@@ -1,9 +1,38 @@
+/* eslint no-unused-vars: "off"*/
 
-var AABB, Action, AddShape, Behaviour, Body, Button, CanvasControl, Circle, Collision, CollisionControl, Demo, Drag, Engine, GJK, Gravity, Line, Mouse, PlayPause, Presets, Queue, Radio, RadioOption, Rectangle, Refresh, Rope, SATColl, Shape, String, Toggle, Vector, abs, atan, atan2, can, cancelAnimationFrame, ceil, cos, ctr, ctxx, customChangePrototype, demo, floor, generateRandomColor, getMax, getMin, getRandomInt, impulseResolution, info, info2, info3, info4, isEven, jcan, makeid, pi, plotItinerary, plotting, pow, requestAnimationFrame, round, shape1, shape2, shape3, sin, solve_Quadratic, sqr, sqrt, tan, test1, test2, test3, test4, win,
-  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty,
-  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+var AABB, Action, AddShape, Behaviour, Body, Button, CanvasControl, Circle,
+  Collision, CollisionControl, Demo, Drag, Engine, GJK, Gravity, Line, Mouse,
+  PlayPause, Presets, Queue, Radio, RadioOption, Rectangle, Refresh, Rope,
+  SATColl, Shape, Cord, Toggle, Vector, abs, atan, atan2, can,
+  cancelAnimationFrame, ceil, cos, CanvasCenter, ctxx, customChangePrototype,
+  demo, floor, generateRandomColor, getMax, getMin, getRandomInt,
+  ImpulseResolution, info, info2, info3, info4, isEven, jcan, makeid, pi,
+  plotItinerary, plotting, pow, requestAnimationFrame, round, shape1, shape2,
+  shape3, sin, solveQuadratic, sqr, sqrt, tan, test1, test2, test3, test4, win;
 
+var hasProp = {}.hasOwnProperty;
+var extend = function(child, parent) {
+  for (var key in parent) {
+    if (hasProp.call(parent, key)) {
+      child[key] = parent[key];
+    }
+  }
+  /**
+   * constructor
+   */
+  function Ctor() {
+    this.constructor = child;
+  }
+  Ctor.prototype = parent.prototype;
+  child.prototype = new Ctor();
+  child.__super__ = parent.prototype;
+  return child;
+};
+var bind = function(fn, me) {
+  return function() {
+    return fn.apply(me, arguments);
+  };
+};
 sin = function(val) {
   return Math.sin(val);
 };
@@ -65,14 +94,14 @@ pi = Math.PI;
 isEven = function(value) {
   if (value % 2 === 0) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 
-solve_Quadratic = function(a, b, c) {
-  var k, x1, x2;
-  if (k = pow(b, 2) - 4 * a * c < 0) {
+solveQuadratic = function(a, b, c) {
+  var x1;
+  var x2;
+  if (pow(b, 2) - 4 * a * c < 0) {
     return false;
   }
   x1 = (-b + Math.sqrt(pow(b, 2) - 4 * a * c)) / (2 * a);
@@ -104,13 +133,25 @@ jcan.attr("width", win.width() - 24);
 
 jcan.attr("height", win.height() - 20);
 
-requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame;
+requestAnimationFrame = window.requestAnimationFrame ||
+ window.webkitRequestAnimationFrame ||
+  window.mozRequestAnimationFrame ||
+   window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame;
 
-cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelRequestAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelRequestAnimationFrame || window.mozCancelAnimationFrame || window.oCancelRequestAnimationFrame || window.oCancelAnimationFrame || window.msCancelRequestAnimationFrame || window.msCancelAnimationFrame;
+cancelAnimationFrame = window.cancelAnimationFrame ||
+ window.webkitCancelRequestAnimationFrame ||
+  window.webkitCancelAnimationFrame ||
+   window.mozCancelRequestAnimationFrame ||
+    window.mozCancelAnimationFrame ||
+     window.oCancelRequestAnimationFrame ||
+      window.oCancelAnimationFrame ||
+       window.msCancelRequestAnimationFrame ||
+        window.msCancelAnimationFrame;
 
-ctr = function() {
+CanvasCenter = function() {
   this.x = jcan.width() / 2;
-  return this.y = jcan.height() / 2;
+  this.y = jcan.height() / 2;
 };
 
 customChangePrototype = function(obj) {
@@ -125,7 +166,9 @@ customChangePrototype = function(obj) {
 plotItinerary = [];
 
 plotting = function(number) {
-  var i, j, len1;
+  var i;
+  var j;
+  var len1;
   plotItinerary.push([plotItinerary.length, number]);
   if (plotItinerary.length > 100) {
     plotItinerary.shift();
@@ -143,7 +186,9 @@ plotting = function(number) {
 };
 
 makeid = function() {
-  var j, possible, text;
+  var j;
+  var possible;
+  var text;
   text = "";
   possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   for (j = 0; j < 5; j++) {
@@ -153,7 +198,8 @@ makeid = function() {
 };
 
 Array.prototype.compare = function(array) {
-  var i, l;
+  var i;
+  var l;
   if (!array) {
     return false;
   }
@@ -167,10 +213,8 @@ Array.prototype.compare = function(array) {
       if (!this[i].compare(array[i])) {
         return false;
       }
-    } else {
-      if (this[i] !== array[i]) {
-        return false;
-      }
+    } else if (this[i] !== array[i]) {
+      return false;
     }
     i++;
   }
@@ -178,7 +222,10 @@ Array.prototype.compare = function(array) {
 };
 
 Array.prototype.copy = function() {
-  var i, j, k, len1;
+  var i;
+  var j;
+  var k;
+  var len1;
   k = [];
   for (j = 0, len1 = this.length; j < len1; j++) {
     i = this[j];
@@ -192,21 +239,28 @@ generateRandomColor = function(transparency) {
   if (transparency == null) {
     transparency = getRandomInt(50, 100) / 100;
   }
-  color = 'rgba(';
+  color = "rgba(";
   for (j = 1; j <= 3; j++) {
     color += getRandomInt(50, 255);
-    color += ',';
+    color += ",";
   }
   color += transparency;
-  color += ')';
+  color += ")";
   return color;
 };
 
 Button = (function() {
+  /**
+   * Button class structure
+   * @param {string} name1     name of the button
+   * @param {string} selector  an activation string representing the jquery selector for the button, when clicked, it is activated
+   * @param {string} selector2 an deactivation string representing the jquery selector for the button, when clicked, it is activated
+   * @constructor
+   */
   function Button(name1, selector, selector2) {
     this.name = name1;
     if (!this.name) {
-      throw "Error: Button doesn't have a proper name";
+      throw new Error("Error: Button doesn't have a proper name");
     }
     this.selector = [];
     this.type = null;
@@ -229,10 +283,10 @@ Button = (function() {
     var selectionError;
     selectionError = "Error: missing or invalid Selector";
     if (!val) {
-      throw selectionError;
+      throw new Error(selectionError);
     }
     if (typeof val !== "string") {
-      throw selectionError;
+      throw new Error(selectionError);
     }
     return $(val);
   };
@@ -257,32 +311,36 @@ Button = (function() {
       return this.findListener(this.core.deactivates, listener);
     }
     for (i in group) {
-      index = group[i];
-      if (i === listener) {
-        return index;
+      if (hasProp.call(group, i)) {
+        index = group[i];
+        if (i === listener) {
+          return index;
+        }
       }
     }
     return -1;
   };
 
-  Button.prototype.setListener = function(listener, data, activation, deactivation) {
+  Button.prototype.setListener =
+  function(listener, data, activation, deactivation) {
     var invalidationError, invalidationfn;
     if (!this.selector.length) {
       return;
     }
     invalidationError = "Error: invalid";
     if (!listener || typeof listener !== "string") {
-      throw invalidationError + " listener";
+      throw new Error(invalidationError + " listener");
     }
-    if (typeof data !== "object" && typeof data !== null) {
-      throw invalidationError + " data assignment";
+    if (typeof data !== "object") {
+      throw new Error(invalidationError + " data assignment");
     }
     invalidationfn = invalidationError + " function assignment";
     if (activation === null && deactivation === null) {
-      throw invalidationfn;
+      throw new Error(invalidationfn);
     }
-    if (typeof activation !== "function" && typeof deactivation !== "function") {
-      throw invalidationfn;
+    if (typeof activation !== "function" &&
+     typeof deactivation !== "function") {
+      throw new Error(invalidationfn);
     }
     if (activation) {
       this.assignActivation(listener, data, activation);
@@ -365,8 +423,10 @@ Button = (function() {
     if (!listener) {
       return ((function() {
         for (i in this.core.activates) {
-          this.activate(i, e);
-          this.activated = false;
+          if (hasProp.call(this.core.activates, i)) {
+            this.activate(i, e);
+            this.activated = false;
+          }
         }
         this.activated = true;
         return this;
@@ -393,8 +453,10 @@ Button = (function() {
     if (!listener) {
       return ((function() {
         for (i in this.core.deactivates) {
-          this.deactivate(i, e);
-          this.activated = true;
+          if (hasProp.call(this.core.deactivates, i)) {
+            this.deactivate(i, e);
+            this.activated = true;
+          }
         }
         this.activated = false;
         return this;
@@ -414,12 +476,17 @@ Button = (function() {
   };
 
   return Button;
-
 })();
 
 Action = (function(superClass) {
   extend(Action, superClass);
-
+  /**
+   * Action buttons, where every click results in a response triggered
+   * @param {string} name1     name of the button
+   * @param {string} selector  an activation string representing the jquery selector for the button, when clicked, it is activated
+   * @param {string} selector2 an deactivation string representing the jquery selector for the button, when clicked, it is activated
+   * @constructor
+   */
   function Action() {
     Action.__super__.constructor.apply(this, arguments);
     this.type = "action";
@@ -437,26 +504,33 @@ Action = (function(superClass) {
   };
 
   return Action;
-
 })(Button);
 
 Toggle = (function(superClass) {
   extend(Toggle, superClass);
-
+  /**
+   * Toggle button, where one click activeates a trigger, and a second click activates another
+   * @param {string} name1     name of the button
+   * @param {string} selector  an activation string representing the jquery selector for the button, when clicked, it is activated
+   * @param {string} selector2 an deactivation string representing the jquery selector for the button, when clicked, it is activated
+   * @constructor
+   */
   function Toggle() {
     Toggle.__super__.constructor.apply(this, arguments);
     this.type = "toggle";
     return this;
   }
 
-  Toggle.prototype.setListener = function(listener, data, activation, deactivation) {
+  Toggle.prototype.setListener = function(listener, data, activation,
+     deactivation) {
     deactivation = deactivation || function() {
       return null;
     };
     activation = activation || function() {
       return null;
     };
-    return Toggle.__super__.setListener.call(this, listener, data, activation, deactivation);
+    return Toggle.__super__.setListener.call(this, listener, data, activation,
+       deactivation);
   };
 
   Toggle.prototype.toggle = function(listener, e) {
@@ -467,9 +541,8 @@ Toggle = (function(superClass) {
   Toggle.prototype.activation = function(listener, e) {
     if (this.activated) {
       return this.deactivate(listener, e);
-    } else {
-      return this.activate(listener, e);
     }
+    return this.activate(listener, e);
   };
 
   Toggle.prototype.deactivation = function(listener, e) {
@@ -489,12 +562,17 @@ Toggle = (function(superClass) {
   };
 
   return Toggle;
-
 })(Button);
 
 RadioOption = (function(superClass) {
   extend(RadioOption, superClass);
-
+  /**
+   * Radio buttons, where multiple buttons deactivate each other, so only one is activated at a time
+   * @param {string} name1     name of the button
+   * @param {string} selector  an activation string representing the jquery selector for the button, when clicked, it is activated
+   * @param {string} selector2 an deactivation string representing the jquery selector for the button, when clicked, it is activated
+   * @constructor
+   */
   function RadioOption() {
     RadioOption.__super__.constructor.apply(this, arguments);
     this.type = "radio option";
@@ -510,12 +588,16 @@ RadioOption = (function(superClass) {
   };
 
   return RadioOption;
-
 })(Button);
-
 Radio = (function(superClass) {
   extend(Radio, superClass);
-
+  /**
+  * Radio container that holds several radio option buttons
+  * @param {string} name1     name of the button
+  * @param {string} selector  an activation string representing the jquery selector for the button, when clicked, it is activated
+  * @param {string} selector2 an deactivation string representing the jquery selector for the button, when clicked, it is activated
+  * @constructor
+  */
   function Radio() {
     this.options = [];
     Radio.__super__.constructor.apply(this, arguments);
@@ -525,7 +607,7 @@ Radio = (function(superClass) {
   Radio.prototype.setSelector = function(val) {
     var className, i, idName, j, name, prefix, ref1, selector;
     selector = this.makeSelector(val);
-    for (i = j = 0, ref1 = selector.length; 0 <= ref1 ? j < ref1 : j > ref1; i = 0 <= ref1 ? ++j : --j) {
+    for (i = 0; i < selector.length; i++) {
       className = selector.eq(i).attr("class");
       idName = selector.eq(i).attr("id");
       name = idName || className;
@@ -535,7 +617,8 @@ Radio = (function(superClass) {
     return this;
   };
 
-  Radio.prototype.setListener = function(listener, data, activation, deactivation) {};
+  Radio.prototype.setListener =
+  function(listener, data, activation, deactivation) {};
 
   Radio.prototype.add = function(option) {
     var originalFn, originalFn2;
@@ -543,7 +626,7 @@ Radio = (function(superClass) {
       return;
     }
     if (!option.type || (option.type !== "radio option")) {
-      throw "Error: invalid option to add";
+      throw new Error("Error: invalid option to add");
     }
     option.index = this.options.length;
     option.id = makeid();
@@ -573,14 +656,14 @@ Radio = (function(superClass) {
 
   Radio.prototype.remove = function(option) {
     var foundOption, index, missingError;
-    foundOption = findOption(option);
+    foundOption = this.findOption(option);
     missingError = "Error: option is missing or not found";
     if (!foundOption) {
-      throw missingError;
+      throw new Error(missingError);
     }
     index = foundOption.index;
     if (index > this.options.length - 1) {
-      throw missingError;
+      throw new Error(missingError);
     }
     option = this.options[index];
     this.options.splice(index, 1);
@@ -591,7 +674,7 @@ Radio = (function(superClass) {
     var foundOption, i, j, len1, ref1;
     foundOption = this.findOption(option);
     if (!foundOption) {
-      throw "Error: option is missing or not found";
+      throw new Error("Error: option is missing or not found");
     }
     ref1 = this.options;
     for (j = 0, len1 = ref1.length; j < len1; j++) {
@@ -604,9 +687,10 @@ Radio = (function(superClass) {
   Radio.prototype.getOption = function(index) {
     var k;
     if ((index == null) || index < 0 || index > this.options.length) {
-      throw "Error: index is not valid";
+      throw new Error("Error: index is not valid");
     }
-    if (k = this.options[index]) {
+    k = this.options[index];
+    if (k) {
       return k;
     }
     return false;
@@ -632,17 +716,16 @@ Radio = (function(superClass) {
     var i, id, invalidOption, j, len1, name, ref1, tag;
     invalidOption = "Error: input is not a valid option";
     if (!obj) {
-      throw invalidOption;
+      throw new Error(invalidOption);
     }
-    id = obj.id != null ? obj.id : null;
-    name = obj.name != null ? obj.name : null;
-    tag = name != null ? "name" : "id";
+    id = obj.id == null ? null : obj.id;
+    name = obj.name == null ? null : obj.name;
+    tag = name == null ? "id" : "name";
     if (tag == null) {
-      throw invalidOption;
+      throw new Error(invalidOption);
     }
-    ref1 = this.options;
-    for (j = 0, len1 = ref1.length; j < len1; j++) {
-      i = ref1[j];
+    for (j = 0; j < this.options.length; j++) {
+      i = this.options[j];
       if (i[tag] === obj[tag]) {
         return i;
       }
@@ -651,10 +734,13 @@ Radio = (function(superClass) {
   };
 
   return Radio;
-
 })(Button);
 
 Queue = (function() {
+  /**
+  * simple queue structure with search and clear functionality
+  * @constructor
+  */
   function Queue() {
     this.storage = [];
     this.size_ = 0;
@@ -691,9 +777,8 @@ Queue = (function() {
   Queue.prototype.get = function(index) {
     if (this.storage[index]) {
       return this.storage[index];
-    } else {
-      return null;
     }
+    return null;
   };
 
   Queue.prototype.size = function() {
@@ -702,7 +787,7 @@ Queue = (function() {
 
   Queue.prototype.clear = function() {
     this.size_ = 0;
-    return this.storage = [];
+    this.storage = [];
   };
 
   Queue.prototype.dequeue = function() {
@@ -714,22 +799,25 @@ Queue = (function() {
   };
 
   return Queue;
-
 })();
 
 Rope = (function() {
   function Rope(shape11, shape21) {
-    this.shape1 = shape11 != null ? shape11 : null;
-    this.shape2 = shape21 != null ? shape21 : null;
+    // this.shape1 = shape11 != null ? shape11 : null;
+    this.shape1 = shape11 == null ? null : shape11;
+    // this.shape2 = shape21 != null ? shape21 : null;
+    this.shape2 = shape21 == null ? null : shape21;
     this.color = "grey";
   }
 
   Rope.prototype.line = function() {
-    return new Line(this.shape1.physical.position, this.shape2.physical.position);
+    return new Line(this.shape1.physical.position,
+      this.shape2.physical.position);
   };
 
   Rope.prototype.compare = function(S1, S2) {
-    if (((S1 === this.shape1) && (S2 === this.shape2)) || ((S2 === this.shape1) && (S1 === this.shape2))) {
+    if (((S1 === this.shape1) && (S2 === this.shape2)) ||
+     ((S2 === this.shape1) && (S1 === this.shape2))) {
       return true;
     }
     return false;
@@ -745,7 +833,6 @@ Rope = (function() {
   };
 
   return Rope;
-
 })();
 
 Engine = (function() {
@@ -775,7 +862,14 @@ Engine = (function() {
   topics = {};
 
   Engine.prototype.emit = function(topic, info) {
-    var i, j, len1, len2, p, ref1, results, tempArr;
+    var i;
+    var j;
+    var len1;
+    var len2;
+    var p;
+    var ref1;
+    var results;
+    var tempArr;
     if (!topics[topic] || !topics[topic].queue.length) {
       return;
     }
@@ -816,7 +910,7 @@ Engine = (function() {
       fn.id = makeid();
     }
     if (this.find(topic, fn.id)) {
-      throw "duplicates";
+      throw new Error("duplicates");
     }
     index = topics[topic].queue.push({
       fn: fn,
@@ -844,8 +938,11 @@ Engine = (function() {
     var i, k;
     if (topic === true) {
       for (i in topics) {
-        if (k = this.findByTopic(i, id)) {
-          return k;
+        if (hasProp.call(topics, i)) {
+          k = this.findByTopic(i, id);
+          if (k) {
+            return k;
+          }
         }
       }
       return false;
@@ -933,16 +1030,15 @@ Engine = (function() {
       cursor: new Vector(this.pageX, this.pageY),
       engine: this
     });
-    for (j = 0, ref1 = this.ITERATIONS; 0 <= ref1 ? j < ref1 : j > ref1; 0 <= ref1 ? j++ : j--) {
-      null;
+    // for (j = 0, ref1 = this.ITERATIONS; 0 <= ref1 ? j < ref1 : j > ref1; 0 <= ref1 ? j++ : j--) {
+    for (j = 0; j < this.ITERATIONS; j++) {
       this.emit("iterate", {
         timestep: this.dt,
         cursor: new Vector(this.pageX, this.pageY),
         engine: this
       });
-      ref2 = this.shapes;
-      for (i1 = p = 0, len1 = ref2.length; p < len1; i1 = ++p) {
-        i = ref2[i1];
+      for (i1 = 0; i1 < this.shapes.length; i1++) {
+        i = this.shapes[i1];
         i.integrate(this.dt);
       }
     }
@@ -950,7 +1046,6 @@ Engine = (function() {
     results = [];
     for (q = 0, len2 = ref3.length; q < len2; q++) {
       i = ref3[q];
-      null;
       results.push(this.checkWall(i));
     }
     return results;
@@ -970,7 +1065,7 @@ Engine = (function() {
 
   Engine.prototype.update = function() {
     var that;
-    that = that != null ? that : this;
+    that = that == null ? this : that;
     that.fps();
     this.draw();
     if (this.accumulator > this.dt * 1.2) {
@@ -994,7 +1089,6 @@ Engine = (function() {
   };
 
   return Engine;
-
 })();
 
 Behaviour = (function() {
@@ -1008,7 +1102,7 @@ Behaviour = (function() {
   Behaviour.prototype.activate = function(engine1, trigger, action) {
     this.engine = engine1;
     this.trigger = trigger;
-    this.action = action != null ? action : "apply";
+    this.action = action == null ? "apply" : action;
     this.engine.on(this.trigger, this[this.action], this);
     return this.active = true;
   };
@@ -1030,7 +1124,7 @@ Behaviour = (function() {
 
   Behaviour.prototype.set = function(mode) {
     if (!mode) {
-      throw "Error: Undefined Mode or required parameter";
+      throw new Error("Error: Undefined Mode or required parameter");
     }
     if (!this.isSet) {
       return this.isSet = true;
@@ -1041,18 +1135,20 @@ Behaviour = (function() {
     var engine, key, ref1, ref2, results, value;
     engine = info.engine;
     if (!this.isSet) {
-      throw "not set";
+      throw new Error("not set");
     }
-    ref1 = this.updates;
-    for (key in ref1) {
-      value = ref1[key];
-      engine.on(key, value[0], value[1], key);
+    for (key in this.updates) {
+      if (hasProp.call(this.updates, key)) {
+        value = this.updates[key];
+        engine.on(key, value[0], value[1], key);
+      }
     }
-    ref2 = this.resets;
     results = [];
-    for (key in ref2) {
-      value = ref2[key];
-      results.push(engine.one(key, value[0], value[1], key));
+    for (key in this.resets) {
+      if (hasProp.call(this.resets, key)) {
+        value = this.resets[key];
+        results.push(engine.one(key, value[0], value[1], key));
+      }
     }
     return results;
   };
@@ -1060,40 +1156,40 @@ Behaviour = (function() {
   Behaviour.prototype.reset = function(event, info) {
     var engine, key, ref1, ref2, results, value;
     engine = info.engine;
-    ref1 = this.updates;
-    for (key in ref1) {
-      value = ref1[key];
-      engine.off({
-        topic: key,
-        fn: value[0]
-      });
-    }
-    ref2 = this.resets;
-    results = [];
-    for (key in ref2) {
-      value = ref2[key];
-      if (key === event) {
-        continue;
+    for (key in this.updates) {
+      if (hasProp.call(this.updates, key)) {
+        value = this.updates[key];
+        engine.off({
+          topic: key,
+          fn: value[0]
+        });
       }
-      results.push(engine.off({
-        topic: key,
-        fn: value[0]
-      }));
     }
-    return results;
+    for (key in this.resets) {
+      if (hasProp.call(this.resets, key)) {
+        value = this.resets[key];
+        if (key === event) {
+          continue;
+        }
+        engine.off({
+          topic: key,
+          fn: value[0]
+        });
+      }
+    }
   };
 
   Behaviour.prototype.getType = function(shape) {
     var name;
     name = shape.type;
-    if (!name || (name !== "Rectangle" && name !== "Circle" && name !== "Shape")) {
-      throw "name not available";
+    if (!name || ((name !== "Rectangle") && (name !== "Circle") &&
+      (name !== "Shape"))) {
+      throw new Error("name not available");
     }
     return shape.type;
   };
 
   return Behaviour;
-
 })();
 
 Collision = (function(superClass) {
@@ -1127,7 +1223,6 @@ Collision = (function(superClass) {
   Collision.prototype.update = function() {};
 
   return Collision;
-
 })(Behaviour);
 
 CollisionControl = (function(superClass) {
@@ -1147,83 +1242,84 @@ CollisionControl = (function(superClass) {
 
   CollisionControl.prototype.apply = function(engine) {
     return engine.on("iterate", function() {
-      var i, i1, j, len1, n, n1, ref1, results;
-      ref1 = engine.shapes;
-      results = [];
-      for (i1 = j = 0, len1 = ref1.length; j < len1; i1 = ++j) {
-        i = ref1[i1];
-        results.push((function() {
-          var len2, p, ref2, results1;
-          ref2 = engine.shapes;
-          results1 = [];
-          for (n1 = p = 0, len2 = ref2.length; p < len2; n1 = ++p) {
-            n = ref2[n1];
-            if (n1 <= i1) {
-              continue;
-            }
-            if (!(n.get("invM") || i.get("invM"))) {
-              continue;
-            }
-            results1.push(engine.emit("checkColl: " + this.getType(i) + " - " + this.getType(n), {
+      var i, i1, n, n1;
+      for (i1 = 0; i1 < engine.shapes.length; i1++) {
+        i = engine.shapes[i1];
+        var len2, p, ref2;
+        for (n1 = 0; n1 < engine.shapes.length; n1++) {
+          n = engine.shapes[n1];
+          if (n1 <= i1) {
+            continue;
+          }
+          if (!(n.get("invM") || i.get("invM"))) {
+            continue;
+          }
+          engine.emit("checkColl: " + this.getType(i) + " - " + this.getType(n),
+            {
               A: i,
               B: n,
               engine: engine
-            }));
-          }
-          return results1;
-        }).call(this));
+            }
+          );
+        }
       }
-      return results;
     }, this);
   };
 
   return CollisionControl;
-
 })(Behaviour);
 
 AABB = (function(superClass) {
   extend(AABB, superClass);
 
   function AABB() {
-    AABB.__super__.constructor.call(this, ["checkColl: Rectangle - Circle", "checkColl: Circle - Rectangle", "checkColl: Rectangle - Rectangle", "checkColl: Circle - Circle"]);
+    AABB.__super__.constructor.call(this, ["checkColl: Rectangle - Circle",
+     "checkColl: Circle - Rectangle",
+      "checkColl: Rectangle - Rectangle",
+       "checkColl: Circle - Circle"]);
   }
 
   AABB.prototype.update = function(event, data) {
-    var a, b, engine, i, j, len1, n, ref1, results;
+    var a, b, engine, i, j, n;
     a = data.A;
     b = data.B;
     engine = data.engine;
     if (!(this.inside(a, b) || this.inside(b, a))) {
       return;
     }
-    ref1 = a.shapes;
-    results = [];
-    for (j = 0, len1 = ref1.length; j < len1; j++) {
-      i = ref1[j];
-      results.push((function() {
-        var len2, p, ref2, results1;
-        ref2 = b.shapes;
-        results1 = [];
-        for (p = 0, len2 = ref2.length; p < len2; p++) {
-          n = ref2[p];
-          results1.push(engine.emit("AABB: " + this.getType(i) + " - " + this.getType(n), {
-            A: i,
-            B: n,
-            engine: engine
-          }));
-        }
-        return results1;
-      }).call(this));
+    for (j = 0; j < a.shapes.length; j++) {
+      i = a.shapes[j];
+      for (var p = 0; p < b.shapes.length; p++) {
+        n = b.shapes[p];
+        engine.emit("AABB: " + this.getType(i) + " - " + this.getType(n), {
+          A: i,
+          B: n,
+          engine: engine
+        });
+      }
     }
-    return results;
   };
 
   AABB.prototype.inside = function(shape1, shape2) {
-    var b1, b2, ref1, ref2, ref3, ref4;
+    var b1, b2;
     b1 = shape1.get("bounding");
     b2 = shape2.get("bounding");
-    if ((b2[1].x <= (ref1 = b1[0].x) && ref1 <= b2[0].x) || (b1[1].x <= (ref2 = b2[0].x) && ref2 <= b1[0].x)) {
-      if ((b2[1].y <= (ref3 = b1[0].y) && ref3 <= b2[0].y) || (b2[1].y <= (ref4 = b1[0].y) && ref4 <= b2[0].y)) {
+    // defining upper and lower bounds for readability
+    var b1UpperX = b1[0].x;
+    var b2UpperX = b2[0].x;
+    var b1UpperY = b1[0].y;
+    var b2UpperY = b2[0].y;
+    var b1LowerX = b1[1].x;
+    var b2LowerX = b2[1].x;
+    var b1LowerY = b1[1].y;
+    var b2LowerY = b2[1].y;
+    var b1BetweenB2OnX = ((b2LowerX <= b1UpperX) && (b1UpperX <= b2UpperX));
+    var b2BetweenB1OnX = ((b1LowerX <= b2UpperX) && (b2UpperX <= b1UpperX));
+    var b1BetweenB2OnY = ((b2LowerY <= b1UpperY) && (b1UpperY <= b2UpperY));
+    var b2BetweenB1OnY = ((b1LowerY <= b2UpperY) && (b2UpperY <= b1UpperY));
+
+    if (b1BetweenB2OnX || b2BetweenB1OnX) {
+      if (b1BetweenB2OnY || b2BetweenB1OnY) {
         return true;
       }
     }
@@ -1231,14 +1327,12 @@ AABB = (function(superClass) {
   };
 
   return AABB;
-
 })(Collision);
 
 GJK = (function(superClass) {
-  var edgePoints, ranking, separation, simplexPoint, tripleCross;
+  var EdgePoints, ranking, separation, simplexPoint, tripleCross;
 
   extend(GJK, superClass);
-
 
   /*
       "AABB: Rectangle - Circle"
@@ -1312,7 +1406,8 @@ GJK = (function(superClass) {
   };
 
   separation = function(points, supportFn) {
-    var direction, first, firstPlace, firstPlaces, i, i1, j, len1, n, n1, newPoint, p1, p2, rankingQueue, safeguard, second, temp, third;
+    var direction, first, firstPlace, firstPlaces, i, i1, n, n1, newPoint, p1,
+      p2, rankingQueue, safeguard, second, temp, third;
     safeguard = 0;
     first = {
       p1: null,
@@ -1337,16 +1432,16 @@ GJK = (function(superClass) {
     };
     rankingQueue = [first, second, third];
     firstPlaces = [];
-    for (i1 = j = 0, len1 = points.length; j < len1; i1 = ++j) {
+    for (i1 = 0; i1 < points.length; i1++) {
       i = points[i1];
       n1 = (i1 + 1 === points.length ? 0 : i1 + 1);
       n = points[n1];
-      temp = new edgePoints(i, n, points);
+      temp = new EdgePoints(i, n, points);
       ranking(temp, rankingQueue);
     }
     while (safeguard++ < 10) {
       if (safeguard > 10) {
-        throw "are you sure?";
+        throw new Error("are you sure?");
       }
       firstPlace = rankingQueue[0];
       p1 = firstPlace.p1;
@@ -1355,21 +1450,22 @@ GJK = (function(superClass) {
       if (supportFn) {
         newPoint = supportFn(direction);
       }
-      if (abs(direction.dot(newPoint) - direction.dot(p1)) < 0.1 || abs(direction.dot(newPoint) - direction.dot(p2)) < 0.1) {
+      if (abs(direction.dot(newPoint) - direction.dot(p1)) < 0.1 ||
+       abs(direction.dot(newPoint) - direction.dot(p2)) < 0.1) {
         return firstPlace;
       }
       rankingQueue.splice(0, 1);
       rankingQueue.push(third);
-      ranking(new edgePoints(p1, newPoint, points), rankingQueue);
-      ranking(new edgePoints(newPoint, p2, points), rankingQueue);
+      ranking(new EdgePoints(p1, newPoint, points), rankingQueue);
+      ranking(new EdgePoints(newPoint, p2, points), rankingQueue);
     }
     return false;
   };
 
   ranking = function(edgePoint, rankings) {
-    var index, item, j, len1, rank, temp;
+    var index, item, rank, temp;
     item = edgePoint;
-    for (index = j = 0, len1 = rankings.length; j < len1; index = ++j) {
+    for (index = 0; index < rankings.length; index++) {
       rank = rankings[index];
       if (rank.normal === null) {
         rankings[index] = item;
@@ -1385,7 +1481,7 @@ GJK = (function(superClass) {
     return rankings;
   };
 
-  edgePoints = function(p11, p21, simplex) {
+  EdgePoints = function(p11, p21, simplex) {
     var a, ab, abDotAb, ao, b;
     this.p1 = p11;
     this.p2 = p21;
@@ -1397,7 +1493,7 @@ GJK = (function(superClass) {
     abDotAb = ab.dot(ab);
     if (abDotAb === 0) {
       console.log(this);
-      throw "it is a zero!";
+      throw new Error("it is a zero!");
     }
     this.ratio = ao.dot(ab) / abDotAb;
     this.normal = tripleCross(ao, ab, ab).scale(1 / abDotAb);
@@ -1474,7 +1570,8 @@ GJK = (function(superClass) {
   };
 
   GJK.prototype.update = function(event, data) {
-    var a, aP, b, bP, closestA, closestB, engine, i, j, lambda1, lambda2, len1, manifoldation, mtv, norm, obj, s1, s2, temp, vec;
+    var a, aP, b, bP, closestA, closestB, engine, i, j, lambda1, lambda2,
+      manifoldation, mtv, norm, obj, s1, s2, temp, vec;
     a = data.A;
     b = data.B;
     engine = data.engine;
@@ -1518,7 +1615,7 @@ GJK = (function(superClass) {
       normal: norm.copy(),
       manifold: manifoldation
     };
-    for (j = 0, len1 = manifoldation.length; j < len1; j++) {
+    for (j = 0; j < manifoldation.length; j++) {
       i = manifoldation[j];
       obj.vector.push(vec);
     }
@@ -1532,12 +1629,10 @@ GJK = (function(superClass) {
   };
 
   return GJK;
-
 })(Collision);
 
 SATColl = (function(superClass) {
   extend(SATColl, superClass);
-
 
   /*
       "AABB: Rectangle - Circle"
@@ -1631,7 +1726,7 @@ SATColl = (function(superClass) {
   SATColl.prototype.projectShape = function(shape, axis, booli) {
     var dot, support;
     if (booli == null) {
-      throw "no booli";
+      throw new Error("no booli");
     }
     support = shape.support(axis);
     dot = support.subtract(shape.get("position")).dot(axis);
@@ -1642,7 +1737,8 @@ SATColl = (function(superClass) {
   };
 
   SATColl.prototype.optimizedSAT = function(shape1, shape2) {
-    var axis, dist, index, j, len1, minAxis, minIndex, minLength, proj1, proj2, projectAxis, relation, result, totalAxises;
+    var axis, dist, index, j, len1, minAxis, minIndex, minLength, proj1, proj2,
+      projectAxis, relation, result, totalAxises;
     relation = shape2.get("position").subtract(shape1.get("position"));
     totalAxises = this.getAxies(shape1, shape2);
     totalAxises = this.removeDuplicateAxis(totalAxises);
@@ -1651,7 +1747,7 @@ SATColl = (function(superClass) {
     for (index = j = 0, len1 = totalAxises.length; j < len1; index = ++j) {
       axis = totalAxises[index];
       if (axis.length !== 1) {
-        throw "not unit vector";
+        throw new Error("not unit vector");
       }
       projectAxis = relation.dot(axis);
       if (projectAxis < 0) {
@@ -1670,14 +1766,14 @@ SATColl = (function(superClass) {
       }
     }
     if (minIndex == null) {
-      throw "no index!";
+      throw new Error("no index!");
     }
     minAxis = totalAxises[minIndex];
     projectAxis = relation.projection(minAxis);
     proj1 = this.projectShape(shape1, minAxis, false);
     proj2 = this.projectShape(shape2, minAxis.scale(-1), false);
     if (proj1.dot(proj2) > 0) {
-      throw "projections arent opposite";
+      throw new Error("projections arent opposite");
     }
     if (proj1.dot(projectAxis) < 0) {
       projectAxis = projectAxis.scale(-1);
@@ -1698,7 +1794,8 @@ SATColl = (function(superClass) {
     }
     edge1 = point.edge1;
     edge2 = point.edge2;
-    if (abs(edge1.vector().unit().dot(dir)) <= abs(edge2.vector().unit().dot(dir))) {
+    if (abs(edge1.vector().unit().dot(dir)) <=
+     abs(edge2.vector().unit().dot(dir))) {
       otherPoint = edge1.p1 === point ? edge1.p2 : edge1.p1;
       result = new Line(point, otherPoint);
       result.length = edge1.length;
@@ -1735,7 +1832,8 @@ SATColl = (function(superClass) {
       };
     }
     flip = false;
-    if (abs(edgeA.edge.vector().unit().dot(normal)) <= abs(edgeB.edge.vector().unit().dot(normal))) {
+    if (abs(edgeA.edge.vector().unit().dot(normal)) <=
+     abs(edgeB.edge.vector().unit().dot(normal))) {
       ref = edgeA;
       inc = edgeB;
     } else {
@@ -1819,28 +1917,42 @@ SATColl = (function(superClass) {
       collision.vector.push(collision.normal.scale(i.depth));
       collision.vector.splice(0, 1);
     }
-    return engine.emit("collided: " + this.getType(a) + " - " + this.getType(b), {
-      cursor: new Vector(engine.pageX, engine.pageY),
-      a: a,
-      b: b,
-      engine: this.engine,
-      collision: collision
-    });
+    return engine.emit(
+      "collided: " + this.getType(a) + " - " + this.getType(b),
+      {
+        cursor: new Vector(engine.pageX, engine.pageY),
+        a: a,
+        b: b,
+        engine: this.engine,
+        collision: collision
+      }
+    );
   };
 
   return SATColl;
-
 })(Collision);
 
-impulseResolution = (function(superClass) {
-  extend(impulseResolution, superClass);
+ImpulseResolution = (function(superClass) {
+  extend(ImpulseResolution, superClass);
 
-  function impulseResolution() {
-    impulseResolution.__super__.constructor.call(this, ["collided: Rectangle - Circle", "collided: Circle - Rectangle", "collided: Rectangle - Rectangle", "collided: Circle - Circle", "collided: Circle - Shape", "collided: Shape - Circle", "collided: Shape - Shape", "collided: Shape - Rectangle", "collided: Rectangle - Shape"]);
+  function ImpulseResolution() {
+    ImpulseResolution.__super__.constructor.call(this,
+      ["collided: Rectangle - Circle",
+       "collided: Circle - Rectangle",
+        "collided: Rectangle - Rectangle",
+         "collided: Circle - Circle",
+          "collided: Circle - Shape",
+           "collided: Shape - Circle",
+            "collided: Shape - Shape",
+             "collided: Shape - Rectangle",
+              "collided: Rectangle - Shape"]);
   }
 
-  impulseResolution.prototype.calculateImpulse4 = function(A, B, contact, contactsLength, CollisionV, normal) {
-    var Or, angVelA, angVelB, contactVel, df, e, impulse, invMassA, invMassB, invMassSum, invMoiA, invMoiB, jt, mr, n, perp, rA, rB, raCrossN, raCrossT, rbCrossN, rbCrossT, rv, sf, sign, t, tangentImpulse;
+  ImpulseResolution.prototype.calculateImpulse4 =
+  function(A, B, contact, contactsLength, CollisionV, normal) {
+    var Or, angVelA, angVelB, contactVel, df, e, impulse, invMassA, invMassB,
+      invMassSum, invMoiA, invMoiB, jt, mr, n, perp, rA, rB, raCrossN, raCrossT,
+      rbCrossN, rbCrossT, rv, sf, sign, t, tangentImpulse;
     rA = contact.subtract(A.get("position"));
     rB = contact.subtract(B.get("position"));
     angVelA = A.get("rv");
@@ -1856,7 +1968,8 @@ impulseResolution = (function(superClass) {
     e = mr * Or;
     sf = A.get("sf") * B.get("sf");
     df = A.get("df") * B.get("df");
-    rv = B.get("v").add(rB.scaleCross(-angVelB)).subtract(A.get("v")).subtract(rA.scaleCross(-angVelA));
+    rv = B.get("v").add(rB.scaleCross(-angVelB)).subtract(A.get("v")).subtract(
+      rA.scaleCross(-angVelA));
 
     /*
     rv = rv.add B.get("force").add(rB.scaleCross(-B.get("torque")))
@@ -1868,7 +1981,8 @@ impulseResolution = (function(superClass) {
     }
     raCrossN = -rA.cross(n);
     rbCrossN = -rB.cross(n);
-    invMassSum = invMassA + invMassB + sqr(raCrossN) * invMoiA + sqr(rbCrossN) * invMoiB;
+    invMassSum = invMassA + invMassB + sqr(raCrossN) * invMoiA +
+     sqr(rbCrossN) * invMoiB;
     impulse = contactVel * (-(1 + e));
     impulse /= invMassSum;
     impulse /= contactsLength;
@@ -1877,32 +1991,35 @@ impulseResolution = (function(superClass) {
     t = perp;
     raCrossT = -rA.cross(t);
     rbCrossT = -rB.cross(t);
-    invMassSum = invMassA + invMassB + sqr(raCrossT) * invMoiA + sqr(rbCrossT) * invMoiB;
+    invMassSum = invMassA + invMassB + sqr(raCrossT) * invMoiA +
+     sqr(rbCrossT) * invMoiB;
     jt = -rv.dot(t);
     jt /= invMassSum;
     sign = rv.dot(t) < 0 ? -1 : 1;
     impulse *= sign;
-    tangentImpulse = abs(jt) < impulse * sf ? t.scale(jt) : t.scale(-impulse * df);
+    tangentImpulse = abs(jt) < impulse * sf ?
+     t.scale(jt) : t.scale(-impulse * df);
     B.applyForce(tangentImpulse, rB.add(B.get("position")));
     return A.applyForce(tangentImpulse.scale(-1), rA.add(A.get("position")));
   };
 
-  impulseResolution.prototype.positionalCorrection = function(percentages, mainShape, otherShape, penetrationDepth, invMasses) {
+  ImpulseResolution.prototype.positionalCorrection =
+  function(percentages, mainShape, otherShape, penetrationDepth, invMasses) {
     var correction, k, percentage;
     percentage = percentages || 0.4;
     if ((k = penetrationDepth.length) < 0.5) {
       percentage = 0;
     }
     if (penetrationDepth.length == null) {
-      throw "";
+      throw new Error("no positional correction");
     }
     correction = penetrationDepth.scale(percentage / invMasses);
     mainShape.move(correction.scale(mainShape.get("invM")));
     return otherShape.move(correction.scale(-otherShape.get("invM")));
   };
 
-  impulseResolution.prototype.impulseResolve = function(A, B, Collision) {
-    var CollisionV, contacts, correction, i, i1, invMasses, j, len1, normal, results;
+  ImpulseResolution.prototype.impulseResolve = function(A, B, Collision) {
+    var CollisionV, contacts, correction, i, i1, invMasses, j, normal, results;
     if (!(invMasses = A.get("invM") + B.get("invM"))) {
       return new Vector();
     }
@@ -1911,14 +2028,15 @@ impulseResolution = (function(superClass) {
     contacts = Collision.manifold;
     correction = this.positionalCorrection(null, A, B, CollisionV, invMasses);
     results = [];
-    for (i1 = j = 0, len1 = contacts.length; j < len1; i1 = ++j) {
+    for (i1 = 0; i1 < contacts.length; i1++) {
       i = contacts[i1];
-      results.push(this.calculateImpulse4(A, B, i, contacts.length, Collision.vector[i1], normal));
+      results.push(this.calculateImpulse4(A, B, i, contacts.length,
+         Collision.vector[i1], normal));
     }
     return results;
   };
 
-  impulseResolution.prototype.update = function(event, data) {
+  ImpulseResolution.prototype.update = function(event, data) {
     var a, b, collision, engine;
     a = data.a;
     b = data.b;
@@ -1936,8 +2054,7 @@ impulseResolution = (function(superClass) {
     return this.impulseResolve(a, b, collision);
   };
 
-  return impulseResolution;
-
+  return ImpulseResolution;
 })(Collision);
 
 Mouse = (function(superClass) {
@@ -1951,10 +2068,10 @@ Mouse = (function(superClass) {
     this.emitMouseUp = bind(this.emitMouseUp, this);
     this.emitMouseDown = bind(this.emitMouseDown, this);
     if (!this.selector) {
-      throw "selector undefined";
+      throw new Error("selector undefined");
     }
     if (type !== "Jquery" && type !== "jquery") {
-      throw "undefined type";
+      throw new Error("undefined type");
     }
     this.inputType = "mouse";
   }
@@ -1962,10 +2079,10 @@ Mouse = (function(superClass) {
   Mouse.prototype.activate = function(engine1) {
     this.engine = engine1;
     if (!this.engine) {
-      throw "engine not defined";
+      throw new Error("engine not defined");
     }
     if (this.engine.input) {
-      throw "input already exists";
+      throw new Error("input already exists");
     }
     this.engine.setupInput(this.inputType, this.getMouseCoord);
     return this.mouseClick();
@@ -1996,9 +2113,12 @@ Mouse = (function(superClass) {
   };
 
   Mouse.prototype.mouseClick = function() {
-    this.selector.on("mousemove.mouseInput", this.mouseChecker.bind(null, this.emitMouseMove));
-    this.selector.on("mousedown.mouseInput", this.mouseChecker.bind(null, this.emitMouseDown));
-    return this.selector.on("mouseup.mouseInput", this.mouseChecker.bind(null, this.emitMouseUp));
+    this.selector.on("mousemove.mouseInput",
+      this.mouseChecker.bind(null, this.emitMouseMove));
+    this.selector.on("mousedown.mouseInput",
+      this.mouseChecker.bind(null, this.emitMouseDown));
+    return this.selector.on("mouseup.mouseInput",
+      this.mouseChecker.bind(null, this.emitMouseUp));
   };
 
   Mouse.prototype.mouseReset = function() {
@@ -2017,7 +2137,6 @@ Mouse = (function(superClass) {
   };
 
   return Mouse;
-
 })(Behaviour);
 
 CanvasControl = (function(superClass) {
@@ -2029,16 +2148,16 @@ CanvasControl = (function(superClass) {
     this.window = window1;
     this.adjustment = bind(this.adjustment, this);
     if (!this.selector) {
-      throw "selector undefined";
+      throw new Error("selector undefined");
     }
     if (!this.context) {
-      throw "context undefined";
+      throw new Error("context undefined");
     }
     if (!this.window) {
-      throw "window undefined";
+      throw new Error("window undefined");
     }
     if (type !== "Jquery" && type !== "jquery") {
-      throw "undefined type";
+      throw new Error("undefined type");
     }
     this.adjustment();
   }
@@ -2046,7 +2165,7 @@ CanvasControl = (function(superClass) {
   CanvasControl.prototype.activate = function(engine1) {
     this.engine = engine1;
     if (!this.engine) {
-      throw "engine not defined";
+      throw new Error("engine not defined");
     }
     return this.adjusting();
   };
@@ -2059,7 +2178,7 @@ CanvasControl = (function(superClass) {
     var center;
     this.selector.attr("width", this.window.width() - 24);
     this.selector.attr("height", this.window.height() - 20);
-    center = new ctr();
+    center = new CanvasCenter();
     this.context.translate(center.x, center.y);
     this.context.scale(1, -1);
     return this.context.translate(-center.x, -center.y);
@@ -2074,7 +2193,6 @@ CanvasControl = (function(superClass) {
   };
 
   return CanvasControl;
-
 })(Behaviour);
 
 PlayPause = (function(superClass) {
@@ -2082,14 +2200,14 @@ PlayPause = (function(superClass) {
 
   function PlayPause() {
     this.resets = {
-      "pause": [this.reset, this]
+      pause: [this.reset, this]
     };
   }
 
   PlayPause.prototype.activate = function(engine) {
     PlayPause.__super__.activate.call(this, engine, "play", "apply");
     return this.updates = {
-      "update": [engine.animate, engine]
+      update: [engine.animate, engine]
     };
   };
 
@@ -2106,7 +2224,6 @@ PlayPause = (function(superClass) {
   };
 
   return PlayPause;
-
 })(Behaviour);
 
 Refresh = (function(superClass) {
@@ -2126,7 +2243,7 @@ Refresh = (function(superClass) {
     var engine;
     engine = info.engine;
     if (!this.isSet) {
-      throw "not set";
+      throw new Error("not set");
     }
     engine.emit("pause", {
       cursor: new Vector(engine.pageX, engine.pageY),
@@ -2136,26 +2253,24 @@ Refresh = (function(superClass) {
   };
 
   return Refresh;
-
 })(Behaviour);
 
-String = (function(superClass) {
-  extend(String, superClass);
+Cord = (function(superClass) {
+  extend(Cord, superClass);
 
-  function String() {
+  function Cord() {
     this.strings = new Queue();
-    this.updatingString = [];
     this.updates = {
-      "animate": [this.update, this],
-      "implement": [this.singleString, this]
+      animate: [this.update, this],
+      implement: [this.singleCord, this]
     };
     this.resets = {
-      "destringify": [this.reset, this],
-      "refresh": [this.reset, this]
+      destringify: [this.reset, this],
+      refresh: [this.reset, this]
     };
   }
 
-  String.prototype.set = function(obj) {
+  Cord.prototype.set = function(obj) {
     if (obj == null) {
       obj = {
         all: true,
@@ -2163,40 +2278,40 @@ String = (function(superClass) {
         maxLength: 100
       };
     }
-    this.massOnly = obj.massOnly != null ? obj.massOnly : false;
-    this.maxLength = obj.maxLength != null ? obj.maxLength : 100;
+    this.massOnly = obj.massOnly == null ? false : obj.massOnly;
+    this.maxLength = obj.maxLength == null ? 100 : obj.maxLength;
     return this.isSet = true;
   };
 
-  String.prototype.activate = function(engine) {
-    return String.__super__.activate.call(this, engine, "stringify", "apply");
+  Cord.prototype.activate = function(engine) {
+    return Cord.__super__.activate.call(this, engine, "stringify", "apply");
   };
 
-  String.prototype.deactivate = function() {
-    return String.__super__.deactivate.apply(this, arguments);
+  Cord.prototype.deactivate = function() {
+    return Cord.__super__.deactivate.apply(this, arguments);
   };
 
-  String.prototype.apply = function(event, info) {
+  Cord.prototype.apply = function(event, info) {
     var engine;
-    String.__super__.apply.apply(this, arguments);
+    Cord.__super__.apply.apply(this, arguments);
     engine = info.engine;
-    return this.createStrings(engine);
+    return this.createCords(engine);
   };
 
-  String.prototype.reset = function(event, info) {
+  Cord.prototype.reset = function(event, info) {
     var engine;
     engine = info.engine;
     this.strings.clear();
-    String.__super__.reset.apply(this, arguments);
+    Cord.__super__.reset.apply(this, arguments);
   };
 
-  String.prototype.createStrings = function(engine) {
+  Cord.prototype.createCords = function(engine) {
     var i, i1, j, len1, results, shapes;
     shapes = engine.shapes;
     results = [];
     for (i1 = j = 0, len1 = shapes.length; j < len1; i1 = ++j) {
       i = shapes[i1];
-      results.push(this.singleString(null, {
+      results.push(this.singleCord(null, {
         shape: i,
         index: i1,
         shapes: shapes
@@ -2205,7 +2320,7 @@ String = (function(superClass) {
     return results;
   };
 
-  String.prototype.singleString = function(event, info) {
+  Cord.prototype.singleCord = function(event, info) {
     var index, j, len1, n, n1, results, shape, shapes;
     shape = info.shape;
     index = info.index;
@@ -2229,8 +2344,9 @@ String = (function(superClass) {
     return results;
   };
 
-  String.prototype.moveString = function(arr) {
-    var A, B, color, contactVel, impulse, invMassA, invMassB, invMassSum, moveVec, n, rv, string;
+  Cord.prototype.moveCord = function(arr) {
+    var A, B, color, contactVel, impulse, invMassA, invMassB, invMassSum,
+      moveVec, n, rv, string;
     A = arr[0];
     B = arr[1];
     invMassA = A.get("invM");
@@ -2255,24 +2371,23 @@ String = (function(superClass) {
     return string.draw(0.4, color);
   };
 
-  String.prototype.update = function(event, info) {
+  Cord.prototype.update = function(event, info) {
     var engine, i, j, len1, ref1, results, shapes;
     engine = info.engine;
     shapes = engine.shapes;
     if (!shapes) {
-      throw "Error: no 'shapes' array present";
+      throw new Error("Error: no 'shapes' array present");
     }
     ref1 = this.strings.storage;
     results = [];
     for (j = 0, len1 = ref1.length; j < len1; j++) {
       i = ref1[j];
-      results.push(this.moveString(i));
+      results.push(this.moveCord(i));
     }
     return results;
   };
 
-  return String;
-
+  return Cord;
 })(Behaviour);
 
 Gravity = (function(superClass) {
@@ -2281,25 +2396,27 @@ Gravity = (function(superClass) {
   function Gravity() {
     this.a = new Vector();
     this.updates = {
-      "animate": [this.update, this]
+      animate: [this.update, this]
     };
     this.resets = {
-      "degravitate": [this.reset, this],
-      "refresh": [this.reset, this]
+      degravitate: [this.reset, this],
+      refresh: [this.reset, this]
     };
   }
 
   Gravity.prototype.set = function(mag, dir) {
     var incorrectDir;
-    incorrectDir = "Error: Missing or Incorrect assignment of direction vector.\n Make sure the input direction vector is a unit vector and has a length property (of 1)";
+    incorrectDir = "Error: Missing or Incorrect assignment of direction " +
+    "vector.\n Make sure the input direction vector is a unit vector and has" +
+    " a length property (of 1)";
     if (!dir) {
-      throw incorrectDir;
+      throw new Error(incorrectDir);
     }
     if (!dir.length) {
       dir.getLength();
     }
     if (!(abs(dir.length - 1) < 0.1)) {
-      throw incorrectDir;
+      throw new Error(incorrectDir);
     }
     this.a = dir.scale(mag);
     return this.isSet = true;
@@ -2326,7 +2443,7 @@ Gravity = (function(superClass) {
     engine = info.engine;
     shapes = engine.shapes;
     if (!shapes) {
-      throw "Error: no 'shapes' array present";
+      throw new Error("Error: no 'shapes' array present");
     }
     results = [];
     for (j = 0, len1 = shapes.length; j < len1; j++) {
@@ -2334,14 +2451,13 @@ Gravity = (function(superClass) {
       if (shape.get("invM")) {
         results.push(shape.applyForce(this.a.scale(1 / shape.get("invM"))));
       } else {
-        results.push(void 0);
+        results.push(undefined);
       }
     }
     return results;
   };
 
   return Gravity;
-
 })(Behaviour);
 
 Drag = (function(superClass) {
@@ -2350,11 +2466,11 @@ Drag = (function(superClass) {
   function Drag() {
     this.velocity = new Vector();
     this.updates = {
-      "animate": [this.update, this]
+      animate: [this.update, this]
     };
     this.resets = {
-      "mouseup": [this.reset, this],
-      "refresh": [this.reset, this]
+      mouseup: [this.reset, this],
+      refresh: [this.reset, this]
     };
   }
 
@@ -2370,7 +2486,7 @@ Drag = (function(superClass) {
     var engine;
     engine = info.engine;
     if (!this.isSet) {
-      throw "not set";
+      throw new Error("not set");
     }
     this.mouseLoc = info.cursor;
     this.shape = this.findShape(engine);
@@ -2392,9 +2508,9 @@ Drag = (function(superClass) {
   };
 
   Drag.prototype.set = function(speed, pull1, torqueDamp) {
-    this.speed = speed != null ? speed : 0.01;
-    this.pull = pull1 != null ? pull1 : 0.71;
-    this.torqueDamp = torqueDamp != null ? torqueDamp : 800;
+    this.speed = speed == null ? 0.01 : speed;
+    this.pull = pull1 == null ? 0.71 : pull1;
+    this.torqueDamp = torqueDamp == null ? 800 : torqueDamp;
     return this.isSet = true;
   };
 
@@ -2414,7 +2530,7 @@ Drag = (function(superClass) {
   Drag.prototype.update = function(event, info) {
     var engine;
     if (!this.isSet) {
-      throw "not set";
+      throw new Error("not set");
     }
     this.mouseLoc = info.cursor;
     engine = info.engine;
@@ -2456,7 +2572,7 @@ Drag = (function(superClass) {
       return;
     }
     if (!(foundPoint = this.findPoint(point, shape))) {
-      throw "Error: cannot find Point";
+      throw new Error("Error: cannot find Point");
     }
     index = foundPoint.index;
     return shape.shapes[0].get("points").splice(index, 1);
@@ -2466,7 +2582,7 @@ Drag = (function(superClass) {
     var j, len1, shape, shapes;
     shapes = engine.shapes;
     if (!shapes) {
-      throw "Error: no 'shapes' array present";
+      throw new Error("Error: no 'shapes' array present");
     }
     for (j = 0, len1 = shapes.length; j < len1; j++) {
       shape = shapes[j];
@@ -2477,7 +2593,8 @@ Drag = (function(superClass) {
     return false;
   };
 
-  Drag.prototype.ropePull = function(shape, force, contact, friction, pull, length, color, width, secondaryColor) {
+  Drag.prototype.ropePull = function(shape, force, contact, friction, pull,
+     length, color, width, secondaryColor) {
     var color_, difference, dot, fProj, fnorm, funit, vProj, vel, weight;
     if (friction == null) {
       friction = 0.03;
@@ -2495,7 +2612,8 @@ Drag = (function(superClass) {
       secondaryColor = "red";
     }
     if (!force) {
-      throw "Error: missing force. Please define a force as a parameter for the function to operate";
+      throw new Error("Error: missing force. Please define a force as a" +
+       " parameter for the function to operate");
     }
     color_ = color;
     if (!force.length) {
@@ -2524,7 +2642,6 @@ Drag = (function(superClass) {
   };
 
   return Drag;
-
 })(Behaviour);
 
 AddShape = (function(superClass) {
@@ -2538,13 +2655,13 @@ AddShape = (function(superClass) {
   }
 
   AddShape.prototype.activate = function(engine) {
-    return AddShape.__super__.activate.call(this, engine, "mousedown", "update");
+    return AddShape.__super__.activate.call(this, engine, "mousedown",
+     "update");
   };
 
   AddShape.prototype.deactivate = function() {
     return AddShape.__super__.deactivate.apply(this, arguments);
   };
-
 
   /*
   apply:(event,info)->
@@ -2588,7 +2705,7 @@ AddShape = (function(superClass) {
     }
     this.count = engine.shapes.length;
     if (!this.shape1) {
-      throw "Error: Shapes are not defined";
+      throw new Error("Error: Shapes are not defined");
     }
     this.setShape(engine);
     if (!this.firstOperation(this.locs, this.mouseLoc)) {
@@ -2604,11 +2721,13 @@ AddShape = (function(superClass) {
 
   AddShape.prototype.set = function(shape11, shape21, mode) {
     var typesOfModes;
-    this.shape1 = shape11 != null ? shape11 : null;
-    this.shape2 = shape21 != null ? shape21 : null;
+    // this.shape1 = shape11 != null ? shape11 : null;
+    this.shape1 = shape11 == null ? null : shape11;
+    // this.shape2 = shape21 != null ? shape21 : null;
+    this.shape2 = shape21 == null ? null : shape21;
     typesOfModes = ["container", "random", "target", "compound"];
     if (typesOfModes.indexOf(mode) < 0) {
-      throw "Error: spawnMode unidentified";
+      throw new Error("Error: spawnMode unidentified");
     }
     this.setShape = eval("this." + mode);
     return this.isSet = true;
@@ -2618,7 +2737,7 @@ AddShape = (function(superClass) {
     var construct;
     construct = props.type;
     if (!construct || typeof construct !== "string" || !eval(construct)) {
-      throw "Error: invalid or missing type";
+      throw new Error("Error: invalid or missing type");
     }
     return new (eval(construct))(props);
   };
@@ -2665,18 +2784,20 @@ AddShape = (function(superClass) {
 
   AddShape.prototype.random = function() {
     var array_, length;
-    length = typeof this.shape1 === "Array" ? this.shape1.length : 1;
-    array_ = typeof this.shape1 === "Array" ? this.shape1 : [this.shape1, this.shape2];
+    console.log(this.shape1);
+    length = this.shape1.constructor === Array ? this.shape1.length : 1;
+    array_ = this.shape1.constructor === Array ?
+     this.shape1 : [this.shape1, this.shape2];
     return this.shape = array_[getRandomInt(0, length)];
   };
 
   AddShape.prototype.target = function() {
     return this.shape = (function() {
       switch (this.count) {
-        case 1:
-          return this.shape1;
-        default:
-          return this.shape2;
+      case 1:
+        return this.shape1;
+      default:
+        return this.shape2;
       }
     }).call(this);
   };
@@ -2684,50 +2805,50 @@ AddShape = (function(superClass) {
   AddShape.prototype.compound = function(engine) {
     var array_, length;
     if (!this.callBack) {
-      this.callBack = this.compound_CALLBACK;
+      this.callBack = this.CompoundCallback;
     }
-    length = typeof this.shape1 === "Array" ? this.shape1.length : 1;
-    array_ = typeof this.shape1 === "Array" ? this.shape1 : [this.shape1, this.shape2];
+    length = typeof this.shape1.constructor === Array ? this.shape1.length : 1;
+    array_ = typeof this.shape1.constructor === Array ?
+      this.shape1 : [this.shape1, this.shape2];
     return this.shape = array_[getRandomInt(0, length)];
   };
 
-  AddShape.prototype.compound_CALLBACK = function(engine) {
+  AddShape.prototype.CompoundCallback = function(engine) {
     var i, j, len1, ref1;
     if (!this.initialComp) {
       this.initialComp = this.createdShape;
       return engine.one("refresh", (function() {
         return this.initialComp = null;
       }), this);
-    } else {
-      ref1 = this.createdShape.shapes;
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
-        i = ref1[j];
-        this.initialComp.addShape(i);
-      }
-
-      /*
-      test4 = new Rectangle {
-                             invM:1/1.5
-                             orient:0
-                             sf: 0.8
-                             df: 0.5
-                             restitution: 0
-                             v:new Vector(-0.1,-0.1)
-                             x:300
-                             y:200
-                             width:50
-                             height: 89
-                             }
-       */
-      return engine.shapes.pop();
     }
+    ref1 = this.createdShape.shapes;
+    for (j = 0, len1 = ref1.length; j < len1; j++) {
+      i = ref1[j];
+      this.initialComp.addShape(i);
+    }
+
+    /*
+    test4 = new Rectangle {
+                           invM:1/1.5
+                           orient:0
+                           sf: 0.8
+                           df: 0.5
+                           restitution: 0
+                           v:new Vector(-0.1,-0.1)
+                           x:300
+                           y:200
+                           width:50
+                           height: 89
+                           }
+     */
+    return engine.shapes.pop();
   };
 
   AddShape.prototype.findShape = function(engine) {
     var j, len1, shape, shapes;
     shapes = engine.shapes;
     if (!shapes) {
-      throw "Error: no 'shapes' array present";
+      throw new Error("Error: no 'shapes' array present");
     }
     for (j = 0, len1 = shapes.length; j < len1; j++) {
       shape = shapes[j];
@@ -2746,11 +2867,11 @@ AddShape = (function(superClass) {
     }
     this.initCount = null;
     this.initVel = null;
-    return shape.v = new Vector(shape.x, shape.y).subtract(this.initLoc).scale(0.003);
+    return shape.v = new Vector(shape.x, shape.y).subtract(this.initLoc)
+    .scale(0.003);
   };
 
   return AddShape;
-
 })(Behaviour);
 
 Presets = (function() {
@@ -2775,17 +2896,17 @@ Presets = (function() {
     return this.storage[this.pickedIndex].deactivate();
   };
 
-  Presets.prototype.add = function(choice, construct) {
+  Presets.prototype.add = function(choice, Construct) {
     var addFn;
     this.pickedIndex = this.pickedIndex < 0 ? 0 : this.pickedIndex;
     this.isSet = this.isSet || true;
-    addFn = this.storage[this.storage.push(new construct()) - 1];
+    addFn = this.storage[this.storage.push(new Construct()) - 1];
     return addFn.set.apply(addFn, choice);
   };
 
   Presets.prototype.choose = function(index) {
     if (index < 0 || index > this.storage.length - 1) {
-      throw "invalid index";
+      throw new Error("invalid index");
     }
     this.deactivate();
     this.pickedIndex = index;
@@ -2793,13 +2914,12 @@ Presets = (function() {
   };
 
   return Presets;
-
 })();
 
 Vector = (function() {
   function Vector(x, y) {
-    this.x = x != null ? x : 0;
-    this.y = y != null ? y : 0;
+    this.x = x == null ? 0 : x;
+    this.y = y == null ? 0 : y;
   }
 
   Vector.prototype.copy = function(temp, temp2) {
@@ -2812,20 +2932,20 @@ Vector = (function() {
   Vector.prototype.move = function(other) {
     this.x += other.x;
     this.y += other.y;
-    return this.length = this.a = void 0;
+    this.length = this.a = undefined;
   };
 
   Vector.prototype.equal = function(other) {
     this.x = other.x;
     this.y = other.y;
     this.length = other.length;
-    return this.a = other.a;
+    this.a = other.a;
   };
 
   Vector.prototype.scale = function(s, temp) {
     var k;
     if (abs(s === Infinity)) {
-      throw "infinity alert!";
+      throw new Error("infinity alert!");
     }
     k = new Vector(this.x * s, this.y * s);
     k.length = this.length * abs(s);
@@ -2932,10 +3052,10 @@ Vector = (function() {
   Vector.prototype.rotate = function(axis, angle) {
     var cosA, cx, cy, k, sinA;
     if (axis.constructor.name !== "Vector") {
-      throw axis;
+      throw new Error(axis);
     }
     if (typeof angle !== "number") {
-      throw angle;
+      throw new Error(angle);
     }
     cosA = cos(angle);
     sinA = sin(angle);
@@ -2948,17 +3068,21 @@ Vector = (function() {
   };
 
   Vector.prototype.draw2 = function(bool, bool2, bool3) {
-    var temp, temp2, temp3, temp4;
-    temp2 = bool != null ? {
+    var temp, start, end;
+    start = bool == null ? new CanvasCenter() : {
       x: 0,
       y: 0
-    } : new ctr();
+    };
+    end = {
+      x: this.x + start.x,
+      y: this.y + start.y
+    };
     temp = {
       type: "arc",
       fillStyle: "black",
       radius: 3,
-      x: temp3 = this.x + temp2.x,
-      y: temp4 = this.y + temp2.y
+      x: end.x,
+      y: end.y
     };
     jcan.draw(temp);
     if (bool2 == null) {
@@ -2967,21 +3091,21 @@ Vector = (function() {
     temp = {
       type: "line",
       strokeWidth: bool2 || 0.5,
-      strokeStyle: bool3 != null ? bool3 : "black",
-      x1: temp2.x,
-      y1: temp2.y,
-      x2: temp3,
-      y2: temp4
+      strokeStyle: bool3 == null ? "black" : bool3,
+      x1: start.x,
+      y1: start.y,
+      x2: end.x,
+      y2: end.y
     };
     return jcan.draw(temp);
   };
 
   Vector.prototype.draw = function(bool, bool2, bool3) {
     var end, start;
-    start = bool != null ? {
+    start = bool == null ? new CanvasCenter() : {
       x: 0,
       y: 0
-    } : new ctr();
+    };
     end = {
       x: this.x,
       y: this.y
@@ -2996,7 +3120,7 @@ Vector = (function() {
       return;
     }
     ctxx.beginPath();
-    ctxx.strokeStyle = bool3 != null ? bool3 : "black";
+    ctxx.strokeStyle = bool3 == null ? "black" : bool3;
     ctxx.lineWidth = bool2 || 0.5;
     ctxx.moveTo(start.x, start.y);
     ctxx.lineTo(end.x, end.y);
@@ -3014,7 +3138,8 @@ Vector = (function() {
       return points[0].copy();
     }
     if (len === 2) {
-      return new Vector((points[0].x + points[1].x) / 2, (points[0].y + points[1].y) / 2);
+      return new Vector((points[0].x + points[1].x) / 2,
+       (points[0].y + points[1].y) / 2);
     }
     end = points[len - 1];
     result = new Vector();
@@ -3084,7 +3209,6 @@ Vector = (function() {
   };
 
   return Vector;
-
 })();
 
 Line = (function() {
@@ -3162,7 +3286,8 @@ Line = (function() {
     deltaInitial = this.p1.subtract(other.p1);
     c = deltaInitial.cross(initial) / k;
     d = deltaInitial.cross(otherInitial) / k;
-    if ((0 < (ref1 = c) && ref1 <= 1) && (0 < (ref2 = d) && ref2 <= 1)) {
+    // if both c and d are between 0 and 1
+    if (((c > 0) && c <= 1) && ((d > 0) && (d <= 1))) {
       return this.p1.subtract(initial.scale(-d));
     }
     return false;
@@ -3172,7 +3297,7 @@ Line = (function() {
     var temp;
     temp = {
       type: "line",
-      strokeWidth: width != null ? width : 3,
+      strokeWidth: width == null ? 3 : width,
       strokeStyle: style || "black",
       x1: this.p1.x,
       y1: this.p1.y,
@@ -3185,18 +3310,16 @@ Line = (function() {
   Line.prototype.draw = function(width, style) {
     ctxx.beginPath();
     ctxx.strokeStyle = style || "black";
-    ctxx.lineWidth = width != null ? width : 3;
+    ctxx.lineWidth = width == null ? 3 : width;
     ctxx.moveTo(this.p1.x, this.p1.y);
     ctxx.lineTo(this.p2.x, this.p2.y);
     return ctxx.stroke();
   };
 
   return Line;
-
 })();
 
 Body = (function() {
-
   /*   FORMAT: for body
       shapes: [a,b,c,d,...] - the shapes included in the body
               setLoc: true - setting the location of the shape using an input
@@ -3228,17 +3351,20 @@ Body = (function() {
     for (i1 = j = 0, len1 = ref1.length; j < len1; i1 = ++j) {
       i = ref1[i1];
       if (i1 >= 1) {
-        throw "if you want more shapes, add them using the addShape function!";
+        throw new Error("if you want more shapes," +
+        " add them using the addShape function!");
       }
       this.shapes[i1] = new Shape(i);
       this.shapes[i1].body = this;
     }
     this.setPhysical(input);
-    this.integrator = this.DEFAULT_Integrator;
+    this.integrator = this.DefaultIntegrator;
   }
 
   Body.prototype.setPhysical = function(input) {
-    this.physical.domains = this.physical.domains.concat(["v", "rv", "force", "torque", "sf", "df", "invM", "invI", "position", "bounding", "restitution"]);
+    this.physical.domains = this.physical.domains.concat(["v", "rv", "force",
+     "torque", "sf", "df", "invM", "invI", "position",
+      "bounding", "restitution"]);
     this.physical.force = new Vector();
     this.physical.torque = 0;
     this.physical.rv = 0;
@@ -3251,7 +3377,8 @@ Body = (function() {
     this.physical.restitution = input.restitution || 0;
     this.physical.invM = input.invM || 0;
     this.physical.invI = input.invI || this.physical.invM / 100;
-    this.physical.position = (input.x != null) && (input.y != null) ? new Vector(input.x, input.y) : new Vector();
+    this.physical.position = (input.x != null) && (input.y != null) ?
+     new Vector(input.x, input.y) : new Vector();
     this.determineCenter();
     this.physical.bounding = [new Vector(), new Vector()];
     this.generateBounds();
@@ -3304,7 +3431,7 @@ Body = (function() {
       i = ref1[j];
       totI += 1 / i.determineinvMOI();
     }
-    return this.physical.invI = this.physical.invM * 1 / totI;
+    return this.physical.invI = this.physical.invM / totI;
   };
 
   Body.prototype.get = function(item) {
@@ -3409,39 +3536,34 @@ Body = (function() {
     return this.integrator(ts);
   };
 
-  Body.prototype.DEFAULT_Integrator = function(ts) {
-    var i, j, len1, len2, len3, len4, len5, len6, n, n1, p, q, r, ref1, ref2, ref3, ref4, ref5, ref6, v, w;
+  Body.prototype.DefaultIntegrator = function(ts) {
+    var i, n, n1, p, q, r, v, w;
     this.physical.rv += this.physical.torque;
     this.physical.v.move(this.physical.force);
     this.physical.position.move(this.physical.v.scale(ts));
-    ref1 = this.shapes;
-    for (n1 = j = 0, len1 = ref1.length; j < len1; n1 = ++j) {
-      n = ref1[n1];
+    for (n1 = 0; n1 < this.shapes.length; n1++) {
+      n = this.shapes[n1];
       n.physical.position.move(this.physical.v.scale(ts));
-      ref2 = n.physical.verticies;
-      for (p = 0, len2 = ref2.length; p < len2; p++) {
-        i = ref2[p];
+      for (p = 0; p < n.physical.verticies.length; p++) {
+        i = n.physical.verticies[p];
         i.move(this.physical.v.scale(ts));
       }
-      ref3 = n.physical.points;
-      for (q = 0, len3 = ref3.length; q < len3; q++) {
-        i = ref3[q];
+      for (q = 0; q < n.physical.points.length; q++) {
+        i = n.physical.points[q];
         i.move(this.physical.v.scale(ts));
       }
-      n.physical.position.equal(n.physical.position.rotate(this.physical.position, this.physical.rv * ts));
-      ref4 = n.physical.verticies;
-      for (r = 0, len4 = ref4.length; r < len4; r++) {
-        i = ref4[r];
+      n.physical.position.equal(n.physical.position.rotate(
+        this.physical.position, this.physical.rv * ts));
+      for (r = 0; r < n.physical.verticies.length; r++) {
+        i = n.physical.verticies[r];
         i.equal(i.rotate(this.physical.position, this.physical.rv * ts));
       }
-      ref5 = n.physical.points;
-      for (v = 0, len5 = ref5.length; v < len5; v++) {
-        i = ref5[v];
+      for (v = 0; v < n.physical.points.length; v++) {
+        i = n.physical.points[v];
         i.equal(i.rotate(this.physical.position, this.physical.rv * ts));
       }
-      ref6 = n.physical.norms;
-      for (w = 0, len6 = ref6.length; w < len6; w++) {
-        i = ref6[w];
+      for (w = 0; w < n.physical.norms.length; w++) {
+        i = n.physical.norms[w];
         i.equal(i.rotate(new Vector(), this.physical.rv * ts));
       }
     }
@@ -3452,13 +3574,12 @@ Body = (function() {
   };
 
   Body.prototype.support = function(direction) {
-    var i, index, j, len1, max, maxVec, ref1, support, tempMax;
+    var i, index, j, max, maxVec, support, tempMax;
     max = -Infinity;
     maxVec = null;
     index = null;
-    ref1 = this.shapes;
-    for (j = 0, len1 = ref1.length; j < len1; j++) {
-      i = ref1[j];
+    for (j = 0; j < this.shapes.length; j++) {
+      i = this.shapes[j];
       support = i.support(direction);
       tempMax = direction.dot(support.subtract(this.physical.position));
       if (tempMax > max) {
@@ -3470,17 +3591,14 @@ Body = (function() {
   };
 
   Body.prototype.move = function(obj) {
-    var i, j, len1, ref1, results;
+    var i, j, results;
     if (obj != null) {
       this.physical.position.move(obj);
     }
-    ref1 = this.shapes;
-    results = [];
-    for (j = 0, len1 = ref1.length; j < len1; j++) {
-      i = ref1[j];
-      results.push(i.move(obj));
+    for (j = 0; j < this.shapes.length; j++) {
+      i = this.shapes[j];
+      i.move(obj);
     }
-    return results;
   };
 
   Body.prototype.applyForce = function(force, contact) {
@@ -3496,7 +3614,6 @@ Body = (function() {
   };
 
   return Body;
-
 })();
 
 Shape = (function() {
@@ -3529,11 +3646,13 @@ Shape = (function() {
   }
 
   Shape.prototype.setPhysical = function(input) {
-    this.physical.domains = this.physical.domains.concat(["edges", "norms", "verticies", "points", "position", "bounding", "area"]);
+    this.physical.domains = this.physical.domains.concat(["edges", "norms",
+     "verticies", "points", "position", "bounding", "area"]);
     if (!input) {
       return;
     }
-    this.physical.position = (input.x != null) && (input.y != null) ? new Vector(input.x, input.y) : new Vector();
+    this.physical.position = (input.x != null) && (input.y != null) ?
+     new Vector(input.x, input.y) : new Vector();
     this.physical.points = [];
     if (input.points != null) {
       this.setVerticies(input.points);
@@ -3550,28 +3669,25 @@ Shape = (function() {
   };
 
   Shape.prototype.setVerticies = function(points) {
-    var j, len1, point, results;
+    var j, len1, point;
     if (!this.physical) {
-      throw "no physical";
+      throw new Error("no physical");
     }
     this.physical.verticies = [];
-    results = [];
     for (j = 0, len1 = points.length; j < len1; j++) {
       point = points[j];
-      results.push(this.physical.verticies.push(new Vector(point[0], point[1])));
+      this.physical.verticies.push(new Vector(point[0], point[1]));
     }
-    return results;
   };
 
   Shape.prototype.setEdges = function() {
-    var edge, i, i1, j, len1, n, n1, ref1, results;
+    var edge, i, i1, j, len1, n, n1, ref1;
     if (!this.physical) {
-      throw "no physical";
+      throw new Error("no physical");
     }
     this.physical.edges = [];
     this.physical.norms = [];
     ref1 = this.physical.verticies;
-    results = [];
     for (i1 = j = 0, len1 = ref1.length; j < len1; i1 = ++j) {
       i = ref1[i1];
       n1 = (i1 + 1) < this.physical.verticies.length ? i1 + 1 : 0;
@@ -3581,23 +3697,36 @@ Shape = (function() {
       i.edge1 = i.edge1 || edge;
       n.edge2 = n.edge2 || edge;
       edge.getLength();
-      results.push(this.physical.norms.push(edge.normal().vector().unit()));
+      this.physical.norms.push(edge.normal().vector().unit());
     }
-    return results;
   };
 
   Shape.prototype.setAppearance = function(input) {
-    this.appearance.domains = this.appearance.domains.concat(["fill", "strokeWidth", "strokeStyle"]);
+    this.appearance.domains = this.appearance.domains.concat(
+      ["fill", "strokeWidth", "strokeStyle"]);
     if (!input) {
       return;
     }
-    this.appearance.fill = input.fill != null ? input.fill : generateRandomColor();
-    this.appearance.strokeWidth = input.stroke != null ? input.stroke[0] : null;
-    return this.appearance.strokeStyle = input.stroke != null ? input.stroke[1] : null;
+    // this.appearance.fill = input.fill != null ? input.fill : generateRandomColor();
+    this.appearance.fill = input.fill == null ?
+     generateRandomColor() : input.fill;
+    this.appearance.strokeWidth = input.stroke == null ?
+     null : input.stroke[0];
+    // return this.appearance.strokeStyle = input.stroke != null ?
+    //  input.stroke[1] : null;
+    this.appearance.strokeStyle = input.stroke == null ?
+     null : input.stroke[1];
   };
 
   Shape.prototype.get = function(item) {
-    var component, domain, j, len1, len2, p, ref1, ref2;
+    var component;
+    var domain;
+    var j;
+    var len1;
+    var len2;
+    var p;
+    var ref1;
+    var ref2;
     ref1 = this.components;
     for (j = 0, len1 = ref1.length; j < len1; j++) {
       component = ref1[j];
@@ -3631,7 +3760,7 @@ Shape = (function() {
   Shape.prototype.generateBounds = function() {
     var i, j, len1, maxX, maxY, minX, minY, ref1, temp;
     if (!this.physical.verticies) {
-      throw "no verticies";
+      throw new Error("no verticies");
     }
     maxX = -Infinity;
     maxY = -Infinity;
@@ -3660,7 +3789,8 @@ Shape = (function() {
   };
 
   Shape.prototype.determineCenter = function() {
-    return this.physical.position = this.physical.position.centroid(this.physical.verticies);
+    return this.physical.position =
+    this.physical.position.centroid(this.physical.verticies);
   };
 
   Shape.prototype.determineinvMOI = function() {
@@ -3674,7 +3804,8 @@ Shape = (function() {
   };
 
   Shape.prototype.calcArea = function() {
-    return this.physical.area = abs(this.physical.position.sArea(this.physical.verticies));
+    return this.physical.area =
+    abs(this.physical.position.sArea(this.physical.verticies));
   };
 
   Shape.prototype.inside = function(point) {
@@ -3755,12 +3886,10 @@ Shape = (function() {
   };
 
   return Shape;
-
 })();
 
 Rectangle = (function(superClass) {
   extend(Rectangle, superClass);
-
 
   /*   FORMAT: for Rectangle
               width: 323 - setting the width of the rectangle
@@ -3788,13 +3917,13 @@ Rectangle = (function(superClass) {
     var dimX, dimY, first, i, j, len1, points, pos, ref1, temp;
     temp = Object.create(input);
     if (!((temp.x != null) && (temp.y != null))) {
-      throw "no position coords";
+      throw new Error("no position coords");
     }
     if (!(temp.width && temp.height)) {
-      throw "no width and height";
+      throw new Error("no width and height");
     }
     if (temp.invM == null) {
-      throw "no mass";
+      throw new Error("no mass");
     }
     temp.invI = (12 * temp.invM) / (sqr(temp.height) + sqr(temp.width));
     temp.shapes = [];
@@ -3807,7 +3936,12 @@ Rectangle = (function(superClass) {
     pos = new Vector(temp.x, temp.y);
     dimX = temp.width / 2;
     dimY = temp.height / 2;
-    points = [[pos.x + dimX, pos.y + dimY], [pos.x + dimX, pos.y - dimY], [pos.x - dimX, pos.y - dimY], [pos.x - dimX, pos.y + dimY]];
+    points = [
+      [pos.x + dimX, pos.y + dimY],
+      [pos.x + dimX, pos.y - dimY],
+      [pos.x - dimX, pos.y - dimY],
+      [pos.x - dimX, pos.y + dimY]
+    ];
     first.points = points;
     Rectangle.__super__.constructor.call(this, temp);
     this.physical.invI = this.physical.invM * this.shapes[0].determineinvMOI();
@@ -3820,12 +3954,10 @@ Rectangle = (function(superClass) {
   }
 
   return Rectangle;
-
 })(Body);
 
 Circle = (function(superClass) {
   extend(Circle, superClass);
-
 
   /*   FORMAT: for Circle
               radus: 323 - setting the radius of the circle
@@ -3849,16 +3981,16 @@ Circle = (function(superClass) {
    */
 
   function Circle(input) {
-    var ctre, first, i, j, len1, points, ref1, temp;
+    var first, i, j, len1, points, ref1, temp;
     temp = Object.create(input);
     if (!((temp.x != null) && (temp.y != null))) {
-      throw "no position coords";
+      throw new Error("no position coords");
     }
     if (!temp.radius) {
-      throw "no radius";
+      throw new Error("no radius");
     }
     if (temp.invM == null) {
-      throw "no mass";
+      throw new Error("no mass");
     }
     temp.invI = (2 * temp.invM) / (sqr(temp.radius));
     temp.shapes = [];
@@ -3869,7 +4001,9 @@ Circle = (function(superClass) {
       y: temp.y,
       radius: temp.radius
     };
-    points = [[first.x, first.y + temp.radius]];
+    points = [
+      [first.x, first.y + temp.radius]
+    ];
     first.points = points;
     Circle.__super__.constructor.call(this, temp);
     ref1 = this.shapes;
@@ -3884,7 +4018,6 @@ Circle = (function(superClass) {
     this.shapes[0].edges = [];
     this.shapes[0].physical.domains.push("radius");
     this.shapes[0].physical.radius = temp.radius;
-    ctre = this.physical.position;
     this.shapes[0].determineinvMOI = function() {
       return 2 / (sqr(temp.radius));
     };
@@ -3893,27 +4026,35 @@ Circle = (function(superClass) {
       ctx.fillStyle = this.appearance.fill;
       ctx.strokeStyle = this.appearance.strokeStyle;
       ctx.lineWidth = this.appearance.strokeWidth;
-      ctx.arc(this.physical.position.x, this.physical.position.y, this.physical.radius, 0, 2 * pi);
+      ctx.arc(this.physical.position.x,
+        this.physical.position.y,
+        this.physical.radius,
+        0,
+        2 * pi);
       ctx.fill();
       if (this.appearance.strokeWidth) {
         ctx.stroke();
       }
-      return new Line(this.physical.position, this.physical.verticies[0]).draw(1, "grey");
+      return new Line(this.physical.position, this.physical.verticies[0])
+        .draw(1, "grey");
     };
     this.shapes[0].generateBounds = function() {
-      this.physical.bounding[0].x = this.physical.position.x + this.physical.radius + 10;
-      this.physical.bounding[0].y = this.physical.position.y + this.physical.radius + 10;
-      this.physical.bounding[1].x = this.physical.position.x - this.physical.radius - 10;
-      return this.physical.bounding[1].y = this.physical.position.y - this.physical.radius - 10;
+      var physical = this.physical;
+      physical.bounding[0].x = physical.position.x + physical.radius + 10;
+      physical.bounding[0].y = physical.position.y + physical.radius + 10;
+      physical.bounding[1].x = physical.position.x - physical.radius - 10;
+      physical.bounding[1].y = physical.position.y - physical.radius - 10;
     };
     this.shapes[0].support = function(direction) {
       if (!direction.length) {
         direction.getLength();
       }
-      return direction.unit().scale(this.physical.radius).add(this.physical.position);
+      return direction.unit().scale(this.physical.radius)
+      .add(this.physical.position);
     };
     this.shapes[0].inside = function(point) {
-      return (point.subtract(this.physical.position).getLength()) < this.physical.radius;
+      return (point.subtract(this.physical.position).getLength()) <
+       this.physical.radius;
     };
     this.shapes[0].calcArea = function() {
       return this.physical.area = pi * sqr(this.physical.radius);
@@ -3927,7 +4068,6 @@ Circle = (function(superClass) {
   }
 
   return Circle;
-
 })(Body);
 
 Demo = (function() {
@@ -3937,19 +4077,19 @@ Demo = (function() {
     this.context = context;
     this.window = window1;
     if (!this.engine) {
-      throw "Error: no engine";
+      throw new Error("Error: no engine");
     }
     if (!this.selector) {
-      throw "Error: no canvas";
+      throw new Error("Error: no canvas");
     }
     if (!this.context) {
-      throw "Error: no context";
+      throw new Error("Error: no context");
     }
     if (!this.window) {
-      throw "Error: no window";
+      throw new Error("Error: no window");
     }
     if (!$) {
-      throw "Error: no jquery";
+      throw new Error("Error: no jquery");
     }
     this.listeners = {};
     this.buttons = {};
@@ -3965,12 +4105,12 @@ Demo = (function() {
   };
 
   Demo.prototype.setBehaviours = function() {
-    var cnc, i, j, len1, mouse, ref1;
-    ref1 = ["Drag", "Gravity", "PlayPause", "Refresh", "String", "AddShape", "Presets"];
-    for (j = 0, len1 = ref1.length; j < len1; j++) {
-      i = ref1[j];
-      if (!eval(i)) {
-        throw "Error: missing " + i;
+    var cnc, i, j, len1, mouse, behaviours;
+    behaviours = ["Drag", "Gravity", "PlayPause", "Refresh", "Cord", "AddShape",
+     "Presets"];
+    for (j = 0; j < behaviours.length; j++) {
+      if (!eval(behaviours[j])) {
+        throw new Error("Error: missing " + behaviours[j]);
       }
     }
     cnc = new CanvasControl(this.selector, this.context, this.window, "Jquery");
@@ -3989,7 +4129,7 @@ Demo = (function() {
     this.behaviours.refresh = new Refresh();
     this.behaviours.refresh.set(true);
     this.behaviours.refresh.activate(this.engine);
-    this.behaviours.string = new String();
+    this.behaviours.string = new Cord();
     this.behaviours.string.set({
       all: true,
       massOnly: true,
@@ -3999,7 +4139,8 @@ Demo = (function() {
   };
 
   Demo.prototype.setPresets = function() {
-    var addingShape, barrier, circ1_, circ2_, pr1, pr2, pr3, pr4, pr5, pr6, rect1_, rect2_, rect3_, setup;
+    var addingShape, barrier, circ1_, circ2_, pr1, pr2, pr3, pr4, pr5, pr6,
+      rect1_, rect2_, rect3_, setup;
     rect1_ = {
       type: "Rectangle",
       setLoc: true,
@@ -4182,7 +4323,7 @@ Demo = (function() {
         engine: engine
       });
     };
-    return this.listeners.presets = function(event) {
+    this.listeners.presets = function(event) {
       var behaviour, button, engine, index;
       engine = event.data.engine;
       button = event.data.button;
@@ -4215,24 +4356,31 @@ Demo = (function() {
           removingClass.bind(null, i.selector[1], "applied")();
           results.push(i.activated = false);
         } else {
-          results.push(void 0);
+          results.push(undefined);
         }
       }
       return results;
     }, this);
     this.buttons.play = new Toggle("playPause", "#play");
-    this.buttons.play.setListener("click", null, applyingClass.bind(null, this.buttons.play.selector[0], "applied"), removingClass.bind(null, this.buttons.play.selector[1], "applied"));
+    this.buttons.play.setListener("click", null,
+     applyingClass.bind(null, this.buttons.play.selector[0], "applied"),
+      removingClass.bind(null, this.buttons.play.selector[1], "applied"));
     this.buttons.gravity = new Toggle("gravity", "#gravity");
-    this.buttons.gravity.setListener("click", null, applyingClass.bind(null, this.buttons.gravity.selector[0], "applied"), removingClass.bind(null, this.buttons.gravity.selector[1], "applied"));
+    this.buttons.gravity.setListener("click", null,
+     applyingClass.bind(null, this.buttons.gravity.selector[0], "applied"),
+      removingClass.bind(null, this.buttons.gravity.selector[1], "applied"));
     this.buttons.string = new Toggle("string", "#string");
-    this.buttons.string.setListener("click", null, applyingClass.bind(null, this.buttons.string.selector[0], "applied"), removingClass.bind(null, this.buttons.string.selector[1], "applied"));
+    this.buttons.string.setListener("click", null,
+     applyingClass.bind(null, this.buttons.string.selector[0], "applied"),
+      removingClass.bind(null, this.buttons.string.selector[1], "applied"));
     this.buttons.presets = new Radio("presets", ".presets");
     ref1 = this.buttons.presets.options;
     for (j = 0, len1 = ref1.length; j < len1; j++) {
       i = ref1[j];
-      null;
-      i.setListener("click", null, applyingClass.bind(null, i.selector[0], "applied"));
-      i.setListener("internal", null, null, removingClass.bind(null, i.selector[1], "applied"));
+      i.setListener("click", null,
+       applyingClass.bind(null, i.selector[0], "applied"));
+      i.setListener("internal", null, null,
+       removingClass.bind(null, i.selector[1], "applied"));
     }
     this.buttons.hideOptions = new Toggle("hideOptions", "#options1");
     hideStuff = function(selectors, classToApply, fn, typeOfHidden, e) {
@@ -4245,8 +4393,14 @@ Demo = (function() {
       }
       return results;
     };
-    this.buttons.hideOptions.setListener("click", null, hideStuff.bind(null, $(".options1"), "applied", applyingClass, "sideHidden"), hideStuff.bind(null, $(".options1"), "applied", removingClass, "sideHidden"));
-    this.buttons.hideOptions.setListener("click", null, removingClass.bind(null, this.buttons.hideOptions.selector[0], "optioned"), applyingClass.bind(null, this.buttons.hideOptions.selector[1], "optioned"));
+    this.buttons.hideOptions.setListener("click", null,
+      hideStuff.bind(null, $(".options1"), "applied", applyingClass,
+       "sideHidden"), hideStuff.bind(null, $(".options1"), "applied",
+        removingClass, "sideHidden"));
+    this.buttons.hideOptions.setListener("click", null,
+      removingClass.bind(null, this.buttons.hideOptions.selector[0],
+         "optioned"), applyingClass.bind(null,
+            this.buttons.hideOptions.selector[1], "optioned"));
 
     /*
     @buttons.presetView1 = new Toggle("presetView1","#presetHead")
@@ -4268,8 +4422,12 @@ Demo = (function() {
       }
       return results;
     };
-    this.buttons.presetView2.setListener("mouseenter", null, hideStuff3.bind(null, $(".presets"), "applied", removingClass, "topHidden"));
-    return this.buttons.presetView2.assignDeactivation("mouseleave", null, hideStuff3.bind(null, $(".presets"), "applied", applyingClass, "topHidden"));
+    this.buttons.presetView2.setListener("mouseenter", null,
+     hideStuff3.bind(null, $(".presets"),
+      "applied", removingClass, "topHidden"));
+    return this.buttons.presetView2.assignDeactivation("mouseleave", null,
+     hideStuff3.bind(null, $(".presets"), "applied", applyingClass,
+      "topHidden"));
   };
 
   Demo.prototype.setButtons = function() {
@@ -4304,10 +4462,9 @@ Demo = (function() {
   };
 
   return Demo;
-
 })();
 
-window.world = new Engine();
+var world = window.world = new Engine();
 
 demo = new Demo(world, jcan, ctxx, win);
 
@@ -4319,7 +4476,7 @@ new AABB().activate(world);
 
 new SATColl().activate(world);
 
-new impulseResolution().activate(world);
+new ImpulseResolution().activate(world);
 
 test3 = new Rectangle({
   invM: 1 / 1.5,

@@ -1,7 +1,7 @@
 ###
     NOTICE:
         i renounce this version to be the latest version of the tumble physics engine.
-    
+
     THINGS TO DO:
         1. Make the FPS interactive
         2. Fix the html and css to be modular simple, less finicky and doesnt cause as much hassle
@@ -38,7 +38,7 @@
 
         Sun Oct 26, 2014: version 187, finished altering the GJK algorithm to accomodate circles. Now the behaviour can detect collisions between two circles, two rectangles and a circle and a rectangle. Future plans involve optimising the SAT algorithm...
 
-        Fri Oct 24, 2014: version 183, touch events were a faliure due to the poor touch events in browsers. I started working on a GJK algorithm for polygon detection (and it works). I also implemented an SAT behaviour as well as a impulse resolution behaviour. Future plans involve making the circle collision detection for SAT and GJK as well as resolution...        
+        Fri Oct 24, 2014: version 183, touch events were a faliure due to the poor touch events in browsers. I started working on a GJK algorithm for polygon detection (and it works). I also implemented an SAT behaviour as well as a impulse resolution behaviour. Future plans involve making the circle collision detection for SAT and GJK as well as resolution...
 
         Wed Oct 15, 2014: version 148, Just fixed the refreshing of the buttons. Now I will officially start implementing touch events...
 
@@ -74,12 +74,12 @@
 
         Sun Sep 14,2014: version 42, in class Behaviour & Constraints, finished writing Behaviour and behaviours classes (e.g: Gravity,Drag) however code has been written on implementation and troubleshooting. New code implements new techniques of modular code and some theoretical ideas. Increased troubleshooting is expected. Implementation requires the overhall and organisation of the engine class, hence future plans involve changing the class's code...
 
-        Wed Sep 10,2014: version 35, in class physics, function calculateImpulse4: fixed the friction mechanism as much as possible, future plans involve optimising performance... 
+        Wed Sep 10,2014: version 35, in class physics, function calculateImpulse4: fixed the friction mechanism as much as possible, future plans involve optimising performance...
 
-        Mon Sep 8,2014: version 32, in class engine, function checkDrag: was able to fix the dragging in hopes to do some experimentation with friction. possible game idea is also found... 
+        Mon Sep 8,2014: version 32, in class engine, function checkDrag: was able to fix the dragging in hopes to do some experimentation with friction. possible game idea is also found...
 
-        Sun Sep 7,2014: version 30, in class physics, function calculateImpulse4: was able to create a new function that is stable. Friction part of the function is yet to be analyzed... 
-        
+        Sun Sep 7,2014: version 30, in class physics, function calculateImpulse4: was able to create a new function that is stable. Friction part of the function is yet to be analyzed...
+
         Mon Sep 6,2014: version 29, in class physics, function impulseResolution: experimenting on to fix a problem where the object acts differently if it is the first shape or second in the queue...
 
         Mon Sep 1,2014: version 22, overhauled the interface across all fronts. Html,css and javascript have changed
@@ -92,7 +92,7 @@
 
         Thurs Aug 21, 2014 : version 6, in class physics, function recFindNorm4 and SATDifferent, started developing the function...
 
-        Thurs Aug 21, 2014 : in class rectangle, function makeEdges, 6th line, changed code to become simpler and more efficient... 
+        Thurs Aug 21, 2014 : in class rectangle, function makeEdges, 6th line, changed code to become simpler and more efficient...
         updated code:"i2 = corner[(i1+1)%@shape.verticies.length]"
 ###
 
@@ -153,7 +153,7 @@ info2 = $("#info2")
 info3 = $("#info3")
 info4 = $("#info4")
 
-##### console selectors ... 
+##### console selectors ...
 jcan = $("canvas")
 can = document.getElementById("canvas1")
 ctxx = can.getContext("2d")
@@ -170,8 +170,8 @@ cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelRequest
 ctr = ->
     @x = jcan.width() / 2
     @y = jcan.height() / 2
-    
-    
+
+
 customChangePrototype = (obj) ->
     for prop of obj
       this[prop] = obj[prop]  if obj.hasOwnProperty(prop)
@@ -185,11 +185,11 @@ plotting = (number)->
     plotItinerary.push [plotItinerary.length,number]
     #console.log plotItinerary.length
     if plotItinerary.length > 100
-        plotItinerary.shift() 
+        plotItinerary.shift()
         for i in plotItinerary
             i[0]--
     $.plot($("#placeholder"), [plotItinerary],{yaxis:{max:1,min:-1}})
-    
+
     #[[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]]
 
 makeid = ->
@@ -199,7 +199,7 @@ makeid = ->
     text += possible.charAt floor Math.random() * possible.length
   text
 
-    
+
 ######### credits to Zato for the following function #########
 Array::compare = (array) ->
 # if the other array is a falsy value, return
@@ -216,14 +216,14 @@ Array::compare = (array) ->
     # Warning - two different object instances will never be equal: {x:20} != {x:20}
         else return false  unless this[i] is array[i]
         i++
-    true    
+    true
 Array::copy = ()->
     k = []
     for i in @
         k.push i
     return k
-    
-generateRandomColor = (transparency=getRandomInt(50,100)/100)-> 
+
+generateRandomColor = (transparency=getRandomInt(50,100)/100)->
     color = 'rgba('
     for [1..3]
         color += getRandomInt(50,255)
@@ -242,24 +242,24 @@ generateRandomColor = (transparency=getRandomInt(50,100)/100)->
 class Button
     constructor:(@name,selector,selector2)->
         throw "Error: Button doesn't have a proper name" if not @name
-        # the selector variable is a Jquery selector, which allows 
+        # the selector variable is a Jquery selector, which allows
         # the use of JQuery listeners and events in the button class
         @selector = []
         # the type variable is mainly used for error checking
         @type = null
         # gives the option to set the selector for faster initialization
         @setSelector selector,selector2 if selector
-            
+
         # this is an array of strings that represents the listener JQuery events
         @core = {
                  activates:{}
                  deactivates:{}
                  }
-        
+
         @activated = false
         #returning itself allows the function to be chainable
         return @
-        
+
     #### fn getType: returns the type of the object
     #    example:
     #    SampleButton new Toggle()
@@ -268,7 +268,7 @@ class Button
     ####
     getType:->
         return @type
-    
+
     # private
     #### fn makeSelector: creates a (JQuery) selector
     #    val: a css selector in a string format
@@ -278,7 +278,7 @@ class Button
         throw selectionError if not val
         throw selectionError if typeof(val) isnt "string"
         return $(val)
-    
+
     #### fn setSelector: sets the selector property to a jQuery selector, an extension of makeSelector
     #    val: a css selector in a string format
     ####
@@ -288,7 +288,7 @@ class Button
         @selector.push @makeSelector(val2) if not @selector[1]
         #returning itself allows the function to be chainable
         return @
-    
+
     findListener:(group,listener)->
         if arguments.length is 1
             return k if (k=@findListener(@core.activates,listener))>0
@@ -296,7 +296,7 @@ class Button
         for i,index of group
             return index if i is listener
         return -1
-    
+
     #### fn setListener: sets a jQuery event that triggers a certain function
     #    listener: a string represents the JQuery event name (e.g: "click","hover" etc...)
     #    data: the data to be carried into the event handler
@@ -311,14 +311,14 @@ class Button
         invalidationfn = invalidationError + " function assignment"
         throw invalidationfn if (activation is null and deactivation is null )
         throw invalidationfn if (typeof(activation) isnt "function" and typeof(deactivation) isnt "function" )
-        # application...        
-        
+        # application...
+
         @assignActivation(listener,data,activation) if activation
         @assignDeactivation(listener,data,deactivation) if deactivation
-            
+
         #returning itself allows the function to be chainable
         return @
-    
+
     #### fn removeListener: removes the jQuery event that triggers the function
     ####
     removeListener:(listener)->
@@ -330,7 +330,7 @@ class Button
             delete @core.deactivates[listener]
         #returning itself allows the function to be chainable
         return @
-    
+
     assignActivation:(listener,data,original)->
         # make a copy of the function in the arguments
         #, so as to not tamper with the original
@@ -343,7 +343,7 @@ class Button
         @core.activates[listener].push fn if fn
         #returning itself allows the function to be chainable
         return @
-         
+
     assignDeactivation:(listener,data,original)->
         # make a copy of the function in the arguments
         #, so as to not tamper with the original
@@ -356,12 +356,12 @@ class Button
         @core.deactivates[listener].push fn if fn
         #returning itself allows the function to be chainable
         return @
-    
+
     activation:(listener,e)->
         return @activate(listener,e)
     deactivation:(listener,e)->
         return @deactivate(listener,e)
-    
+
     activate:(listener,e)->
         return if @activated
         if not listener
@@ -377,7 +377,7 @@ class Button
         @activated = true
         #returning itself allows the function to be chainable
         return @
-            
+
     deactivate:(listener,e)->
         return unless @activated
         if not listener
@@ -402,16 +402,16 @@ class Action extends Button
         @type = "action"
         #returning itself allows the function to be chainable
         return @
-        
+
     fire:(listener,e)->
         @activation listener,e
         #returning itself allows the function to be chainable
         return @
-    
+
     activation:(listener,e)->
         @activate(listener,e)
         return @deactivation(null,e)
-    
+
 #### class Toggle: a type of button when clicked once, activates, and when clicked again, deactivates
 ####
 class Toggle extends Button
@@ -420,33 +420,33 @@ class Toggle extends Button
         @type = "toggle"
         #returning itself allows the function to be chainable
         return @
-    
+
     setListener:(listener,data,activation,deactivation)->
         deactivation = deactivation or ()->return null;
         activation = activation or ()->return null;
         super(listener,data,activation,deactivation)
-    
+
     toggle:(listener,e)->
         @activation listener,e
         #returning itself allows the function to be chainable
         return @
-    
+
     activation:(listener,e)->
-        return if @activated then @deactivate(listener,e) else @activate(listener,e) 
-        
+        return if @activated then @deactivate(listener,e) else @activate(listener,e)
+
     deactivation:(listener,e)->
         #returning itself allows the function to be chainable
         return @
-    
+
     assignDeactivation:(listener,data,fn)->
         super
         @assignActivation(listener,data,null)
-    
+
     assignActivation:(listener,data,fn)->
         super
         if @findListener(@core.deactivates,listener) is -1
             @core.deactivates[listener] = []
- 
+
 #### class RadioOption: an instance of a radio option button, mean to be used within an instance of a radio object
 ####
 class RadioOption extends Button
@@ -455,21 +455,21 @@ class RadioOption extends Button
         @type = "radio option"
         #returning itself allows the function to be chainable
         return @
-    
+
     #### fn select: selects the radio option
     #    warning: if the object is one of the options of a radio object,
     #    applying this function externally may break its functionality!
     ####
     select:(listener,e)->
         @activate(listener,e)
-    
+
     #### fn deselect: deselects the radio option
     #    warning: if the object is one of the options of a radio object,
     #    applying this function externally may break its functionality!
     ####
     deselect:(listener,e)->
         return @deactivate(listener,e)
-    
+
 #### class Radio: is an interface type that has sub options to click at. Once a single option has been activated,
 #    the remaining options are deactivated as a result, making sure only one option is selected at all times.
 ####
@@ -480,7 +480,7 @@ class Radio extends Button
         @options = []
         super
         @type = "radio"
-        
+
     setSelector:(val)->
         selector = @makeSelector(val)
         for i in [0...selector.length]
@@ -491,10 +491,11 @@ class Radio extends Button
             @add(new RadioOption(name,(prefix+name)))
         #returning itself allows the function to be chainable
         return @
-    
+
     setListener:(listener,data,activation,deactivation)->
+      # not implemented
         return
-        
+
     #### fn add: adds an option to the roster of possible options to choos in radio buttons
     #    option: a RadioOption object (might be changed)
     ####
@@ -517,58 +518,58 @@ class Radio extends Button
                 option.selector[0].on listener+".adioInternal",data,(e)=>
                     @selectOption option
             originalFn.apply option,arguments
-        
+
         originalFn2 = option.removeListener
         option.removeListener = (listener)=>
             if option.findListener(option.core.deactivates,listener) isnt -1
                 option.selector[0].off listener+".adioInternal"
             originalFn2.apply option,arguments
-        
+
     remove:(option)->
         # checks that we dont remove a button that doesn't exists
-        foundOption = findOption option
+        foundOption = @findOption option
         missingError = "Error: option is missing or not found"
         throw missingError unless foundOption
         index = foundOption.index
         throw missingError if index > @options.length-1
         option = @options[index]
-        
+
         # removes the button
         @options.splice index,1
         return true
-    
+
     #### fn selectOption: selects one of the options in the radio buttons roster
     ####
     selectOption:(option)->
         # checks that we dont select a button that doesn't exist
         foundOption = @findOption option
         throw "Error: option is missing or not found" unless foundOption
-        
+
         for i in @options
             i.deselect()
         # we assume that the option will be selected automatically
         # (see add function for more details)
-        
+
         #returning itself allows the function to be chainable
         return @
-    
+
     #### fn getOption: returns the options option object from a specified index
     ####
     getOption:(index)->
         throw "Error: index is not valid" if not index? or index<0 or index > @options.length
         return k if k = @options[index]
         return false
-    
+
     #### fn getLength: returns the number of options present
     ####
     getLength:()->
         return @options.length
-    
+
     clicked:()->
         for i,index in @options
             return index if i.activated
         return false
-    
+
     #### fn findOption: finds an option from the roster of radio buttons
     ####
     findOption:(obj)->
@@ -581,7 +582,7 @@ class Radio extends Button
         for i in @options
             return i if i[tag] is obj[tag]
         return false
-    
+
 
 
 #################### QUEUE ####################
@@ -648,9 +649,9 @@ class Engine
         @pageY=0
         @fps()
         @update()
-        
+
     #### PUBSUB
-    
+
     topics = {}
     emit:(topic,info)->
         if not topics[topic] or not topics[topic].queue.length
@@ -664,8 +665,8 @@ class Engine
                 tempArr.push i
         if tempArr
             for i in tempArr
-                @off({topic:topic,fn:i.fn}) 
-                
+                @off({topic:topic,fn:i.fn})
+
     on:(topic,fn,scope,name)->
         if not topics[topic]
             topics[topic] = {queue:[]}
@@ -673,19 +674,19 @@ class Engine
         throw "duplicates" if @find(topic,fn.id)
         index = topics[topic].queue.push({fn:fn,scope:(scope or null),name:name})-1
         return
-    
+
     findByTopic:(topic,id)->
         for obj,index in topics[topic].queue
             return {index:index,obj:obj} if obj.fn.id is id
         return false
-    
+
     find:(topic,id)->
         if topic is true
             for i of topics
                 return k if k=@findByTopic(i,id)
             return false
         return @findByTopic(topic,id)
-    
+
     off:(obj)->
         #### obj = {
         #             topic*: the topic
@@ -697,16 +698,16 @@ class Engine
         id_ = if obj.fn then obj.fn.id else obj.id
         return result unless result = @find obj.topic,id_
         return topics[obj.topic].queue.splice result.index,1
-    
+
     one:(topic,fn,scope,name)->
         fn.one = true
         @on.apply @,arguments
     #### PUBSUB
-    
+
     setupInput:(type)->
         @input = {
                   type: type
-                  }    
+                  }
     resetInput:()->
         @input = null
     fps:->
@@ -715,7 +716,7 @@ class Engine
         @accumulator += @thisLoop - @lastLoop
         @elapsedTime = @thisLoop-@lastLoop
         @lastLoop = @thisLoop
-        @fpsNum = 1000/@accumulator#@elapsedTime 
+        @fpsNum = 1000/@accumulator#@elapsedTime
         $("#fps").html(ceil @fpsNum)
     implement:(item)->
         @shapes.push item
@@ -740,7 +741,7 @@ class Engine
             if (product = vel.dot(base = new Vector(0,-1))) > 0
                 vel.move base.scale(-product*constant)
                 #shape.move new Vector(0,1).scale 0.2
-    animate:->   
+    animate:->
         @emit("animate",{timestep:@dt,cursor:new Vector(@pageX,@pageY),engine:@})
         for [0...@ITERATIONS]
             null
@@ -755,7 +756,7 @@ class Engine
         for i in @shapes
             i.draw(ctxx)
     update:()->
-        that = if that? then that else @ 
+        that = if that? then that else @
         that.fps()
         @draw()
         if @accumulator > @dt*1.2
@@ -763,7 +764,7 @@ class Engine
         while @accumulator > @dt
             @emit("update",{timestep:@dt,cursor:new Vector(@pageX,@pageY),engine:@})
             @accumulator -= @dt
-        setTimeout -> 
+        setTimeout ->
             requestAnimationFrame(() ->
                 that.update()
             ) if that.request.frame is true
@@ -793,14 +794,14 @@ class Behaviour
         @reset(true,{engine:@engine})
         @engine.off {topic:@trigger,fn:@[@action]}
         return @active = false
-    
+
     isActivated:()-> return @active
     set:(mode)->
-        #checks if the functions have parameters 
+        #checks if the functions have parameters
         throw "Error: Undefined Mode or required parameter" if not mode
         #asserts that the behaviour has been properly set
         @isSet = true unless @isSet
-            
+
     apply:(event,info)->
         engine = info.engine
         throw "not set" unless @isSet
@@ -808,25 +809,25 @@ class Behaviour
             engine.on(key,value[0],value[1],key)
          for key,value of @resets
             engine.one(key,value[0],value[1],key)
-    
+
     #### reset: restores this behaviour instance to its initial state.
     ####
-    reset:(event,info)->  
+    reset:(event,info)->
         engine = info.engine
         for key,value of @updates
             engine.off {topic:key,fn:value[0]}
         for key,value of @resets
             continue if key is event
             engine.off {topic:key,fn:value[0]}
-            
+
     #### getType: returns the type of shape provided
-    ####        
+    ####
     getType:(shape)->
         name = shape.type
         throw "name not available" if not name or
             (name isnt "Rectangle" and name isnt "Circle" and name isnt "Shape")
         return shape.type
-    
+
 #### class Collision: a template for other collision detectors/solvers
 ####
 
@@ -880,7 +881,7 @@ class AABB extends Collision
                ,"checkColl: Circle - Rectangle"
                ,"checkColl: Rectangle - Rectangle"
                ,"checkColl: Circle - Circle"])
-        
+
     update:(event,data)->
         a = data.A
         b = data.B
@@ -893,8 +894,8 @@ class AABB extends Collision
                                   ,A:i#a
                                   ,B:n#b
                                   ,engine:engine
-                                  } 
-        
+                                  }
+
     inside:(shape1,shape2)->
         b1 = shape1.get "bounding"
         b2 = shape2.get "bounding"
@@ -906,7 +907,7 @@ class AABB extends Collision
 #### class GJK: Uses the GJK algorithm to find the collision between two polygons
 ####
 
-class GJK extends Collision 
+class GJK extends Collision
     ###
         "AABB: Rectangle - Circle"
         "AABB: Circle - Rectangle"
@@ -917,7 +918,7 @@ class GJK extends Collision
         super([
                 "AABB: Shape - Shape"
                ])
-        
+
     simplex:(shape1,shape2)->
         simplexPoints = []
         safeguard = 0
@@ -949,10 +950,10 @@ class GJK extends Collision
             if @containsOrigin simplexPoints,direction
                 # if it is in the simplex, return true
                 return separation(simplexPoints,supportFn)
-            # else we dont know if the origin is 
+            # else we dont know if the origin is
             # in the simplex, so change directions and repeat the loop...
         return false
-    
+
     containsOrigin:(points,direction)->
         if points.length is 3
             a = points[2]
@@ -977,7 +978,7 @@ class GJK extends Collision
             result = tripleCross ab,ao,ab
             direction.equal result
             return false
-        
+
     separation=(points,supportFn)->
         safeguard = 0
         first = {p1 : null,p2 : null,normal : null,length : null,ratio: null}
@@ -1008,7 +1009,7 @@ class GJK extends Collision
             ranking(new edgePoints(p1,newPoint,points),rankingQueue)
             ranking(new edgePoints(newPoint,p2,points),rankingQueue)
         return false
-    
+
     ranking = (edgePoint,rankings)->
         item = edgePoint
         for rank,index in rankings
@@ -1021,7 +1022,7 @@ class GJK extends Collision
                 item = temp
                 continue
         return rankings
-    
+
     edgePoints = (@p1,@p2,@simplex)->
         a = @p1
         b = @p2
@@ -1037,23 +1038,23 @@ class GJK extends Collision
             @normal = a
         if @ratio > 1
             @normal = b
-        
+
         @length = @normal.dot(@normal)
-        
+
         @
-        
+
     tripleCross=(a,b,c)->
         return b.scale(c.dot(a)).subtract(a.scale(c.dot(b)))
-    
+
     simplexPoint = (k1,k2)->
         vector = k1.subtract k2
         vector.p1 = k1
         vector.p2 = k2
         return vector
-                     
+
     doSupport:(a,b,dir)->
         return simplexPoint(a.support(dir),b.support(dir.scale(-1)))
-      
+
     getManifolds:(mtv,initial)->
         return unless not(mtv.p1.p1 is mtv.p2.p1) and
             not(mtv.p1.p2 is mtv.p2.p2)
@@ -1074,7 +1075,7 @@ class GJK extends Collision
         stack.splice(getMax(maxVec,minVec),1)
         stack.splice(getMin(maxVec,minVec),1)
         return stack
-    
+
     getNormals:(normals,vec)->
         max = -Infinity
         maxVec = null
@@ -1085,8 +1086,8 @@ class GJK extends Collision
                 maxVec = index
         return normals[maxVec] if maxVec?
         return false
-    
-    
+
+
     update:(event,data)->
         a = data.A
         b = data.B
@@ -1128,9 +1129,9 @@ class GJK extends Collision
                   ,engine:@engine
                   ,collision:obj}#{vector:vec,normal:norm.copy(),manifold:manifoldation}}
         return
-            
-    
-class SATColl extends Collision 
+
+
+class SATColl extends Collision
     ###
         "AABB: Rectangle - Circle"
         "AABB: Circle - Rectangle"
@@ -1141,16 +1142,16 @@ class SATColl extends Collision
         super([
                 "AABB: Shape - Shape"
                ])
-        
+
     getShapeType:(shape)->
         return shape.shapeType
-      
+
     getAxies:(a,b)->
         #typeA = @getType a
         #typeB = @getType b
         typeA = @getShapeType a
         typeB = @getShapeType b
-        
+
         result = []
         if typeA is "Circle"
             temp = @circleAxis(a,b)
@@ -1158,14 +1159,14 @@ class SATColl extends Collision
         if typeB is "Circle"
             temp = @circleAxis(b,a)
             result = result.concat(temp) if temp.length
-        
+
         result.push i for i in a.get("norms")
         result.push i for i in b.get("norms")
         #result.push i for i in a.shapes[0].get("norms")
         #result.push i for i in b.shapes[0].get("norms")
-        
+
         return result
-        
+
     circleAxis:(circ,nonCirc)->
         if @getShapeType(nonCirc) is "Circle"
         #if @getType(nonCirc) is "Circle"
@@ -1181,7 +1182,7 @@ class SATColl extends Collision
             vec.getLength()
             result.push vec.unit()
         return result
-    
+
     removeDuplicateAxis:(axises)->
         removals = []
         for i,i1 in axises
@@ -1194,7 +1195,7 @@ class SATColl extends Collision
             if not booli
                 removals.push i
         return removals
-    
+
     projectShape:(shape,axis,booli)->
         throw "no booli" if not booli?
         # this is important...
@@ -1202,7 +1203,7 @@ class SATColl extends Collision
         dot = support.subtract(shape.get("position")).dot axis
         return dot if booli
         return axis.scale dot
-    
+
     optimizedSAT:(shape1,shape2)->
         # get a vector from one shape to another (will be used later)
         relation = shape2.get("position").subtract shape1.get("position")
@@ -1218,10 +1219,10 @@ class SATColl extends Collision
         for axis,index in totalAxises
             # makes sure all axises are unit vectors
             throw "not unit vector" if axis.length isnt 1
-            # get the dot product of the relation 
+            # get the dot product of the relation
             # vector and the axis
             projectAxis = relation.dot(axis)
-            
+
             if projectAxis < 0
                 projectAxis *= -1
                 axis = totalAxises[index] = axis.scale -1
@@ -1241,7 +1242,7 @@ class SATColl extends Collision
             if dist < minLength
                 minLength = dist
                 minIndex = index
-                
+
         # after we determined the axis of minimum separation,
         # now we have to create the vector
         # quick error check...
@@ -1254,7 +1255,7 @@ class SATColl extends Collision
         # in the direction of the axis
         proj1 = @projectShape(shape1,minAxis,false)
         proj2 = @projectShape(shape2,minAxis.scale(-1),false)
-        # quick error checks to make sure 
+        # quick error checks to make sure
         # everything is in the right direction
         throw "projections arent opposite" if proj1.dot(proj2) > 0
         if proj1.dot(projectAxis) < 0
@@ -1263,7 +1264,7 @@ class SATColl extends Collision
         result = projectAxis.subtract(proj1).add(proj2)
         result.length = abs minAxis.dot result
         return result
-    
+
     closestEdge:(shape,dir)->
         point = shape.support dir
         if not point.edge1 or not point.edge2
@@ -1275,12 +1276,12 @@ class SATColl extends Collision
             result = new Line(point,otherPoint)
             result.length = edge1.length
             return {type:"edge",edge:result,support: point}
-        
+
         otherPoint = if edge2.p1 is point then edge2.p2 else edge2.p1
         result = new Line(point,otherPoint)
         result.length = edge2.length
         return {type:"edge",edge:result,support: point}
-    
+
     getManifold:(a,b,normal)->
         # get the closest edge of both shapes
         edgeA = @closestEdge(a,normal)
@@ -1300,10 +1301,10 @@ class SATColl extends Collision
         else
             ref = edgeB
             inc = edgeA
-            # set a flag to indicate that we 
+            # set a flag to indicate that we
             # are flipping the normal later
             flip = true
-            
+
         p1 = inc.edge.p1
         p2 = inc.edge.p2
         refVec = ref.edge.vector().unit()
@@ -1323,8 +1324,8 @@ class SATColl extends Collision
         cp.splice 0,1 if cp[0].depth < 0
         #throw "no points!" unless cp.length
         return {points:cp,flip:flip}
-        
-    
+
+
     clippling:(p1,p2,ref,o)->
         # create a container to store the clipped points
         cp = []
@@ -1342,8 +1343,8 @@ class SATColl extends Collision
             u = d1 / (d1-d2)
             cp.push e.scale(u).add p1
         return cp
-        
-    
+
+
     update:(event,data)->
         a = data.A
         b = data.B
@@ -1364,7 +1365,7 @@ class SATColl extends Collision
               ,b:b
               ,engine:@engine
               ,collision:collision}
- 
+
 class impulseResolution extends Collision
     constructor: ->
         super([
@@ -1380,9 +1381,9 @@ class impulseResolution extends Collision
                "collided: Shape - Shape"
                "collided: Shape - Rectangle"
                "collided: Rectangle - Shape"
-               ]) 
-    
-    calculateImpulse4:(A,B,contact,contactsLength,CollisionV,normal)-> 
+               ])
+
+    calculateImpulse4:(A,B,contact,contactsLength,CollisionV,normal)->
         rA = contact.subtract(A.get("position"))
         rB = contact.subtract(B.get("position"))
         angVelA = A.get("rv")
@@ -1403,42 +1404,42 @@ class impulseResolution extends Collision
         ###
         rv = rv.add B.get("force").add(rB.scaleCross(-B.get("torque")))
             .subtract(A.get("force")).subtract(rA.scaleCross(-A.get("torque")))
-        ####   
-        
+        ####
+
         contactVel = rv.dot( n )
         return false if contactVel >= 0
-        
+
         raCrossN = -rA.cross n
         rbCrossN = -rB.cross n
-        
+
         invMassSum = invMassA + invMassB + sqr(raCrossN)*invMoiA + sqr(rbCrossN) * invMoiB
-        
+
         impulse = contactVel*(-(1 + e))
         impulse /= invMassSum
-        impulse /= contactsLength     
+        impulse /= contactsLength
 
         B.applyForce n.scale(impulse),rB.add B.get("position")
         A.applyForce n.scale(-impulse),rA.add A.get("position")
-        
+
         t = perp
         raCrossT = -rA.cross t
         rbCrossT = -rB.cross t
-        
+
         invMassSum = invMassA + invMassB + sqr(raCrossT)*invMoiA + sqr(rbCrossT) * invMoiB
-        
+
         jt = -rv.dot t
         jt/= invMassSum
         sign = if rv.dot(t) < 0 then -1 else 1
-        
+
         impulse *= sign
         tangentImpulse = if abs(jt) < impulse * sf then t.scale(jt) else t.scale(-impulse * df)
-        
-        
+
+
         B.applyForce tangentImpulse,rB.add B.get("position")
         A.applyForce tangentImpulse.scale(-1),rA.add A.get("position")
-        
-        
-        
+
+
+
     positionalCorrection:(percentages,mainShape,otherShape,penetrationDepth,invMasses)->
         percentage = percentages or 0.4
         if (k = penetrationDepth.length)<0.5 then percentage = 0
@@ -1446,7 +1447,7 @@ class impulseResolution extends Collision
         correction = penetrationDepth.scale(percentage/invMasses)
         mainShape.move correction.scale(mainShape.get("invM"))
         otherShape.move correction.scale(-otherShape.get("invM"))
-    
+
     impulseResolve:(A,B,Collision)->
         return new Vector() unless (invMasses = A.get("invM") + B.get("invM"))
         CollisionV = Collision.vector[0]
@@ -1458,7 +1459,7 @@ class impulseResolution extends Collision
             #@positionalCorrection null,A,B,CollisionV.scale(1/contacts.length),invMasses
             @calculateImpulse4 A,B,i,contacts.length,Collision.vector[i1],normal
             #@calculateImpulse4 A,B,i,12,CollisionV,normal
-     
+
     update:(event,data)->
         a = data.a
         b = data.b
@@ -1468,7 +1469,7 @@ class impulseResolution extends Collision
         engine = data.engine
         return unless (a.get("invM") or b.get("invM"))
         @impulseResolve(a,b,collision)
-            
+
 #### class Mouse: relays all information on the mouse
 #    1. provides the engine with the cartesian coordinates of the input (in this case the mouse)
 #    2. notifies the engine of an input interaction (e.g:click of a mouse)
@@ -1479,7 +1480,7 @@ class Mouse extends Behaviour
         throw "selector undefined" if not @selector
         #this serves as a reminder that this simulation is dependent on jquery
         throw "undefined type" if type isnt "Jquery" and type isnt "jquery"
-        #inputType is used to identify the instance of the class 
+        #inputType is used to identify the instance of the class
         # i.e: one would know that this is an input behaviour for a mouse
         @inputType = "mouse"
     activate:(@engine)->
@@ -1519,7 +1520,7 @@ class Mouse extends Behaviour
         if @forbiddenElement
             return if $.contains(@forbiddenElement[0],e.target)
         fn(e)
-        
+
 
 class CanvasControl extends Behaviour
     constructor:(@selector,@context,@window,type)->
@@ -1539,7 +1540,7 @@ class CanvasControl extends Behaviour
     deactivate:()->
         #stops adjusting the canvas
         @resetting()
-    adjustment:(event)=> 
+    adjustment:(event)=>
         @selector.attr "width", (@window.width() - 24)
         @selector.attr "height", (@window.height() - 20)
         center = new ctr()
@@ -1557,61 +1558,61 @@ class CanvasControl extends Behaviour
 class PlayPause extends Behaviour
     constructor:()->
         @resets = {"pause":[@reset,@]}
-    
+
     activate:(engine)->
         super engine,"play","apply"
         @updates = {"update":[engine.animate,engine]}
     deactivate:()->
         super
-    
+
     #### updates the behaviour
     ####
-    # i know this is redundant, but i have to keep this. 
+    # i know this is redundant, but i have to keep this.
     # this is because every function is imprinted with a unique id
     apply:(event,info)->
         return super
-    
+
     #### fn reset: resets the environment to its original conditions
     ####
-    
-    # i know this is redundant, but i have to keep this. 
+
+    # i know this is redundant, but i have to keep this.
     # this is because every function is imprinted with a unique id
     reset:(event,info)->
         return super
 
 #### class Refresh: resets the simulation to its original state
-####    
+####
 class Refresh extends Behaviour
     constructor:()->
-    
+
     activate:(engine)->
         super engine,"refresh","update"
     deactivate:()->
         super
-    
+
     #### updates the behaviour
     ####
     update:(event,info)->
         engine = info.engine
-        throw "not set" unless @isSet   
+        throw "not set" unless @isSet
         engine.emit("pause",{cursor:new Vector(engine.pageX,engine.pageY),engine:engine})
         engine.shapes = []
-        
+
 #### class String: binds all shapes together with a string that pulls them all together
-####         
+####
 class String extends Behaviour
     constructor:()->
         @strings = new Queue()
         @updatingString = []
         @updates = {"animate":[@update,@],"implement":[@singleString,@]}
         @resets = {"destringify":[@reset,@],"refresh":[@reset,@]}
-    
+
     set:(obj={all:true,massOnly:false,maxLength:100})->
         ####     Options & Defaults:
         # obj = {
         #         all(deactivated): true  - specifies if all shapes are affected
         #         massOnly: false - specifies if non mass shapes are affected
-        #         maxLength: 100 - specifies the maximum length of the string 
+        #         maxLength: 100 - specifies the maximum length of the string
         #         before force is applied
         #       }
         ####
@@ -1619,13 +1620,13 @@ class String extends Behaviour
         @massOnly = if obj.massOnly? then obj.massOnly else false
         @maxLength = if obj.maxLength? then obj.maxLength else 100
         @isSet = true
-        
-    
+
+
     activate:(engine)->
         super engine,"stringify","apply"
     deactivate:()->
         super
-        
+
     #### fn apply: sets all the information and proper procudure once the behaviour
     #     is activated.
     # event: the name that is called (see pubsub implementation in engine class)
@@ -1635,20 +1636,20 @@ class String extends Behaviour
         super
         engine = info.engine
         @createStrings(engine)
-    
+
     #### fn reset: resets the environment to its original conditions
-    #### 
+    ####
     reset:(event,info)->
         engine = info.engine
         @strings.clear()
         super
         return
-            
+
     createStrings:(engine)->
         shapes = engine.shapes
         for i,i1 in shapes
             @singleString null,{shape:i,index:i1,shapes:shapes}
-    
+
     singleString:(event,info)->
         shape = info.shape
         index = info.index
@@ -1659,7 +1660,7 @@ class String extends Behaviour
                 if @massOnly
                     continue if not (n.get("invM") and shape.get("invM"))
                 @strings.queue [shape,n]
-      
+
     moveString:(arr)->
         A = arr[0]
         B = arr[1]
@@ -1673,12 +1674,12 @@ class String extends Behaviour
         rv = B.get("v").subtract(A.get("v"))
         contactVel = rv.dot( n )
         contactVel= if contactVel <=0 then 0 else contactVel
-        invMassSum = invMassA + invMassB 
+        invMassSum = invMassA + invMassB
         impulse = contactVel*(-1) / invMassSum *0.01
         impulse = -abs(1/invMassSum*0.001)
         B.applyForce n.scale(impulse) if invMassA
         A.applyForce n.scale(-impulse) if invMassB
-            
+
         string.draw(0.4,color)
 
     #### fn update: updates the gravitational pull on all shapes
@@ -1693,14 +1694,14 @@ class String extends Behaviour
             @moveString i
 
 #### class Gravity: applies a constant force upon all weighted shapes to a specific direction
-#### 
+####
 class Gravity extends Behaviour
     constructor:()->
         #private variable: represents the gravitational force applied
         @a = new Vector()
         @updates = {"animate":[@update,@]}
         @resets = {"degravitate":[@reset,@],"refresh":[@reset,@]}
-    
+
     #### fn set: sets the pull and the gravitational force applied
     # mag: a scalar representing the magnitude of the gravitational force
     # dir: a unit vector directing the gravitational force
@@ -1714,31 +1715,31 @@ class Gravity extends Behaviour
         throw incorrectDir if not ( abs(dir.length - 1) < 0.1 )
         @a = dir.scale(mag)
         @isSet = true
-        
+
     activate:(engine)->
         super engine,"gravitate","apply"
     deactivate:()->
         super
-    
-    
+
+
     #### fn apply: sets all the information and proper procudure once the behaviour
     #     is activated.
     # event: the name that is called (see pubsub implementation in engine class)
     # info: packaged info in an object form
     ####
-    # i know this is redundant, but i have to keep this. 
+    # i know this is redundant, but i have to keep this.
     # this is because every function is imprinted with a unique id
     apply:(event,info)->
         return super
-    
+
     #### fn reset: resets the environment to its original conditions
     ####
-    
-    # i know this is redundant, but i have to keep this. 
+
+    # i know this is redundant, but i have to keep this.
     # this is because every function is imprinted with a unique id
     reset:(event,info)->
         return super
-    
+
     #### fn update: updates the gravitational pull on all shapes
     # event: the name that is called (see pubsub implementation in engine class)
     # info: packaged info in an object form
@@ -1749,50 +1750,50 @@ class Gravity extends Behaviour
         throw "Error: no 'shapes' array present" if not shapes
         for shape in shapes
             shape.applyForce @a.scale(1/shape.get("invM")) if shape.get("invM")
-            
-#### class Drag: allows the user to apply a force on any shape in 
+
+#### class Drag: allows the user to apply a force on any shape in
 #    any direction by clicking and dragging.
-#### 
+####
 class Drag extends Behaviour
-    
+
     constructor:()->
         #one vector representing the velocity of the mouse
-        @velocity = new Vector() 
+        @velocity = new Vector()
         @updates = {"animate":[@update,@]}
         @resets = {"mouseup":[@reset,@],"refresh":[@reset,@]}
-        
+
     activate:(engine)->
         super engine,"mousedown","apply"
     deactivate:()->
         super
-        
-        
+
+
     #### fn apply: sets all the information and proper procudure once the behaviour
     #     is activated.
     # event: the name that is called (see pubsub implementation in engine class)
     # info: packaged info in an object form
-    ####    
+    ####
     apply:(event,info)->
         engine = info.engine
         throw "not set" unless @isSet
-            
+
         @mouseLoc = info.cursor
         @shape = @findShape(engine)
         return unless @shape
         @refLoc = @addPoint @mouseLoc.copy(),@shape
-        
+
         return super
-    
+
     #### reset: restores this behaviour instance to its initial state. designed to prevent the dragging process from occurring
     ####
-    reset:(event,info)-> 
+    reset:(event,info)->
         @deletePoint @refLoc,@shape if @shape
         @refLoc = null
         @shape = null
-        @mouseLoc = null 
+        @mouseLoc = null
         return super
-    
-    
+
+
     #### fn set: activated on the click of the mouse
     #    pull: the magnitude of the pull that the cursor has on the shape (0 to 1 as percentage of the
     #    pull of the mouse)
@@ -1802,13 +1803,13 @@ class Drag extends Behaviour
     set: ( @speed=0.01,@pull=0.71,@torqueDamp=800)->
         @isSet = true
         #super(@speed,@pull)
-    
+
     #### firstClicked: this function fires off as soon as the mouse is pressed
     #    aims to do 3 things
     #    make sure the behaviour does not initiate the pulling untill it finds a shape to pull
     #    finds the appropriate shape to pull
-    #    assigns a point to be attached to the shape to serve as a basis for the torque generated in the pull 
-    ####    
+    #    assigns a point to be attached to the shape to serve as a basis for the torque generated in the pull
+    ####
     firstClicked:(event,info)->
         engine = info.engine
         @mouseLoc = info.cursor
@@ -1817,8 +1818,8 @@ class Drag extends Behaviour
         @refLoc = @addPoint @mouseLoc.copy(),@shape
         @clicking = engine.on("animate",@update,@)
         engine.on("mouseup",@reset,@)
-    
-      
+
+
     #### updates the behaviour
     ####
     update:(event,info)->
@@ -1829,11 +1830,11 @@ class Drag extends Behaviour
         # create a velocity out of the mouse's displacement from the shape
         @velocity = @mouseLoc.subtract @refLoc
         @ropePull @shape,@velocity,@refLoc
-        
-    
-        
+
+
+
     #### Points: Points are essentially vectors that are stored within the shape object and are classified with a unique id so they can be retrieved easily. There are three functions that manage such a behaviour:
-    #addPoint: adds a point onto the shape, gives it a unique id. the shape should be able to move and rotate the point as the shape itself moves and rotates 
+    #addPoint: adds a point onto the shape, gives it a unique id. the shape should be able to move and rotate the point as the shape itself moves and rotates
     #findPoint: finds the point from the shape's selection of points. this makes sure that the shape in scope is indeed the shape that is being dragged
     #deletePoint: removes the point from existance. This proces is done to get rid of unwanted operations and memory
     ####
@@ -1856,19 +1857,19 @@ class Drag extends Behaviour
         throw "Error: cannot find Point" if not foundPoint = @findPoint(point,shape)
         index = foundPoint.index
         shape.shapes[0].get("points").splice(index,1)
-    
+
     #### fn findShape: finds the shape clicked on, returns shape object or false
-    ####    
+    ####
     findShape:(engine)->
         shapes = engine.shapes
         throw "Error: no 'shapes' array present" if not shapes
         for shape in shapes
             return shape if shape.inside @mouseLoc
         return false
-    
-        
+
+
     #### ropePull: an ad-hoc function that extends upon the functionality of the applyForce function in the shape class
-    #    it sets the physical behaviour and displays the rope in order to give it a more physical appeal 
+    #    it sets the physical behaviour and displays the rope in order to give it a more physical appeal
     ####
     ropePull:(shape,force,contact,friction=0.03,pull,length = 100,color="lightgrey",width=1.5,secondaryColor="red")->
         throw "Error: missing force. Please define a force as a parameter for the function to operate" if not force
@@ -1886,25 +1887,25 @@ class Drag extends Behaviour
             fProj = vel.projection(fnorm).scale -1
             shape.applyForce(vProj.scale(-1),contact)
             shape.move(funit.scale(difference*0.01*shape.get("invM")))
-            shape.applyForce fProj.scale(friction),contact 
+            shape.applyForce fProj.scale(friction),contact
         if force.length > length*1.5
             color_ = secondaryColor
             weight = shape.get("invM") / 10000
             shape.applyForce force.scale(weight),contact
-        new Line(contact,contact.add force).draw(width,color_) if contact  
+        new Line(contact,contact.add force).draw(width,color_) if contact
 
-#### class AddShape: allows the user to specify which shape gets added to 
+#### class AddShape: allows the user to specify which shape gets added to
 #    the simulation using a set of predetermined presets.
-#### 
+####
 class AddShape extends Behaviour
     constructor:(engine)->
-    
+
         @count = 0
         #setting up the mouse location
         @mouseLoc = new Vector()
         @locs = []
         @callBack = null
-    
+
     activate:(engine)->
         super engine,"mousedown","update"
     deactivate:()->
@@ -1920,7 +1921,7 @@ class AddShape extends Behaviour
         shape.x = loc.x
         shape.y = loc.y
         return shape
-        
+
     firstOperation:(locations,cursor)->
         locations.push new Vector cursor.x,cursor.y
         if locations.length isnt 2
@@ -1928,7 +1929,7 @@ class AddShape extends Behaviour
         @setLocation(locations[0],@shape) if @shape.setLoc
         @setVelocity(locations[0],locations[1],@shape) if @shape.setVel
         return @shape
-    
+
     update:(event,info)->
         #makes sure the behaviour has already been set
         return unless @isSet
@@ -1950,7 +1951,7 @@ class AddShape extends Behaviour
         @createdShape = @createShape @shape
         engine.implement @createdShape
         @callBack(engine) if @callBack
-        
+
     ##### fn set: sets the shape you want to spawn
     #     shape1: first shape coming up
     #     shape2: second shape
@@ -1958,21 +1959,21 @@ class AddShape extends Behaviour
     #         container: spawn a container in the middle of the screen and shapes of a certain kind to occupy the container (shape1)
     #         random: span a random choice between two types of shapes (shape1 and shape2) randomly
     #         target: span one of one type of shape (shape1) and an infinite amount of a second type of shape (shape2)
-    #####     
+    #####
     set:(@shape1=null,@shape2=null,mode)->
         typesOfModes = ["container","random","target","compound"]
         throw "Error: spawnMode unidentified" if typesOfModes.indexOf(mode) < 0
         @setShape = (eval("this."+mode))
         @isSet = true
-    
+
     createShape:(props)->
         construct = props.type
         throw "Error: invalid or missing type" if not construct or typeof(construct) isnt "string" or not eval construct
         return new (eval(construct))(props)
-    
+
     ##### fn container: sets the container required for the set function
-    #     
-    ##### 
+    #
+    #####
     container:(engine)->
         return @shape = @shape1 if @count isnt 0
         engine.implement @createShape
@@ -2006,44 +2007,44 @@ class AddShape extends Behaviour
                         df: 0.2,
                         restitution: 0.0
         return @shape = @shape1
-    
+
     ##### fn random: sets the randomness for the random spawn mode
-    #     
-    ##### 
+    #
+    #####
     random:->
-    
+
         # this gives the option for shape1 parameter to be an array of shapes that spawn randomly
         # however this option is only possible in the random mode
         length = if typeof @shape1 is "Array" then @shape1.length else 1
-                
+
         array_ = if typeof @shape1 is "Array" then @shape1 else [@shape1,@shape2]
-        
+
         @shape = array_[getRandomInt(0,length)]
-    
+
     ##### fn target: sets the target shape and the other shapes for the target spawn mode
-    #     
-    ##### 
+    #
+    #####
     target:->
-        
+
         @shape = switch @count
             when 1
                 @shape1
             else
                 @shape2
-                
+
     ##### fn compound: creates a compound shape out of the set of shapes created
-    #     
-    ####  
+    #
+    ####
     compound:(engine)->
-        @callBack = @compound_CALLBACK if not @callBack 
+        @callBack = @compound_CALLBACK if not @callBack
         # this gives the option for shape1 parameter to be an array of shapes that spawn randomly
         # however this option is only possible in the random mode
         length = if typeof @shape1 is "Array" then @shape1.length else 1
-                
+
         array_ = if typeof @shape1 is "Array" then @shape1 else [@shape1,@shape2]
-        
+
         @shape = array_[getRandomInt(0,length)]
-        
+
     #### fn compound_CALLBACK: this attaches all newly created shapes to the first shape created
     #
     ####
@@ -2064,7 +2065,7 @@ class AddShape extends Behaviour
                                    sf: 0.8
                                    df: 0.5
                                    restitution: 0
-                                   v:new Vector(-0.1,-0.1) 
+                                   v:new Vector(-0.1,-0.1)
                                    x:300
                                    y:200
                                    width:50
@@ -2073,19 +2074,19 @@ class AddShape extends Behaviour
             ####
             #@initialComp.addShape test4.shapes[0]
             engine.shapes.pop()
-            
-            
+
+
     #### fn findShape: finds the shape clicked on, returns shape object or false
-    ####    
+    ####
     findShape:(engine)->
         shapes = engine.shapes
         throw "Error: no 'shapes' array present" if not shapes
         for shape in shapes
             return shape if shape.inside @mouseLoc
-        return false            
-    
+        return false
+
     #### fn setVelFn: creates a small functionality where the velocity of the object can be set
-    #### 
+    ####
     setVelFn:(shape)->
         if not @initCount
             @initLoc = new Vector shape.x,shape.y
@@ -2094,37 +2095,37 @@ class AddShape extends Behaviour
         @initCount = null
         @initVel = null
         shape.v = new Vector(shape.x,shape.y).subtract(@initLoc).scale(0.003)
-    
-#### class Presets: is a set of different instances of behaviours that 
+
+#### class Presets: is a set of different instances of behaviours that
 #    can be activated or deactivated.
-#### 
+####
 class Presets
     constructor:()->
         @storage = []
         @pickedIndex = -1
         @isSet = false
-        
+
     activate:(engine)->
         return unless @isSet
         @engine = @engine or engine
         @storage[@pickedIndex].activate(@engine)
-        
+
     deactivate:()->
         return unless @isSet
         @storage[@pickedIndex].deactivate()
-        
+
     add:(choice,construct)->
         @pickedIndex = if @pickedIndex < 0 then 0 else @pickedIndex
         @isSet = @isSet or true
         addFn = @storage[@storage.push(new construct()) - 1]
         addFn.set.apply addFn,choice
-        
+
     choose:(index)->
         throw "invalid index" if index < 0 or index > @storage.length-1
         @deactivate()
         @pickedIndex = index
         @activate(@engine)
-        
+
 #################### Vector ####################
 class Vector
     constructor:(@x=0,@y=0)->
@@ -2214,7 +2215,7 @@ class Vector
         k.a = @a + angle
         return k
     draw2:(bool,bool2,bool3)->
-        temp2 = if bool? then {x:0,y:0} else new ctr() 
+        temp2 = if bool? then {x:0,y:0} else new ctr()
         temp =
             type: "arc"
             fillStyle: "black"
@@ -2232,10 +2233,10 @@ class Vector
             x2: temp3
             y2: temp4
         jcan.draw temp
-        
+
     draw:(bool,bool2,bool3)->
-        
-        start = if bool? then {x:0,y:0} else new ctr() 
+
+        start = if bool? then {x:0,y:0} else new ctr()
         end = {@x,@y}
         end.x+=start.x
         end.y+=start.y
@@ -2250,7 +2251,7 @@ class Vector
         ctxx.moveTo(start.x,start.y)
         ctxx.lineTo(end.x, end.y)
         ctxx.stroke()
-        
+
     # extension function to deal with polygons...
     centroid:(points)->
         area = @sArea(points)
@@ -2268,7 +2269,7 @@ class Vector
             end = i
         temp = 1/((6*@sArea(points)) or 1)
         return result.scale temp
-    
+
     centroidStraight:(points)->
         len = points.length
         result = new Vector()
@@ -2278,7 +2279,7 @@ class Vector
         result.x /= len
         result.y /= len
         return result
-    
+
     # extension function to deal with polygons...
     sArea:(points)->
         ret = 0
@@ -2286,8 +2287,8 @@ class Vector
         for i in points
             ret += end.cross i
             end = i
-        return ret/2  
-    
+        return ret/2
+
     invMOI:(invMass,points)->
         len = points.length
         return 0 if len is 1
@@ -2307,9 +2308,9 @@ class Vector
         #return ret/(6*total)
         return (6*total*invMass)/ret if ret
         return 0
-        
+
 #################### Line ####################
-        
+
 class Line
     constructor:(@p1,@p2)->
     copy:(temp,temp2) ->
@@ -2369,7 +2370,7 @@ class Line
             x2: @p2.x
             y2: @p2.y
         jcan.draw temp
-        
+
     draw:(width,style)->
         ctxx.beginPath()
         ctxx.strokeStyle= style or "black"
@@ -2377,9 +2378,9 @@ class Line
         ctxx.moveTo(@p1.x,@p1.y)
         ctxx.lineTo(@p2.x,@p2.y)
         ctxx.stroke()
-      
-       
- 
+
+
+
 #################### Body ####################
 
 class Body
@@ -2397,11 +2398,11 @@ class Body
                 df: 0.5, - the coefficient of dynamic friction of the object
                 restitution: 0 - the coefficient of restitution of the object
                 v:new Vector(-1,-0.5) - the intitial velocity, if not set
-                x:400, - setting the location, if it isnt set, it will be 
+                x:400, - setting the location, if it isnt set, it will be
                 y:200, - set automatically from the centers of its shapes
     ####
     constructor:(input)->
-        @physical = {domains:[]} 
+        @physical = {domains:[]}
         # components are the essential pieces that make up the body
         @components = [@physical]
         return unless input
@@ -2411,11 +2412,11 @@ class Body
             throw "if you want more shapes, add them using the addShape function!" if i1 >= 1
             @shapes[i1] = new Shape i
             @shapes[i1].body = @
-            
+
         @setPhysical(input)
         # setting the default integration mechanism
         @integrator = @DEFAULT_Integrator
-            
+
     # this function sets all the physical aspects of the body
     setPhysical:(input)->
         # domains is used for the get & set functions,
@@ -2444,13 +2445,13 @@ class Body
         @physical.restitution = input.restitution or 0
         @physical.invM = input.invM or 0
         @physical.invI = input.invI or @physical.invM / 100
-        @physical.position = if (input.x? and input.y?) 
+        @physical.position = if (input.x? and input.y?)
         then new Vector(input.x,input.y) else new Vector()
         @determineCenter()
         @physical.bounding = [new Vector(),new Vector()]
         @generateBounds()
         @determineinvMOI()
-     
+
     addShape:(shape)->
         shape.body = @
         @shapes.push shape
@@ -2464,7 +2465,7 @@ class Body
         Itot *= pieceMass
         @physical.invI = 1/((1/@physical.invI) + Itot)
         @physical.invM = 1/(pieceMass*(@shapes.length))
-        
+
     determineCenter:()->
         positions = []
         totArea = 0
@@ -2477,13 +2478,13 @@ class Body
             #positions.push i.physical.position
         @physical.position = initCent.scale(1/totArea) if totArea
         #@physical.position = @physical.position.centroid(positions)
-        
+
     determineinvMOI:()->
         totI = 0
         for i in @shapes
             totI += 1/i.determineinvMOI()
         return @physical.invI = @physical.invM * 1/totI
-        
+
     # this function is used to retireve properties of the body
     get:(item)->
         for component in @components
@@ -2508,12 +2509,12 @@ class Body
         if index >= @shapes.length or index < 0
             return null
         return @shapes[index] = shape
-        
+
     inside:(point)->
         for i in @shapes
             return true if i.inside point
         return false
-    
+
     generateBounds:()->
         maxX = -Infinity
         maxY = -Infinity
@@ -2529,38 +2530,38 @@ class Body
         @physical.bounding[0].y = maxY
         @physical.bounding[1].x = minX
         @physical.bounding[1].y = minY
-    
+
     draw:(ctx)->
         for shape in @shapes
             shape.draw ctx
             #shape.physical.position.draw 0,0
-        
+
         #@physical.position.draw 0,0
-    integrate:(ts)-> 
+    integrate:(ts)->
         return @integrator(ts)
-    
+
     DEFAULT_Integrator:(ts)->
-        
+
         @physical.rv += @physical.torque
         @physical.v.move @physical.force
-        
+
         @physical.position.move @physical.v.scale(ts)
         for n,n1 in @shapes
             n.physical.position.move @physical.v.scale(ts)
             #i.move @physical.v.scale(ts) for i in n.physical.bounding
             i.move @physical.v.scale(ts) for i in n.physical.verticies
             i.move @physical.v.scale(ts) for i in n.physical.points
-            
+
             n.physical.position.equal n.physical.position.rotate @physical.position,@physical.rv*ts
             i.equal i.rotate @physical.position,@physical.rv*ts for i in n.physical.verticies
             i.equal i.rotate @physical.position,@physical.rv*ts for i in n.physical.points
             i.equal i.rotate new Vector(),@physical.rv*ts for i in n.physical.norms
-            
-        @generateBounds()    
+
+        @generateBounds()
         @physical.force.x = 0
         @physical.force.y = 0
         @physical.torque = 0
-        
+
     support:(direction)->
         max = -Infinity
         maxVec = null
@@ -2572,13 +2573,13 @@ class Body
                 max = tempMax
                 maxVec = support
         return maxVec
-    
+
     move:(obj)->
         if obj?
             @physical.position.move obj
         for i in @shapes
             i.move obj
-            
+
     applyForce:(force,contact)->
         @physical.force.move force.scale @physical.invM
         #console.log contact
@@ -2587,14 +2588,14 @@ class Body
         contact_ = contact.subtract @physical.position
         conCrossF = contact_.cross force.scale @physical.invI
         @physical.torque += conCrossF
-        conCrossF 
+        conCrossF
         #console.log @physical.force
         #@physical.force.scale(100).draw null,0
-        
+
 class Shape
     constructor:(input)->
         @type = "Shape"
-        @physical = {domains:[]} 
+        @physical = {domains:[]}
         @appearance = {domains:[]}
         @components = [@physical,@appearance]
         @setPhysical(input)
@@ -2604,7 +2605,7 @@ class Shape
                 y:200, - setting the location
                 points: [
                             [3,2]  - these are setting the verticies
-                            [3,1]    of the shape. However, not all 
+                            [3,1]    of the shape. However, not all
                             [4,1]    shapes have verticies, special
                             [2,4]    cases do exist like circles
                         ]
@@ -2613,7 +2614,7 @@ class Shape
                 stroke: [1,"grey"] - the trim of the shape, if one isnt
                              assigned, there wont be any
         ####
-   
+
     setPhysical:(input)->
         @physical.domains = @physical.domains.concat [
                              "edges"
@@ -2625,7 +2626,7 @@ class Shape
                              "area"
                              ]
         return unless input
-        @physical.position = if (input.x? and input.y?) 
+        @physical.position = if (input.x? and input.y?)
         then new Vector(input.x,input.y) else new Vector()
         @physical.points = []
         @setVerticies(input.points) if input.points?
@@ -2652,7 +2653,7 @@ class Shape
             n.edge2 = n.edge2 or edge
             edge.getLength()
             @physical.norms.push edge.normal().vector().unit()
-        
+
     setAppearance:(input)->
         @appearance.domains = @appearance.domains.concat [
                              "fill"
@@ -2660,20 +2661,20 @@ class Shape
                              "strokeStyle"
                              ]
         return unless input
-        @appearance.fill = if input.fill? 
+        @appearance.fill = if input.fill?
         then input.fill else generateRandomColor()
-        @appearance.strokeWidth = if input.stroke? 
+        @appearance.strokeWidth = if input.stroke?
         then input.stroke[0] else null
-        @appearance.strokeStyle = if input.stroke? 
+        @appearance.strokeStyle = if input.stroke?
         then input.stroke[1] else null
-            
+
     # this function is used to retrieve properties from the shape
     get:(item)->
         for component in @components
             for domain in component.domains
                 if item is domain
                     return component[item]
-                
+
     # this function is used to set properties of the shape
     set:(item,val)->
         for component in @components
@@ -2682,7 +2683,7 @@ class Shape
                     component[item] = val
                     return true
         return false
-    
+
     generateBounds:()->
         throw "no verticies" unless @physical.verticies
         maxX = -Infinity
@@ -2694,32 +2695,32 @@ class Shape
             maxY = temp if (temp = i.y) > maxY
             minX = temp if (temp = i.x) < minX
             minY = temp if (temp = i.y) < minY
-            
+
         @physical.bounding[0].x = maxX + 10
         @physical.bounding[0].y = maxY + 10
         @physical.bounding[1].x = minX - 10
         @physical.bounding[1].y = minY - 10
-    
-    
+
+
     determineCenter:()->
         @physical.position = @physical.position.centroid(@physical.verticies)
-    
+
     determineinvMOI:()->
         points = @physical.verticies.concat([])
         for i,i1 in points
             points[i1] = i.subtract @physical.position
         return @physical.position.invMOI 1,points
-    
+
     calcArea:()->
         return @physical.area = abs @physical.position.sArea(@physical.verticies)
-    
+
     inside:(point)->
         for i,i1 in @physical.norms
             edge = @physical.edges[i1]
             vec = point.subtract edge.p1
             return false if vec.dot(i) > 0
         return true
-    
+
     support:(direction)->
         max = -Infinity
         maxVec = null
@@ -2731,14 +2732,14 @@ class Shape
                 max = tempMax
                 maxVec = i
         return maxVec
-    
+
     move:(obj)->
         if obj?
             @physical.position.move obj
             i.move obj for i in @physical.bounding
             i.move obj for i in @physical.verticies
             i.move obj for i in @physical.points
-    
+
     # this function is used to set properties of the body
     draw:(ctx)->
         ctx.beginPath()
@@ -2753,7 +2754,7 @@ class Shape
         ctx.fill()
         ctx.stroke() if @appearance.strokeWidth
         #@physical.position.draw 0,0
-    
+
 class Rectangle extends Body
     ###   FORMAT: for Rectangle
                 width: 323 - setting the width of the rectangle
@@ -2773,7 +2774,7 @@ class Rectangle extends Body
                 df: 0.5, - the coefficient of dynamic friction of the object
                 restitution: 0 - the coefficient of restitution of the object
                 v:new Vector(-1,-0.5) - the intitial velocity, if not set
-                x:400, - setting the location, if it isnt set, it will be 
+                x:400, - setting the location, if it isnt set, it will be
                 y:200, - set automatically from the centers of its shapes
     ####
     constructor:(input)->
@@ -2805,9 +2806,9 @@ class Rectangle extends Body
             i.shapeType = "Rectangle"
         @type = "Rectangle"
 
-#################### Circle #################### 
+#################### Circle ####################
 
-class Circle extends Body  
+class Circle extends Body
     ###   FORMAT: for Circle
                 radus: 323 - setting the radius of the circle
                 invM:1/1.5, - setting the mass by setting its inverse,
@@ -2825,7 +2826,7 @@ class Circle extends Body
                 df: 0.5, - the coefficient of dynamic friction of the object
                 restitution: 0 - the coefficient of restitution of the object
                 v:new Vector(-1,-0.5) - the intitial velocity, if not set
-                x:400, - setting the location, if it isnt set, it will be 
+                x:400, - setting the location, if it isnt set, it will be
                 y:200, - set automatically from the centers of its shapes
     ####
     constructor:(input)->
@@ -2857,10 +2858,10 @@ class Circle extends Body
         @shapes[0].physical.domains.push "radius"
         @shapes[0].physical.radius = temp.radius
         ctre = @physical.position
-        
+
         @shapes[0].determineinvMOI = ()->
             return 2/(sqr(temp.radius))
-        
+
         @shapes[0].draw = (ctx)->
             ctx.beginPath()
             ctx.fillStyle = @appearance.fill
@@ -2870,25 +2871,25 @@ class Circle extends Body
             ctx.fill()
             ctx.stroke() if @appearance.strokeWidth
             new Line(@physical.position,@physical.verticies[0]).draw 1,"grey"
-            
+
         @shapes[0].generateBounds=()->
             @physical.bounding[0].x = @physical.position.x + @physical.radius + 10
             @physical.bounding[0].y = @physical.position.y + @physical.radius + 10
             @physical.bounding[1].x = @physical.position.x - @physical.radius - 10
             @physical.bounding[1].y = @physical.position.y - @physical.radius - 10
-            
+
         @shapes[0].support=(direction)->
             direction.getLength() if not direction.length
             return direction.unit().scale(@physical.radius).add @physical.position
-            
+
         @shapes[0].inside=(point)->
             return (point.subtract(@physical.position).getLength()) < @physical.radius
-            
+
         @shapes[0].calcArea=()-> return @physical.area = pi * sqr @physical.radius
-        
+
         @shapes[0].determineCenter=()->
             return @physical.position
-            
+
         @determineinvMOI()
         @determineCenter()
         @generateBounds()
@@ -2903,7 +2904,7 @@ class Demo
         throw "Error: no jquery" if not $
         @listeners = {}
         @buttons = {}
-        @behaviours = {}    
+        @behaviours = {}
     init:()->
         @setBehaviours()
         @setPresets()
@@ -2917,38 +2918,38 @@ class Demo
         #### CANVAS CONTROL ####
         cnc = new CanvasControl(@selector,@context,@window,"Jquery")
         cnc.activate(@engine)
-        #### CANVAS CONTROL ####        
+        #### CANVAS CONTROL ####
         #### MOUSE ####
         mouse = new Mouse($("#canvasArea"),"Jquery",$(".navigation"))
         mouse.activate(@engine)
         #### MOUSE ####
-        #### DRAG ####   
+        #### DRAG ####
         @behaviours.drag = new Drag()
         @behaviours.drag.set()
         @behaviours.drag.activate(@engine)
-        #### DRAG ####   
-        #### PLAYPAUSE #### 
+        #### DRAG ####
+        #### PLAYPAUSE ####
         @behaviours.playPause = new PlayPause()
         @behaviours.playPause.set(true)
         @behaviours.playPause.activate(@engine)
-        #### PLAYPAUSE #### 
-        #### GRAVITY #### 
+        #### PLAYPAUSE ####
+        #### GRAVITY ####
         @behaviours.gravity = new Gravity()
         @behaviours.gravity.set(0.008,new Vector(0,-1))
         @behaviours.gravity.activate(@engine)
-        #### GRAVITY #### 
-        #### REFRESH #### 
+        #### GRAVITY ####
+        #### REFRESH ####
         @behaviours.refresh = new Refresh()
         @behaviours.refresh.set(true)
         @behaviours.refresh.activate(@engine)
-        #### REFRESH #### 
-        #### STRING #### 
+        #### REFRESH ####
+        #### STRING ####
         @behaviours.string = new String()
         @behaviours.string.set({all:true,massOnly:true,maxLength:100})
         @behaviours.string.activate(@engine)
-        #### STRING #### 
+        #### STRING ####
     setPresets:()->
-        rect1_ = 
+        rect1_ =
                 type:"Rectangle"
                 setLoc: true
                 setVel: true
@@ -2962,8 +2963,8 @@ class Demo
                 df: 0.5,
                 restitution: 0
                 ,v:new Vector(-1,-0.5)
-                
-        rect2_ = 
+
+        rect2_ =
                 type:"Rectangle"
                 x:300,
                 y:200,
@@ -2976,8 +2977,8 @@ class Demo
                 df: 0.4,
                 restitution: 0
                 v:new Vector(0,0.2)
-                
-        rect3_ = 
+
+        rect3_ =
                 type:"Rectangle"
                 x:300,
                 y:200,
@@ -2990,8 +2991,8 @@ class Demo
                 df: 0.4,
                 restitution: 0
                 v:new Vector(0,0.2)
-               
-        circ1_ = 
+
+        circ1_ =
                 type:"Circle"
                 radius:getRandomInt(30,35),
                 setLoc: true
@@ -3002,8 +3003,8 @@ class Demo
                 sf: 0.6,
                 df: 0.4,
                 invM:1/1
-                
-        circ2_ = 
+
+        circ2_ =
             type:"Circle"
             radius:getRandomInt(5,50),
             setLoc: true
@@ -3013,7 +3014,7 @@ class Demo
             sf: 0.6,
             df: 0.4,
             invM:1/2,
-        
+
 
         pr1 = [circ1_,rect1_,"random"]
         pr2 = [rect1_,circ2_,"target"]
@@ -3024,20 +3025,20 @@ class Demo
         #pr4 = [circ2_,circ2_,"random"]
         pr5 = [circ1_,circ2_,"container"]
         pr6 = [rect2_,rect1_,"target"]
-        
+
         @behaviours.presets = new Presets()
         @behaviours.presets.add pr6,AddShape
         @behaviours.presets.add pr4,AddShape
         @behaviours.presets.add pr3,AddShape
         @behaviours.presets.add pr2,AddShape
         @behaviours.presets.activate(@engine)
-        
+
         #### adding a platform at the begining of every simulation (warning: prevents container
         #### setup from initializing).
-        
+
         addingShape = new AddShape()
-        
-        barrier = 
+
+        barrier =
             type:"Rectangle"
             x:47,
             y:100,
@@ -3048,10 +3049,10 @@ class Demo
             sf: 0.8,
             df: 0.7
             restitution: 0
-            
+
         ####          REMOVE THE HASHTAGS BESIDE (AND BELOW IT)!!!
-        setup = ()=> 
-            @engine.implement addingShape.createShape barrier 
+        setup = ()=>
+            @engine.implement addingShape.createShape barrier
         @engine.on("refresh",setup,@)
         setup()
         ####
@@ -3065,7 +3066,7 @@ class Demo
             engine = event.data.engine
             button = event.data.button
             engine.emit("pause",{cursor:new Vector(engine.pageX,engine.pageY),engine:engine})
-        ###    
+        ###
         @engine.on "play",()->
             if not @buttons.play.isChecked()
                 @buttons.play.alter true
@@ -3081,13 +3082,13 @@ class Demo
             engine = event.data.engine
             button = event.data.button
             engine.emit("gravitate",{cursor:new Vector(engine.pageX,engine.pageY),engine:engine})
-            
+
         @listeners.degravitate = (event)->
             engine = event.data.engine
             button = event.data.button
             engine.emit("degravitate",{cursor:new Vector(engine.pageX,engine.pageY),engine:engine})
-        
-        ###    
+
+        ###
         @engine.on "refresh",()->
             if @buttons.gravity.isChecked()
                 @buttons.gravity.alter false
@@ -3096,7 +3097,7 @@ class Demo
         ,@
         ###
         #### GRAVITY ####
-        #### REFRESH #### 
+        #### REFRESH ####
         @listeners.refresh = (event)->
             engine = event.data.engine
             engine.emit("refresh",{cursor:new Vector(engine.pageX,engine.pageY),engine:engine})
@@ -3106,12 +3107,12 @@ class Demo
             engine = event.data.engine
             button = event.data.button
             engine.emit("stringify",{cursor:new Vector(engine.pageX,engine.pageY),engine:engine})
-            
+
         @listeners.destringify =(event)->
             engine = event.data.engine
             button = event.data.button
             engine.emit("destringify",{cursor:new Vector(engine.pageX,engine.pageY),engine:engine})
-            
+
         #### STRING ####
         #### PRESETS ####
         @listeners.presets = (event)->
@@ -3122,15 +3123,15 @@ class Demo
             index = button.index
             behaviour.choose(index)
         #### PRESETS ####
-        
+
     setButtonViews:()->
-        ################### APPLYING & REMOVING #########################   
+        ################### APPLYING & REMOVING #########################
         applyingClass = (selector,classToApply,e)->
             selector.addClass classToApply
-            
+
         removingClass = (selector,classToApply,e)->
             selector.removeClass classToApply
-        
+
         #### REFRESH ####
         @buttons.refresh = new Action("refresh","#refresh")
         @engine.on "refresh",()->
@@ -3140,13 +3141,13 @@ class Demo
                     i.activated = false
         ,@
         #### REFRESH ####
-        
+
         #### PLAYPAUSE ####
         @buttons.play = new Toggle("playPause","#play")
         @buttons.play.setListener "click",null,applyingClass.bind(null,@buttons.play.selector[0],"applied")
             ,removingClass.bind(null,@buttons.play.selector[1],"applied")
         #### PLAYPAUSE ####
-        
+
         #### GRAVITY ####
         @buttons.gravity = new Toggle("gravity","#gravity")
         @buttons.gravity.setListener "click",null,applyingClass.bind(null,@buttons.gravity.selector[0],"applied")
@@ -3157,7 +3158,7 @@ class Demo
         @buttons.string.setListener "click",null,applyingClass.bind(null,@buttons.string.selector[0],"applied")
             ,removingClass.bind(null,@buttons.string.selector[1],"applied")
         #### STRING ####
-        
+
         #### PRESETS ####
         @buttons.presets = new Radio("presets",".presets")
         for i in @buttons.presets.options
@@ -3165,7 +3166,7 @@ class Demo
             i.setListener "click",null,applyingClass.bind(null,i.selector[0],"applied")
             i.setListener "internal",null,null,removingClass.bind(null,i.selector[1],"applied")
         #### PRESETS ####
-        
+
         #### OPTIONS ####
         @buttons.hideOptions = new Toggle("hideOptions","#options1")
         hideStuff = (selectors,classToApply,fn,typeOfHidden,e)->
@@ -3177,7 +3178,7 @@ class Demo
         @buttons.hideOptions.setListener "click",null,removingClass.bind(null,@buttons.hideOptions.selector[0],"optioned")
             ,applyingClass.bind(null,@buttons.hideOptions.selector[1],"optioned")
         #### OPTIONS ####
-        
+
         #### PRESETSVIEW1 ####
         ###
         @buttons.presetView1 = new Toggle("presetView1","#presetHead")
@@ -3187,11 +3188,11 @@ class Demo
                 fn selector,typeOfHidden
         @buttons.presetView1.setListener "click",null,hideStuff2.bind(null,$(".presets"),"applied",applyingClass,"topHidden")
             ,hideStuff2.bind(null,$(".presets"),"applied",removingClass,"topHidden")
-        ###    
+        ###
         #### PRESETSVIEW1 ####
-        
+
         #### PRESETSVIEW2 ####
-        
+
         @buttons.presetView2 = new Button("presetView2",".dropdown")
         hideStuff3 = (selectors,classToApply,fn,typeOfHidden,e)->
             for i,index in selectors
@@ -3206,7 +3207,7 @@ class Demo
         @buttons.play.setListener "click"
             ,{engine:@engine,button:@buttons.play}
             ,@listeners.play
-            ,@listeners.pause 
+            ,@listeners.pause
         #### PLAYPAUSE ####
         #### GRAVITY ####
         @buttons.gravity.setListener "click"
@@ -3214,11 +3215,11 @@ class Demo
             ,@listeners.gravitate
             ,@listeners.degravitate
         #### GRAVITY ####
-        #### REFRESH #### 
+        #### REFRESH ####
         @buttons.refresh.setListener "click"
             ,{engine:@engine,button:@buttons.refresh}
             ,@listeners.refresh
-        #### REFRESH #### 
+        #### REFRESH ####
         #### STRING ####
         @buttons.string.setListener "click"
             ,{engine:@engine,button:@buttons.string}
@@ -3236,9 +3237,9 @@ class Demo
         #### PRESETS ####
 
 ########################## Demo ##########################
-#################### END OF CLASSES ####################     
+#################### END OF CLASSES ####################
 
-#################### START ####################   
+#################### START ####################
 
 # Note: it is implied that the code below will run as soon as the page loads
 window.world = new Engine()
@@ -3259,7 +3260,7 @@ test3 = new Rectangle {
     sf: 0.8
     df: 0.5
     restitution: 0
-    v:new Vector(-0.1,-0.1) 
+    v:new Vector(-0.1,-0.1)
     x:300
     y:200
     width:54
@@ -3272,7 +3273,7 @@ test2 = new Rectangle {
     sf: 0.8
     df: 0.5
     restitution: 0
-    v:new Vector(-0.1,-0.1) 
+    v:new Vector(-0.1,-0.1)
     x:200
     y:200
     width:50
@@ -3284,7 +3285,7 @@ test4 = new Rectangle {
     sf: 0.8
     df: 0.5
     restitution: 0
-    v:new Vector(-0.1,-0.1) 
+    v:new Vector(-0.1,-0.1)
     x:300
     y:200
     width:50
@@ -3296,7 +3297,7 @@ test1 = new Circle {
     sf: 0.8
     df: 0.5
     restitution: 0
-    v:new Vector(-0.1,-0.1) 
+    v:new Vector(-0.1,-0.1)
     x:600
     y:200
     radius:40
@@ -3312,5 +3313,3 @@ test4.addShape shape2
 #world.implement test4
 #world.implement test2
 #world.implement test3
-
-
