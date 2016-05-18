@@ -1,11 +1,7 @@
-
 # Mac crap
 .DS_Store
-
-#################
-## Directories
-#################
-
-dev/
-cms/core/config/
-node_modules/
+node_modules
+dist
+.tmp
+bower_components
+test/bower_components

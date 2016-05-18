@@ -1,0 +1,32 @@
+html,body,.flex-container{
+  height: 100%;
+  width: 100%;
+}
+
+body{
+  // remove browser generated margins
+  margin: 0;
+}
+
+.flex-container{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.flex-container-nav-elem{
+  padding-top: 10px;
+  flex-basis: 59px;
+}
+.flex-container-fill-screen{
+  flex-basis: 0;
+  flex-grow: 1;
+  // because the navigation is going to be absolutely spaced
+  position: relative;
+}
+.tumble-navigation{
+  z-index: 1;
+}
+.canvas{
+  position: absolute;
+}

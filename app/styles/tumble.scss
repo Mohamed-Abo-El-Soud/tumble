@@ -1,0 +1,199 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:900,300);
+
+#placeholder {
+    width:600px;
+    height:300px;
+    position:fixed;
+    //background:rgba(225, 225, 225, 0.4);
+    z-index:-1;
+}
+
+#instructions {
+    font-family: "Roboto",non-serif;
+    position:fixed;
+    z-index: -1;
+    display: none;
+    margin: 80px 0px 0px 109px;
+
+    //text-align: right;
+    //width:600px;
+    //height:300px;
+    list-style-type: none;
+}
+#instructions h1{
+    color: #B7C3C2;
+}
+#instructions ul{
+    list-style-type:none;
+    color: #808080;
+}
+
+/* general */
+ * {
+    //border: 1px dotted blue;
+}
+
+// disable the highliting from double-clicking
+.tumble-canvas-area{
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+}
+
+.tumble-navigation {
+    position: fixed;
+}
+.css-button {
+    padding: 16px;
+    font-size: 1em;
+    text-align: center;
+    color: #696969;
+    font-family:"Roboto", sans-serif;
+    font-weight: 900;
+    transition: all 0.3s cubic-bezier(0, 0, .16, .76);
+    background: #ededed;
+    //flex: 1;
+}
+.topHidden {
+    padding: 0px;
+    font-size: 0px;
+    //flex: 0;
+}
+.sideHidden {
+    transform: scaleX(0);
+    padding: 0px;
+    font-size: 0px;
+    margin-top: 40px;
+    opacity: 0;
+    //flex: 0;
+}
+.sideHidden div{
+
+    transform: scaleX(0);
+    padding: 0px;
+    font-size: 0px;
+    margin-top: 40px;
+    opacity: 0;
+}
+.tumble-navigation {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+.applied {
+    //transition: all 0.3s cubic-bezier(0, 0, .16, .76);
+    background: #535353;
+    color: #fff;
+}
+.dropdown {
+    padding: 0;
+    display: inline-flex;
+    flex-direction: column;
+    //font-weight: 900;
+}
+.css-button:not(.dropdown):active {
+    position: relative;
+    top: 1px;
+}
+/* general */
+
+/* button specific */
+ #gravity {
+    clear: both;
+}
+#gravity:after {
+    content:"GRAVITY";
+}
+#string:after {
+    content:"STRING";
+}
+#presetHead:after {
+    content:"PRESETS";
+}
+#refresh:after {
+    content:"REFRESH";
+}
+#play:after {
+    content:"PLAY";
+}
+#play.applied:after {
+    content:"PAUSE";
+}
+.js-options-hamburger {
+    padding: 13px;
+
+}
+.block {
+    background: #535353;
+    width: 31px;
+    height: 4px;
+    margin: 3px;
+    position: relative;
+    top: 0px;
+    transition: all 0.3s cubic-bezier(0, 0, .16, .76);
+}
+.js-options-hamburger.is-opened .block.one {
+    transform: rotate(-30deg);
+}
+.js-options-hamburger.is-opened .block.two {
+    opacity: 0;
+}
+.js-options-hamburger.is-opened .block.three {
+    transform: rotate(30deg);
+}
+.dropdown.sideHidden {
+    font-size: 1em;
+}
+.clear {
+    width: 200%;
+    display: none;
+}
+/* button specific */
+
+/* Media Queries */
+ @media (max-width:655px) {
+    .tumble-navigation {
+        align-items: stretch;
+        // justify-content: space-between;
+        // stretch to the edges of the screen
+        position: absolute;
+        width: 100%;
+    }
+    .dropdown {
+        flex-direction: row;
+        order: 5;
+    }
+    .css-button/*:not(.js-presets)*/:not(.dropdown):not(.sideHidden):not(.topHidden) {
+        font-size: 0.7em;
+    }
+    .clear {
+        display: block;
+    }
+}
+@media (max-width:540px) {
+    .dropdown:not(.sideHidden) {
+        width: 100%;
+        order: 0;
+        flex-direction: column;
+    }
+
+    .css-button/*:not(.js-presets)*/:not(.dropdown):not(.sideHidden):not(.topHidden) {
+        font-size: 0.6em;
+        //padding: 8px;
+    }
+    .dropdown:not(.sideHidden) ~.css-button {
+        flex: 1;
+    }
+}
+@media (max-width:400px) {
+     .css-button:not(.dropdown):not(.sideHidden):not(.topHidden) {
+        font-size: 0.5em;
+        padding: 5px;
+    }
+
+}
+/* Media Queries */

@@ -129,9 +129,9 @@ ctxx = can.getContext("2d");
 
 win = $(window);
 
-jcan.attr("width", win.width() - 24);
+// jcan.attr("width", win.width() - 24);
 
-jcan.attr("height", win.height() - 20);
+// jcan.attr("height", win.height() - 20);
 
 requestAnimationFrame = window.requestAnimationFrame ||
  window.webkitRequestAnimationFrame ||
@@ -845,10 +845,11 @@ Rope = (function() {
 Engine = (function() {
   var topics;
   /**
-   * The core engine of the physics engine. Renders the frames and implements a publisher/subscriber pattern
+   * Class Engine: The core engine of the physics engine. Renders the frames and implements a publisher/subscriber pattern
+   * @param {selector} $fpsSelector the selector of the fps DOM element
    * @constructor
    */
-  function Engine() {
+  function Engine($fpsSelector) {
     this.request = {
       frame: true,
       animation: false
@@ -863,9 +864,10 @@ Engine = (function() {
     this.fpsCount = 1;
     this.dt = 1 / this.fpsCount;
     this.fpsNum = null;
+    this.$fpsSelector = $fpsSelector;
     this.pageX = 0;
     this.pageY = 0;
-    this.fps();
+    this.fps($fpsSelector);
     this.update();
   }
 
@@ -993,7 +995,7 @@ Engine = (function() {
     this.elapsedTime = this.thisLoop - this.lastLoop;
     this.lastLoop = this.thisLoop;
     this.fpsNum = 1000 / this.accumulator;
-    return $("#fps").html(ceil(this.fpsNum));
+    return this.$fpsSelector.html(ceil(this.fpsNum));
   };
 
   Engine.prototype.implement = function(item) {
@@ -2151,17 +2153,68 @@ Mouse = (function(superClass) {
   };
 
   Mouse.prototype.emitMouseMove = function(event) {
-    this.engine.pageX = event.pageX - 10;
-    return this.engine.pageY = this.selector.height() - event.pageY + 6;
+    var selector = this.selector[0].tagName === "CANVAS" ?
+     this.selector[0].parentNode : this.selector[0];
+    var totalOffsets = this.getAllOffsets(selector);
+    this.engine.pageX = event.pageX - totalOffsets.left;
+    this.engine.pageY = (this.selector.height() - event.pageY) +
+     totalOffsets.top;
+  };
+  Mouse.prototype.getAllOffsets = function(element) {
+    var safetyCounter = 0;
+    var currParent;
+    if ((!element.tagName) || (element.tagName === "BODY")) {
+      throw new Error("element is not a domElement");
+    }
+    currParent = element;
+    var offSetsLeft = element.offsetLeft;
+    var offSetsTop = element.offsetTop;
+    while (currParent && (currParent.tagName !== "BODY") &&
+     (safetyCounter < 10)) {
+      currParent = currParent.parentNode;
+      offSetsLeft -= currParent.offsetLeft;
+      offSetsTop -= currParent.offsetTop;
+      safetyCounter++;
+    }
+    return {left: offSetsLeft, top: offSetsTop};
   };
 
   Mouse.prototype.mouseClick = function() {
+    var that = this;
     this.selector.on("mousemove.mouseInput",
       this.mouseChecker.bind(null, this.emitMouseMove));
     this.selector.on("mousedown.mouseInput",
-      this.mouseChecker.bind(null, this.emitMouseDown));
-    return this.selector.on("mouseup.mouseInput",
-      this.mouseChecker.bind(null, this.emitMouseUp));
+      function(e) {
+        that.mouseChecker(that.emitMouseMove, e);
+        that.mouseChecker(that.emitMouseDown, e);
+      }
+    );
+    this.selector.on("mouseup.mouseInput",
+      function(e) {
+        that.mouseChecker(that.emitMouseMove, e);
+        that.mouseChecker(that.emitMouseUp, e);
+      }
+    );
+    // bind touch events
+    this.selector[0].addEventListener("touchstart", this.touchHandler, true);
+    this.selector[0].addEventListener("touchmove", this.touchHandler, true);
+    this.selector[0].addEventListener("touchend", this.touchHandler, true);
+    this.selector[0].addEventListener("touchcancel", this.touchHandler, true);
+  };
+  Mouse.prototype.touchHandler = function(event) {
+    var touch = event.changedTouches[0];
+
+    var simulatedEvent = document.createEvent("MouseEvent");
+    simulatedEvent.initMouseEvent({
+      touchstart: "mousedown",
+      touchmove: "mousemove",
+      touchend: "mouseup"
+    }[event.type], true, true, window, 1,
+    touch.pageX, touch.pageY,
+    touch.clientX, touch.clientY, false,
+    false, false, false, 0, null);
+    touch.target.dispatchEvent(simulatedEvent);
+    event.preventDefault();
   };
 
   Mouse.prototype.mouseReset = function() {
@@ -2226,8 +2279,13 @@ CanvasControl = (function(superClass) {
 
   CanvasControl.prototype.adjustment = function(event) {
     var center;
-    this.selector.attr("width", this.window.width() - 24);
-    this.selector.attr("height", this.window.height() - 20);
+    // console.log("adjusting...");
+    // console.log(this.selector);
+    // return;
+    // this.selector.attr("width", this.window.width() - 24);
+    // this.selector.attr("height", this.window.height() - 20);
+    this.selector.attr("width", this.selector.parent().width());
+    this.selector.attr("height", this.selector.parent().height());
     center = new CanvasCenter();
     this.context.translate(center.x, center.y);
     this.context.scale(1, -1);
@@ -3178,10 +3236,17 @@ Vector = (function() {
     };
     return jcan.draw(temp);
   };
-
-  Vector.prototype.draw = function(bool, bool2, bool3) {
+  /**
+   * Vector.draw: draws the vector on the canvas
+   * @param  {boolean} fromCenter            whether the vector should be drawn from the center of the canvas or from the origin
+   * @param  {number} originLineWidth       the width of the line from the vector to the origin. If left null then no line will be drawn
+   * @param  {string} originLineStrokeColor the stroke color of the line from the vector to the origin - default is black
+   * @return {undefined}
+   */
+  Vector.prototype.draw = function(fromCenter, originLineWidth,
+     originLineStrokeColor) {
     var end, start;
-    start = bool == null ? new CanvasCenter() : {
+    start = fromCenter == null ? new CanvasCenter() : {
       x: 0,
       y: 0
     };
@@ -3195,15 +3260,16 @@ Vector = (function() {
     ctxx.fillStyle = "black";
     ctxx.arc(end.x, end.y, 3, 0, 2 * pi);
     ctxx.fill();
-    if (bool2 == null) {
+    if (originLineWidth == null) {
       return;
     }
     ctxx.beginPath();
-    ctxx.strokeStyle = bool3 == null ? "black" : bool3;
-    ctxx.lineWidth = bool2 || 0.5;
+    ctxx.strokeStyle = originLineStrokeColor == null ?
+     "black" : originLineStrokeColor;
+    ctxx.lineWidth = originLineWidth || 0.5;
     ctxx.moveTo(start.x, start.y);
     ctxx.lineTo(end.x, end.y);
-    return ctxx.stroke();
+    ctxx.stroke();
   };
 
   Vector.prototype.centroid = function(points) {
@@ -4220,7 +4286,7 @@ Demo = (function() {
     }
     cnc = new CanvasControl(this.selector, this.context, this.window, "Jquery");
     cnc.activate(this.engine);
-    mouse = new Mouse($("#canvasArea"), "Jquery", $(".navigation"));
+    mouse = new Mouse($(".js-canvas"), "Jquery", $(".js-navigation"));
     mouse.activate(this.engine);
     this.behaviours.drag = new Drag();
     this.behaviours.drag.set();
@@ -4450,12 +4516,12 @@ Demo = (function() {
     removingClass = function(selector, classToApply, e) {
       return selector.removeClass(classToApply);
     };
-    this.buttons.refresh = new Action("refresh", "#refresh");
+    this.buttons.refresh = new Action("refresh", ".js-refresh");
     this.engine.on("refresh", function() {
       var i, j, len1, ref1, results;
       ref1 = [this.buttons.gravity, this.buttons.string, this.buttons.play];
       results = [];
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
+      for (j = 0; j < ref1.length; j++) {
         i = ref1[j];
         if (i.activated) {
           removingClass.bind(null, i.selector[1], "applied")();
@@ -4466,19 +4532,19 @@ Demo = (function() {
       }
       return results;
     }, this);
-    this.buttons.play = new Toggle("playPause", "#play");
+    this.buttons.play = new Toggle("playPause", ".js-play");
     this.buttons.play.setListener("click", null,
      applyingClass.bind(null, this.buttons.play.selector[0], "applied"),
       removingClass.bind(null, this.buttons.play.selector[1], "applied"));
-    this.buttons.gravity = new Toggle("gravity", "#gravity");
+    this.buttons.gravity = new Toggle("gravity", ".js-gravity");
     this.buttons.gravity.setListener("click", null,
      applyingClass.bind(null, this.buttons.gravity.selector[0], "applied"),
       removingClass.bind(null, this.buttons.gravity.selector[1], "applied"));
-    this.buttons.string = new Toggle("string", "#string");
+    this.buttons.string = new Toggle("string", ".js-string");
     this.buttons.string.setListener("click", null,
      applyingClass.bind(null, this.buttons.string.selector[0], "applied"),
       removingClass.bind(null, this.buttons.string.selector[1], "applied"));
-    this.buttons.presets = new Radio("presets", ".presets");
+    this.buttons.presets = new Radio("presets", ".js-presets");
     ref1 = this.buttons.presets.options;
     for (j = 0, len1 = ref1.length; j < len1; j++) {
       i = ref1[j];
@@ -4487,11 +4553,12 @@ Demo = (function() {
       i.setListener("internal", null, null,
        removingClass.bind(null, i.selector[1], "applied"));
     }
-    this.buttons.hideOptions = new Toggle("hideOptions", "#options1");
+    this.buttons.hideOptions = new Toggle("hideOptions",
+     ".js-options-hamburger");
     hideStuff = function(selectors, classToApply, fn, typeOfHidden, e) {
-      var index, len2, p, results, selector;
+      var index, p, results, selector;
       results = [];
-      for (index = p = 0, len2 = selectors.length; p < len2; index = ++p) {
+      for (index = 0; index < selectors.length; index++) {
         i = selectors[index];
         selector = selectors.eq(index);
         results.push(fn(selector, typeOfHidden));
@@ -4499,13 +4566,14 @@ Demo = (function() {
       return results;
     };
     this.buttons.hideOptions.setListener("click", null,
-      hideStuff.bind(null, $(".options1"), "applied", applyingClass,
-       "sideHidden"), hideStuff.bind(null, $(".options1"), "applied",
-        removingClass, "sideHidden"));
+      hideStuff.bind(null, $(".js-on-hamburger-collapse"), "applied",
+       applyingClass, "sideHidden"), hideStuff.bind(null,
+          $(".js-on-hamburger-collapse"), "applied", removingClass,
+           "sideHidden"));
     this.buttons.hideOptions.setListener("click", null,
       removingClass.bind(null, this.buttons.hideOptions.selector[0],
-         "optioned"), applyingClass.bind(null,
-            this.buttons.hideOptions.selector[1], "optioned"));
+         "is-opened"), applyingClass.bind(null,
+            this.buttons.hideOptions.selector[1], "is-opened"));
 
     /*
     @buttons.presetView1 = new Toggle("presetView1","#presetHead")
@@ -4513,8 +4581,8 @@ Demo = (function() {
         for i,index in selectors
             selector = selectors.eq(index)
             fn selector,typeOfHidden
-    @buttons.presetView1.setListener "click",null,hideStuff2.bind(null,$(".presets"),"applied",applyingClass,"topHidden")
-        ,hideStuff2.bind(null,$(".presets"),"applied",removingClass,"topHidden")
+    @buttons.presetView1.setListener "click",null,hideStuff2.bind(null,$(".js-presets"),"applied",applyingClass,"topHidden")
+        ,hideStuff2.bind(null,$(".js-presets"),"applied",removingClass,"topHidden")
      */
     this.buttons.presetView2 = new Button("presetView2", ".dropdown");
     hideStuff3 = function(selectors, classToApply, fn, typeOfHidden, e) {
@@ -4528,10 +4596,10 @@ Demo = (function() {
       return results;
     };
     this.buttons.presetView2.setListener("mouseenter", null,
-     hideStuff3.bind(null, $(".presets"),
+     hideStuff3.bind(null, $(".js-presets"),
       "applied", removingClass, "topHidden"));
     return this.buttons.presetView2.assignDeactivation("mouseleave", null,
-     hideStuff3.bind(null, $(".presets"), "applied", applyingClass,
+     hideStuff3.bind(null, $(".js-presets"), "applied", applyingClass,
       "topHidden"));
   };
 
@@ -4569,7 +4637,7 @@ Demo = (function() {
   return Demo;
 })();
 
-var world = window.world = new Engine();
+var world = window.world = new Engine($(".js-fps"));
 
 demo = new Demo(world, jcan, ctxx, win);
 
@@ -4643,6 +4711,3 @@ shape1 = test1.shapes[0];
 test4.addShape(shape1);
 
 test4.addShape(shape2);
-
-// ---
-// generated by coffee-script 1.9.2
