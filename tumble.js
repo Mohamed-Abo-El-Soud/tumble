@@ -251,7 +251,7 @@ generateRandomColor = function(transparency) {
 
 Button = (function() {
   /**
-   * Button class structure
+   * class Button: used to identify and properly use css buttons in the interface
    * @param {string} name1     name of the button
    * @param {string} selector  an activation string representing the jquery selector for the button, when clicked, it is activated
    * @param {string} selector2 an deactivation string representing the jquery selector for the button, when clicked, it is activated
@@ -481,7 +481,7 @@ Button = (function() {
 Action = (function(superClass) {
   extend(Action, superClass);
   /**
-   * Action buttons, where every click results in a response triggered
+   * class Action: a type of button that fires of an action once it is clicked
    * @param {string} name1     name of the button
    * @param {string} selector  an activation string representing the jquery selector for the button, when clicked, it is activated
    * @param {string} selector2 an deactivation string representing the jquery selector for the button, when clicked, it is activated
@@ -509,7 +509,7 @@ Action = (function(superClass) {
 Toggle = (function(superClass) {
   extend(Toggle, superClass);
   /**
-   * Toggle button, where one click activeates a trigger, and a second click activates another
+   * class Toggle: a type of button when clicked once, activates, and when clicked again, deactivates
    * @param {string} name1     name of the button
    * @param {string} selector  an activation string representing the jquery selector for the button, when clicked, it is activated
    * @param {string} selector2 an deactivation string representing the jquery selector for the button, when clicked, it is activated
@@ -567,7 +567,7 @@ Toggle = (function(superClass) {
 RadioOption = (function(superClass) {
   extend(RadioOption, superClass);
   /**
-   * Radio buttons, where multiple buttons deactivate each other, so only one is activated at a time
+   * class RadioOption: an instance of a radio option button, mean to be used within an instance of a radio object
    * @param {string} name1     name of the button
    * @param {string} selector  an activation string representing the jquery selector for the button, when clicked, it is activated
    * @param {string} selector2 an deactivation string representing the jquery selector for the button, when clicked, it is activated
@@ -592,7 +592,8 @@ RadioOption = (function(superClass) {
 Radio = (function(superClass) {
   extend(Radio, superClass);
   /**
-  * Radio container that holds several radio option buttons
+  * class Radio: is an interface type that has sub options to click at. Once a single option has been activated,
+  *    the remaining options are deactivated as a result, making sure only one option is selected at all times.
   * @param {string} name1     name of the button
   * @param {string} selector  an activation string representing the jquery selector for the button, when clicked, it is activated
   * @param {string} selector2 an deactivation string representing the jquery selector for the button, when clicked, it is activated
@@ -738,7 +739,7 @@ Radio = (function(superClass) {
 
 Queue = (function() {
   /**
-  * simple queue structure with search and clear functionality
+  * simple queue structure with "search" and "clear" functionality
   * @constructor
   */
   function Queue() {
@@ -802,6 +803,12 @@ Queue = (function() {
 })();
 
 Rope = (function() {
+  /**
+   * A rope that acts as a string between two shapes
+   * @param {Shape} shape11 first shape
+   * @param {Shape} shape21 second shape
+   * @constructor
+   */
   function Rope(shape11, shape21) {
     // this.shape1 = shape11 != null ? shape11 : null;
     this.shape1 = shape11 == null ? null : shape11;
@@ -837,7 +844,10 @@ Rope = (function() {
 
 Engine = (function() {
   var topics;
-
+  /**
+   * The core engine of the physics engine. Renders the frames and implements a publisher/subscriber pattern
+   * @constructor
+   */
   function Engine() {
     this.request = {
       frame: true,
@@ -1092,6 +1102,15 @@ Engine = (function() {
 })();
 
 Behaviour = (function() {
+  /**
+   * class Behaviour: adds different behaviours upon user interaction with the engine
+   *    set: set its parameters in which the behaviour is going to function
+   *    update: affects the world for the behaviour to be achieved
+   *    active: boolean - displays whether the behaviour is running
+   *    activate: activates the behaviour
+   *    deactivate: deactivates the behaviour
+   * @constructor
+   */
   function Behaviour() {
     var args;
     this.active = false;
@@ -1194,12 +1213,16 @@ Behaviour = (function() {
 
 Collision = (function(superClass) {
   extend(Collision, superClass);
-
+  /**
+   * class Collision: a template for other collision detectors/solvers
+   * @param {Array} checks the array of checks that act as events that when triggered, they call the update function to this class
+   * @constructor
+   */
   function Collision(checks) {
-    var i, j, len1;
+    var i, j;
     Collision.__super__.constructor.apply(this, arguments);
     this.updates = {};
-    for (j = 0, len1 = checks.length; j < len1; j++) {
+    for (j = 0; j < checks.length; j++) {
       i = checks[j];
       this.updates[i] = [this.update, this];
     }
@@ -1227,7 +1250,10 @@ Collision = (function(superClass) {
 
 CollisionControl = (function(superClass) {
   extend(CollisionControl, superClass);
-
+  /**
+   * class CollisionControl: checks all pairs of shapes to see if shapes collided
+   * @constructor
+   */
   function CollisionControl() {
     CollisionControl.__super__.constructor.apply(this, arguments);
   }
@@ -1271,7 +1297,10 @@ CollisionControl = (function(superClass) {
 
 AABB = (function(superClass) {
   extend(AABB, superClass);
-
+  /**
+   * class AABB: checks if shapes are inside one another through the AABB rectangle
+   * @constructor
+   */
   function AABB() {
     AABB.__super__.constructor.call(this, ["checkColl: Rectangle - Circle",
      "checkColl: Circle - Rectangle",
@@ -1331,17 +1360,18 @@ AABB = (function(superClass) {
 
 GJK = (function(superClass) {
   var EdgePoints, ranking, separation, simplexPoint, tripleCross;
-
   extend(GJK, superClass);
-
-  /*
-      "AABB: Rectangle - Circle"
-      "AABB: Circle - Rectangle"
-      "AABB: Rectangle - Rectangle"
-      "AABB: Circle - Circle"
-   */
-
+  /**
+  * class GJK: Uses the GJK algorithm to find the collision between two polygons
+  * @constructor
+  */
   function GJK() {
+    /*
+        "AABB: Rectangle - Circle"
+        "AABB: Circle - Rectangle"
+        "AABB: Rectangle - Rectangle"
+        "AABB: Circle - Circle"
+     */
     GJK.__super__.constructor.call(this, ["AABB: Shape - Shape"]);
   }
 
@@ -1633,15 +1663,17 @@ GJK = (function(superClass) {
 
 SATColl = (function(superClass) {
   extend(SATColl, superClass);
-
-  /*
-      "AABB: Rectangle - Circle"
-      "AABB: Circle - Rectangle"
-      "AABB: Rectangle - Rectangle"
-      "AABB: Circle - Circle"
+  /**
+   * class SATColl: Uses the SAT algorithm to find the collision between two polygons
+   * @constructor
    */
-
   function SATColl() {
+    /*
+    "AABB: Rectangle - Circle"
+    "AABB: Circle - Rectangle"
+    "AABB: Rectangle - Rectangle"
+    "AABB: Circle - Circle"
+    */
     SATColl.__super__.constructor.call(this, ["AABB: Shape - Shape"]);
   }
 
@@ -1934,7 +1966,10 @@ SATColl = (function(superClass) {
 
 ImpulseResolution = (function(superClass) {
   extend(ImpulseResolution, superClass);
-
+  /**
+  * class ImpulseResolution: Pushes away two polygons by adding the appropriate force and torque
+  * @constructor
+  */
   function ImpulseResolution() {
     ImpulseResolution.__super__.constructor.call(this,
       ["collided: Rectangle - Circle",
@@ -2059,7 +2094,15 @@ ImpulseResolution = (function(superClass) {
 
 Mouse = (function(superClass) {
   extend(Mouse, superClass);
-
+ /**
+  * class Mouse: Relays all information on the mouse
+  *    1. provides the engine with the cartesian coordinates of the input (in this case the mouse)
+  *    2. notifies the engine of an input interaction (e.g:click of a mouse)
+  * @param {Selector} selector1        the selector corresponding to the canvas
+  * @param {String} type             the type of selector (currently can only be JQuery)
+  * @param {Selector} forbiddenElement a selector containing an element that is ignored when clicked
+  * @constructor
+  */
   function Mouse(selector1, type, forbiddenElement) {
     this.selector = selector1;
     this.forbiddenElement = forbiddenElement;
@@ -2141,7 +2184,14 @@ Mouse = (function(superClass) {
 
 CanvasControl = (function(superClass) {
   extend(CanvasControl, superClass);
-
+  /**
+   * class CanvasControl: resizes the canvas once the window is resized
+   * @param {Selector} selector1 the selector for the canvas
+   * @param {object} context   the context of the canvas
+   * @param {object} window1   reference to the window
+   * @param {String} type      the type of selector (currently can only be JQuery)
+   * @constructor
+   */
   function CanvasControl(selector1, context, window1, type) {
     this.selector = selector1;
     this.context = context;
@@ -2197,7 +2247,10 @@ CanvasControl = (function(superClass) {
 
 PlayPause = (function(superClass) {
   extend(PlayPause, superClass);
-
+  /**
+   * class PlayPause: adds the play / pause functionality to the engine
+   * @constructor
+   */
   function PlayPause() {
     this.resets = {
       pause: [this.reset, this]
@@ -2228,7 +2281,10 @@ PlayPause = (function(superClass) {
 
 Refresh = (function(superClass) {
   extend(Refresh, superClass);
-
+  /**
+   * class Refresh: resets the simulation to its original state
+   * @constructor
+   */
   function Refresh() {}
 
   Refresh.prototype.activate = function(engine) {
@@ -2257,7 +2313,10 @@ Refresh = (function(superClass) {
 
 Cord = (function(superClass) {
   extend(Cord, superClass);
-
+  /**
+   * class String: binds and pulls all shapes together with a string that pulls them all together
+   * @constructor
+   */
   function Cord() {
     this.strings = new Queue();
     this.updates = {
@@ -2392,7 +2451,10 @@ Cord = (function(superClass) {
 
 Gravity = (function(superClass) {
   extend(Gravity, superClass);
-
+  /**
+   * class Gravity: applies a constant force upon all weighted shapes to a specific direction
+   * @constructor
+   */
   function Gravity() {
     this.a = new Vector();
     this.updates = {
@@ -2462,7 +2524,10 @@ Gravity = (function(superClass) {
 
 Drag = (function(superClass) {
   extend(Drag, superClass);
-
+  /**
+   * class class Drag: allows the user to apply a force on any shape in any direction by clicking and dragging.
+   * @constructor
+   */
   function Drag() {
     this.velocity = new Vector();
     this.updates = {
@@ -2646,7 +2711,11 @@ Drag = (function(superClass) {
 
 AddShape = (function(superClass) {
   extend(AddShape, superClass);
-
+  /**
+   * class AddShape: allows the user to specify which shape gets added to the simulation using a set of predetermined presets.
+   * @param {Object} engine reference to the engine instance
+   * @constructor
+   */
   function AddShape(engine) {
     this.count = 0;
     this.mouseLoc = new Vector();
@@ -2875,6 +2944,10 @@ AddShape = (function(superClass) {
 })(Behaviour);
 
 Presets = (function() {
+  /**
+   * class Presets: is a set of different instances of behaviours that can be activated or deactivated.
+   * @constructor
+   */
   function Presets() {
     this.storage = [];
     this.pickedIndex = -1;
@@ -2917,6 +2990,12 @@ Presets = (function() {
 })();
 
 Vector = (function() {
+  /**
+   * class Vector: a class providing a mathematical vector object
+   * @param {number} x a number represting the x coordinate
+   * @param {number} y a number represting the y coordinate
+   * @constructor
+   */
   function Vector(x, y) {
     this.x = x == null ? 0 : x;
     this.y = y == null ? 0 : y;
@@ -3212,6 +3291,12 @@ Vector = (function() {
 })();
 
 Line = (function() {
+  /**
+   * class Line: a line joining two vector instances
+   * @param {Vector} p11 the first vector of the line
+   * @param {Vector} p21 the second vector of the line
+   * @constructor
+   */
   function Line(p11, p21) {
     this.p1 = p11;
     this.p2 = p21;
@@ -3320,25 +3405,28 @@ Line = (function() {
 })();
 
 Body = (function() {
-  /*   FORMAT: for body
-      shapes: [a,b,c,d,...] - the shapes included in the body
-              setLoc: true - setting the location of the shape using an input
-              setVel: true - setting the velocity using input
-              invM:1/1.5, - setting the mass by setting its inverse,
-                            the mass of this object is 1.5 units
-              invI:1/1.5, - setting the moment of inertia by setting
-                          its inverse, it will be the same as mass
-                          if one isnt chosen
-              orient:0, - the initial orientation of the shape
-              sf: 0.8, - the coefficient of static friction of the object
-              df: 0.5, - the coefficient of dynamic friction of the object
-              restitution: 0 - the coefficient of restitution of the object
-              v:new Vector(-1,-0.5) - the intitial velocity, if not set
-              x:400, - setting the location, if it isnt set, it will be
-              y:200, - set automatically from the centers of its shapes
+  /**
+   * class Body: any body element that has a set existance in the engine. It could be moved, has a weight and could be drawn.
+   * @param {object} input an object containing all the relevant information for the creation of the body (e.g: weight).
+   * @constructor
    */
   function Body(input) {
-    var i, i1, j, len1, ref1;
+    /**
+     *   Format of input for body:
+     *   shapes: [a,b,c,d,...] - the shapes included in the body
+     *           @property setLoc: true - setting the location of the shape using an input
+     *           @property setVel: true - setting the velocity using input
+     *           @property invM:1/1.5, - setting the mass by setting its inverse, the mass of this object is 1.5 units
+     *           @property invI:1/1.5, - setting the moment of inertia by setting its inverse, it will be the same as mass if one isnt chosen
+     *           @property orient:0, - the initial orientation of the shape
+     *           @property sf: 0.8, - the coefficient of static friction of the object
+     *           @property df: 0.5, - the coefficient of dynamic friction of the object
+     *           @property restitution: 0 - the coefficient of restitution of the object
+     *           @property v:new Vector(-1,-0.5) - the intitial velocity, if not set
+     *           @property x:400, - setting the location, if it isnt set, it will be
+     *           @property y:200, - set automatically from the centers of its shapes
+     */
+    var i, i1;
     this.physical = {
       domains: []
     };
@@ -3347,9 +3435,8 @@ Body = (function() {
       return;
     }
     this.shapes = input.shapes || [];
-    ref1 = this.shapes;
-    for (i1 = j = 0, len1 = ref1.length; j < len1; i1 = ++j) {
-      i = ref1[i1];
+    for (i1 = 0; i1 < this.shapes.length; i1++) {
+      i = this.shapes[i1];
       if (i1 >= 1) {
         throw new Error("if you want more shapes," +
         " add them using the addShape function!");
@@ -3617,7 +3704,27 @@ Body = (function() {
 })();
 
 Shape = (function() {
+  /**
+   * class Shape: a 2 dimensional shape object class stucture
+   * @param {object} input an object containing all the relevant information for the creation of the shape (e.g: fill).
+   * @constructor
+   */
   function Shape(input) {
+    /**
+     *      Format of input for Shape:
+     *      @property x:400, - setting the location
+     *      @property y:200, - setting the location
+     *      @property points: [
+     *                  [3,2]  - these are setting the verticies
+     *                  [3,1]    of the shape. However, not all
+     *                  [4,1]    shapes have verticies, special
+     *                  [2,4]    cases do exist like circles
+     *              ]
+     *      @property fill: "blue" - the color of the object, if one isnt
+     *                   assigned, a random color will be chosen
+     *      @property stroke: [1,"grey"] - the trim of the shape, if one isnt
+     *                   assigned, there wont be any
+     */
     this.type = "Shape";
     this.physical = {
       domains: []
@@ -3628,21 +3735,6 @@ Shape = (function() {
     this.components = [this.physical, this.appearance];
     this.setPhysical(input);
     this.setAppearance(input);
-
-    /*     FORMAT: for Shape
-            x:400, - setting the location
-            y:200, - setting the location
-            points: [
-                        [3,2]  - these are setting the verticies
-                        [3,1]    of the shape. However, not all
-                        [4,1]    shapes have verticies, special
-                        [2,4]    cases do exist like circles
-                    ]
-            fill: "blue" - the color of the object, if one isnt
-                         assigned, a random color will be chosen
-            stroke: [1,"grey"] - the trim of the shape, if one isnt
-                         assigned, there wont be any
-     */
   }
 
   Shape.prototype.setPhysical = function(input) {
@@ -3890,31 +3982,34 @@ Shape = (function() {
 
 Rectangle = (function(superClass) {
   extend(Rectangle, superClass);
-
-  /*   FORMAT: for Rectangle
-              width: 323 - setting the width of the rectangle
-              height: 123 - setting the height of the rectangle
-              invM:1/1.5, - setting the mass by setting its inverse,
-                            the mass of this object is 1.5 units
-              the moment of inertia is calculated automatically
-              fill: "blue" - the color of the object, if one isnt
-                           assigned, a random color will be chosen
-              stroke: [1,"grey"] - the trim of the shape, if one isnt
-                           assigned, there wont be any
-
-              setLoc: true - setting the location of the shape using an input
-              setVel: true - setting the velocity using input
-              orient:0, - the initial orientation of the shape
-              sf: 0.8, - the coefficient of static friction of the object
-              df: 0.5, - the coefficient of dynamic friction of the object
-              restitution: 0 - the coefficient of restitution of the object
-              v:new Vector(-1,-0.5) - the intitial velocity, if not set
-              x:400, - setting the location, if it isnt set, it will be
-              y:200, - set automatically from the centers of its shapes
+  /**
+   * class Rectangle: a 2 dimensional rectangle shape class stucture
+   * @param {object} input an object containing all the relevant information for the creation of the rectangl3 (e.g: width).
+   * @constructor
    */
-
   function Rectangle(input) {
-    var dimX, dimY, first, i, j, len1, points, pos, ref1, temp;
+    /**
+     *             Format of input for Rectangle:
+     *                @property width: 323 - setting the width of the rectangle
+     *                @property height: 123 - setting the height of the rectangle
+     *                @property invM:1/1.5, - setting the mass by setting its inverse,
+     *                              the mass of this object is 1.5 units
+     *                the moment of inertia is calculated automatically
+     *                @property fill: "blue" - the color of the object, if one isnt
+     *                             assigned, a random color will be chosen
+     *                @property stroke: [1,"grey"] - the trim of the shape, if one isnt
+     *                             assigned, there wont be any
+     *                @property setLoc: true - setting the location of the shape using an input
+     *                @property setVel: true - setting the velocity using input
+     *                @property orient:0, - the initial orientation of the shape
+     *                @property sf: 0.8, - the coefficient of static friction of the object
+     *                @property df: 0.5, - the coefficient of dynamic friction of the object
+     *                @property restitution: 0 - the coefficient of restitution of the object
+     *                @property v:new Vector(-1,-0.5) - the intitial velocity, if not set
+     *                @property x:400, - setting the location, if it isnt set, it will be
+     *                @property y:200, - set automatically from the centers of its shapes
+     */
+    var dimX, dimY, first, i, j, points, pos, temp;
     temp = Object.create(input);
     if (!((temp.x != null) && (temp.y != null))) {
       throw new Error("no position coords");
@@ -3945,9 +4040,8 @@ Rectangle = (function(superClass) {
     first.points = points;
     Rectangle.__super__.constructor.call(this, temp);
     this.physical.invI = this.physical.invM * this.shapes[0].determineinvMOI();
-    ref1 = this.shapes;
-    for (j = 0, len1 = ref1.length; j < len1; j++) {
-      i = ref1[j];
+    for (j = 0; j < this.shapes.length; j++) {
+      i = this.shapes[j];
       i.shapeType = "Rectangle";
     }
     this.type = "Rectangle";
@@ -3958,29 +4052,32 @@ Rectangle = (function(superClass) {
 
 Circle = (function(superClass) {
   extend(Circle, superClass);
-
-  /*   FORMAT: for Circle
-              radus: 323 - setting the radius of the circle
-              invM:1/1.5, - setting the mass by setting its inverse,
-                            the mass of this object is 1.5 units
-              the moment of inertia is calculated automatically
-              fill: "blue" - the color of the object, if one isnt
-                           assigned, a random color will be chosen
-              stroke: [1,"grey"] - the trim of the shape, if one isnt
-                           assigned, there wont be any
-
-              setLoc: true - setting the location of the shape using an input
-              setVel: true - setting the velocity using input
-              orient:0, - the initial orientation of the shape
-              sf: 0.8, - the coefficient of static friction of the object
-              df: 0.5, - the coefficient of dynamic friction of the object
-              restitution: 0 - the coefficient of restitution of the object
-              v:new Vector(-1,-0.5) - the intitial velocity, if not set
-              x:400, - setting the location, if it isnt set, it will be
-              y:200, - set automatically from the centers of its shapes
+  /**
+   * class Circle: a 2 dimensional circle shape class stucture
+   * @param {object} input an object containing all the relevant information for the creation of the circle (e.g: width).
+   * @constructor
    */
-
   function Circle(input) {
+    /**
+     *         FORMAT: for Circle
+     *           @property radus: 323 - setting the radius of the circle
+     *           @property invM:1/1.5, - setting the mass by setting its inverse,
+     *                         the mass of this object is 1.5 units
+     *           the moment of inertia is calculated automatically
+     *           @property fill: "blue" - the color of the object, if one isnt
+     *                        assigned, a random color will be chosen
+     *           @property stroke: [1,"grey"] - the trim of the shape, if one isnt
+     *                        assigned, there wont be any
+     *           @property setLoc: true - setting the location of the shape using an input
+     *           @property setVel: true - setting the velocity using input
+     *           @property orient:0, - the initial orientation of the shape
+     *           @property sf: 0.8, - the coefficient of static friction of the object
+     *           @property df: 0.5, - the coefficient of dynamic friction of the object
+     *           @property restitution: 0 - the coefficient of restitution of the object
+     *           @property v:new Vector(-1,-0.5) - the intitial velocity, if not set
+     *           @property x:400, - setting the location, if it isnt set, it will be
+     *           @property y:200, - set automatically from the centers of its shapes
+     */
     var first, i, j, len1, points, ref1, temp;
     temp = Object.create(input);
     if (!((temp.x != null) && (temp.y != null))) {
@@ -4071,6 +4168,14 @@ Circle = (function(superClass) {
 })(Body);
 
 Demo = (function() {
+  /**
+   * class Demo: a class setting up the demo
+   * @param {object} engine1   a reference to the engine object
+   * @param {selector} selector1 a reference to the selector object
+   * @param {object} context   a reference to the context object
+   * @param {window} window1   a reference to the window object
+   * @constructor
+   */
   function Demo(engine1, selector1, context, window1) {
     this.engine = engine1;
     this.selector = selector1;

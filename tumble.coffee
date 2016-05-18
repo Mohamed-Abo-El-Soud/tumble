@@ -847,7 +847,7 @@ class Collision extends Behaviour
     update:()->
         return
 
-#### class CollisionControl: checks if objects collided
+#### class CollisionControl: checks all pairs of shapes to see if shapes collided
 ####
 
 class CollisionControl extends Behaviour
@@ -872,7 +872,7 @@ class CollisionControl extends Behaviour
                           }
         ,@
 
-#### class AABB: checks if shapes are inside one another
+#### class AABB: checks if shapes are inside one another through the AABB rectangle
 ####
 
 class AABB extends Collision
