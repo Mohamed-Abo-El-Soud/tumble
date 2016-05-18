@@ -1,0 +1,61 @@
+{
+    "env": {
+        "browser": true,
+        "node": true,
+        "jquery": true
+    },
+    "extends": "google",
+    "rules": {
+        "indent": [
+            "error",
+            2
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-console": [
+          "off"
+        ],
+        "eqeqeq": [
+          2,
+          "smart"
+        ],
+        "camelcase": [
+          2,
+    			{ "properties": "always" }
+        ],
+        "dot-notation": [
+          2,
+    			{ "allowPattern": "^[a-z]+(_[a-z]+)+$" }
+        ],
+         "no-eq-null": [
+           "off"
+         ],
+         "no-extend-native": [
+           "off"
+         ],
+         "one-var": [
+           "off"
+         ],
+         "no-eval": [
+           "off"
+         ],
+         "no-return-assign": [
+           "off"
+         ]
+    },
+    "globals": {
+      "App": true,
+      "_": true,
+      "enquire": true
+    }
+}
