@@ -1,0 +1,52 @@
+/* button specific */
+ #gravity {
+    clear: both;
+}
+#gravity:after {
+    content:"GRAVITY";
+}
+#string:after {
+    content:"STRING";
+}
+#presetHead:after {
+    content:"PRESETS";
+}
+#refresh:after {
+    content:"REFRESH";
+}
+#play:after {
+    content:"PLAY";
+}
+#play.applied:after {
+    content:"PAUSE";
+}
+#options1 {
+    padding: 13px;
+
+}
+.block {
+    background: #535353;
+    width: 31px;
+    height: 4px;
+    margin: 3px;
+    position: relative;
+    top: 0px;
+    transition: all 0.3s cubic-bezier(0, 0, .16, .76);
+}
+#options1.optioned .block.one {
+    transform: rotate(-30deg);
+}
+#options1.optioned .block.two {
+    opacity: 0;
+}
+#options1.optioned .block.three {
+    transform: rotate(30deg);
+}
+.dropdown.sideHidden {
+    font-size: 1em;
+}
+.clear {
+    width: 200%;
+    display: none;
+}
+/* button specific */
