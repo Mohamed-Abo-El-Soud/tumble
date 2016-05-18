@@ -19,7 +19,7 @@ Then all you have to do is run locally with gulp: `gulp serve`.
 
 ## Similar Projects
 
-Other great watch libraries to try are:
+Other great libraries to check out are:
 
 * [PhysicsJS](https://github.com/wellcaffeinated/PhysicsJS)
 * [matter-js](https://github.com/liabru/matter-js)
