@@ -4650,64 +4650,64 @@ new AABB().activate(world);
 new SATColl().activate(world);
 
 new ImpulseResolution().activate(world);
-
-test3 = new Rectangle({
-  invM: 1 / 1.5,
-  orient: 0,
-  sf: 0.8,
-  df: 0.5,
-  restitution: 0,
-  v: new Vector(-0.1, -0.1),
-  x: 300,
-  y: 200,
-  width: 54,
-  height: 175
-});
-
-test2 = new Rectangle({
-  invM: 1 / 1.5,
-  orient: 0,
-  sf: 0.8,
-  df: 0.5,
-  restitution: 0,
-  v: new Vector(-0.1, -0.1),
-  x: 200,
-  y: 200,
-  width: 50,
-  height: 89
-});
-
-test4 = new Rectangle({
-  invM: 1 / 1.5,
-  orient: 0,
-  sf: 0.8,
-  df: 0.5,
-  restitution: 0,
-  v: new Vector(-0.1, -0.1),
-  x: 300,
-  y: 200,
-  width: 50,
-  height: 89
-});
-
-test1 = new Circle({
-  invM: 1 / 1.5,
-  orient: 0,
-  sf: 0.8,
-  df: 0.5,
-  restitution: 0,
-  v: new Vector(-0.1, -0.1),
-  x: 600,
-  y: 200,
-  radius: 40
-});
-
-shape2 = test2.shapes[0];
-
-shape3 = test3.shapes[0];
-
-shape1 = test1.shapes[0];
-
-test4.addShape(shape1);
-
-test4.addShape(shape2);
+//
+// test3 = new Rectangle({
+//   invM: 1 / 1.5,
+//   orient: 0,
+//   sf: 0.8,
+//   df: 0.5,
+//   restitution: 0,
+//   v: new Vector(-0.1, -0.1),
+//   x: 300,
+//   y: 200,
+//   width: 54,
+//   height: 175
+// });
+//
+// test2 = new Rectangle({
+//   invM: 1 / 1.5,
+//   orient: 0,
+//   sf: 0.8,
+//   df: 0.5,
+//   restitution: 0,
+//   v: new Vector(-0.1, -0.1),
+//   x: 200,
+//   y: 200,
+//   width: 50,
+//   height: 89
+// });
+//
+// test4 = new Rectangle({
+//   invM: 1 / 1.5,
+//   orient: 0,
+//   sf: 0.8,
+//   df: 0.5,
+//   restitution: 0,
+//   v: new Vector(-0.1, -0.1),
+//   x: 300,
+//   y: 200,
+//   width: 50,
+//   height: 89
+// });
+//
+// test1 = new Circle({
+//   invM: 1 / 1.5,
+//   orient: 0,
+//   sf: 0.8,
+//   df: 0.5,
+//   restitution: 0,
+//   v: new Vector(-0.1, -0.1),
+//   x: 600,
+//   y: 200,
+//   radius: 40
+// });
+//
+// shape2 = test2.shapes[0];
+//
+// shape3 = test3.shapes[0];
+//
+// shape1 = test1.shapes[0];
+//
+// test4.addShape(shape1);
+//
+// test4.addShape(shape2);
