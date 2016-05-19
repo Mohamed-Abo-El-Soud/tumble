@@ -10,7 +10,9 @@ To see a demonstration of the code, visit: http://jsfiddle.net/Mohamed_Abo_El_So
 A physics Engine built from scratch.  
 Can be used on Windows, OSX, Linux and mobile phones.
 
-To see a demonstration of the code, visit: http://jsfiddle.net/Mohamed_Abo_El_Soud/FqMz9/223/
+To see a demonstration of the code, [click here](http://mohamed-abo-el-soud.github.io/tumble/) or visit: http://mohamed-abo-el-soud.github.io/tumble/
+
+There is also a jsfiddle of the code running as well here: http://jsfiddle.net/Mohamed_Abo_El_Soud/FqMz9/223/
 
 ## Usage
 Fork the repo with: `git clone https://github.com/Mohamed-Abo-El-Soud/tumble.git`.
