@@ -5,7 +5,7 @@ A physics Engine built from scratch
 
 To see a demonstration of the code, visit: http://jsfiddle.net/Mohamed_Abo_El_Soud/FqMz9/223/ -->
 
-# tumble [![Build Status](https://img.shields.io/badge/tumble-passing-brightgreen.svg)](https://travis-ci.org/Mohamed-Abo-El-Soud/tumble) [![Build status](https://ci.appveyor.com/api/projects/status/vtx65w9eg511tgo4)](https://ci.appveyor.com/project/Mohamed-Abo-El-Soud/tumble)
+# tumble [![Build Status](https://travis-ci.org/Mohamed-Abo-El-Soud/tumble.svg?branch=master)](https://travis-ci.org/Mohamed-Abo-El-Soud/tumble) [![Build status](https://ci.appveyor.com/api/projects/status/vtx65w9eg511tgo4)](https://ci.appveyor.com/project/Mohamed-Abo-El-Soud/tumble)
 
 A physics Engine built from scratch.  
 Can be used on Windows, OSX, Linux and mobile phones.
