@@ -4545,9 +4545,8 @@ Demo = (function() {
      applyingClass.bind(null, this.buttons.string.selector[0], "applied"),
       removingClass.bind(null, this.buttons.string.selector[1], "applied"));
     this.buttons.presets = new Radio("presets", ".js-presets");
-    ref1 = this.buttons.presets.options;
-    for (j = 0, len1 = ref1.length; j < len1; j++) {
-      i = ref1[j];
+    for (j = 0; j < this.buttons.presets.options; j++) {
+      i = this.buttons.presets.options[j];
       i.setListener("click", null,
        applyingClass.bind(null, i.selector[0], "applied"));
       i.setListener("internal", null, null,
@@ -4576,19 +4575,48 @@ Demo = (function() {
             this.buttons.hideOptions.selector[1], "is-opened"));
 
     /*
-    @buttons.presetView1 = new Toggle("presetView1","#presetHead")
-    hideStuff2 = (selectors,classToApply,fn,typeOfHidden,e)->
-        for i,index in selectors
-            selector = selectors.eq(index)
-            fn selector,typeOfHidden
-    @buttons.presetView1.setListener "click",null,hideStuff2.bind(null,$(".js-presets"),"applied",applyingClass,"topHidden")
+    this.buttons.presetView1 = new Toggle("presetView1","#presetHead")
+    hideStuff2 = function(selectors,classToApply,fn,typeOfHidden,e){
+        // for i,index in selectors
+        for (var index = 0; index < selectors.length; index++) {
+          i = selectors[index];
+          selector = selectors.eq(index)
+          fn selector,typeOfHidden
+        }
+    this.buttons.presetView1.setListener "click",null,hideStuff2.bind(null,$(".js-presets"),"applied",applyingClass,"topHidden")
         ,hideStuff2.bind(null,$(".js-presets"),"applied",removingClass,"topHidden")
+        }
      */
+    this.buttons.presetView1 = new Toggle("presetView1", "#presetHead");
+
+    var hideStuff2 = function(selectors, classToApply, fn, typeOfHidden, e) {
+      var i, index, results, selector;
+      results = [];
+      console.log("hidden?");
+      for (index = 0; index < selectors.length; index++) {
+        i = selectors[index];
+        selector = selectors.eq(index);
+        results.push(fn(selector, typeOfHidden));
+      }
+      return results;
+    };
+
+    this.buttons.presetView1.setListener("click", null,
+      hideStuff2.bind(
+        null, $(".js-presets"), "applied", applyingClass, "topHidden"
+      ),
+      hideStuff2.bind(
+        null, $(".js-presets"), "applied", removingClass, "topHidden"
+      )
+    );
+    // hides it in the beginning to avoid difficulties in mobile
+    this.buttons.presetView1.activate("click", null);
+
     this.buttons.presetView2 = new Button("presetView2", ".dropdown");
     hideStuff3 = function(selectors, classToApply, fn, typeOfHidden, e) {
-      var index, len2, p, results, selector;
+      var index, results, selector;
       results = [];
-      for (index = p = 0, len2 = selectors.length; p < len2; index = ++p) {
+      for (index = 0; index < selectors.length; index++) {
         i = selectors[index];
         selector = selectors.eq(index);
         results.push(fn(selector, typeOfHidden));

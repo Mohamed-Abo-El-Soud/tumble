@@ -6,14 +6,68 @@
     position:fixed;
     //background:rgba(225, 225, 225, 0.4);
     z-index:-1;
+    display: none;
+}
+
+.popup-cover{
+  position: fixed;
+  // fill whole screen
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: rgba(0,0,0,0);
+  // @include ease_in_out(0.25s,background);
+  @include ease_in_out(background);
+  // make it unclickable
+  pointer-events: none;
+  .popup{
+    @include ease_in_out(opacity);
+    visibility: hidden;
+    opacity: 0;
+  }
+  &.is-opened{
+    background: rgba(0,0,0,0.5);
+    pointer-events: all;
+    .popup{
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+.popup{
+  background: white;
+  margin-top: 5%;
+  @media (orientation: landscape) {
+    margin-top: 0%;
+  }
+  padding: 20px;
+}
+
+.cow{
+  margin: 0 auto;
+ // width: 200px;
+ width: auto;
+ // display: inline-block;
+ background: black;
+ // padding: 20px;
+ color: white;
 }
 
 #instructions {
     font-family: "Roboto",non-serif;
-    position:fixed;
+    // position:fixed;
+    // position:absolute;
     z-index: -1;
-    display: none;
-    margin: 80px 0px 0px 109px;
+    // hide if needed
+    // display: none;
+    // space out stuff
+    // margin: 80px 0px 0px 109px;
+    // center horizontally
+    // text-align: center;
+    // margin: 0 auto;
+
+    // left: 50%;
+    // margin-left: -50%;
 
     //text-align: right;
     //width:600px;

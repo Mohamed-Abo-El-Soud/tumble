@@ -1,0 +1,14 @@
+@mixin ease_in_out($type: all, $time: 0.25s) {
+  @if ($type != all){
+    -webkit-transition: all $time ease-in-out;
+    -moz-transition: all $time ease-in-out;
+    -o-transition: all $time ease-in-out;
+    transition: all $time ease-in-out;
+    transition-property: $type;
+  } @else {
+    -webkit-transition: $type $time ease-in-out;
+    -moz-transition: $type $time ease-in-out;
+    -o-transition: $type $time ease-in-out;
+    transition: $type $time ease-in-out;
+  }
+}
