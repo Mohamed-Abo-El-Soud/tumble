@@ -3188,7 +3188,7 @@ Vector = (function() {
 
   Vector.prototype.rotate = function(axis, angle) {
     var cosA, cx, cy, k, sinA;
-    if (axis.constructor.name !== "Vector") {
+    if (axis.constructor.name !== Vector.name) {
       throw new Error(axis);
     }
     if (typeof angle !== "number") {
